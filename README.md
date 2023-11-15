@@ -1,4 +1,4 @@
-# React + TypeScript + Vite
+# Teams 2.0 Built with React, TypeScript & TailwindCSS
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
