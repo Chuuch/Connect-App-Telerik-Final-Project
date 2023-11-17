@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<!-- saved from url=(0022)http://localhost:5173/ -->
+<html lang="en"><script type="application/json" id="luminous-options" class="luminous-options" data-changed="false" data-from="storage.sync">{"disabled":{"WebAPIs":{},"addEventListener":{},"handleEvent":{}},"collect_details":false,"injection_disabled":true}</script><script id="luminous-interceptor" class="luminous-interceptor" type="text/javascript" nonce="3b34aae43a" data-from="contentScript">var should_luminous_run=1==document.getElementsByClassName("luminous-interceptor").length,remove_duplicated_luminous_elements=function(e){var t=document.getElementsByClassName(e),n=t.length;if(1<n)for(;n--;)0<n&&t[n].remove()};if(remove_duplicated_luminous_elements("luminous-data"),remove_duplicated_luminous_elements("luminous-options"),remove_duplicated_luminous_elements("luminous-interceptor"),should_luminous_run){var original_window_setTimeout=window.setTimeout,original_window_setInterval=window.setInterval,cached_options={injection_disabled:!1},collect_details=!1,json_options_element=void 0,get_options=function(){return(json_options_element=json_options_element||document.getElementById("luminous-options"))&&"true"==json_options_element.getAttribute("data-changed")&&(cached_options=JSON.parse(json_options_element.innerHTML),collect_details=cached_options.collect_details,json_options_element.setAttribute("data-changed","false")),cached_options},luminous_data_element=document.getElementById("luminous-data"),is_allowed=function(e,t){var n=get_options();return n.disabled||(n.disabled={}),n.disabled[e]||(n.disabled[e]={}),!n.disabled[e][t]},dispatch_stack_fifo=[],dispatch_stack_timer=void 0,process_dispatch_stack=function(){clearTimeout(dispatch_stack_timer),dispatch_stack_timer=void 0,luminous_data_element.getAttribute("data-ready")?luminous_data_element.dispatchEvent(new MessageEvent("luminous-message",{data:dispatch_stack_fifo})):dispatch_stack_timer=original_window_setTimeout(function(){process_dispatch_stack()},100,"__INTERNAL_LUMINOUS_CODE__"),dispatch_stack_fifo=[]},increment_counter=function(e,t,n,o,i,r){original_window_setTimeout(function(e,t,n,o,i,r,a){if(collect_details&&r)r=(""+r).slice(0,400);else r=void 0;dispatch_stack_fifo.push({kind:t,type:n,time:a,target:i.toString(),code:r,allowed:o,domain:document.location.host,url:document.location.href}),dispatch_stack_timer=dispatch_stack_timer||original_window_setTimeout(function(){process_dispatch_stack()},100,"__INTERNAL_LUMINOUS_CODE__")},0,"__INTERNAL_LUMINOUS_CODE__",e,t,n,o,i,r)};if(!get_options().injection_disabled){var removeEventListener_alias={},original_EventTarget_removeEventListener=EventTarget.prototype.removeEventListener;EventTarget.prototype.removeEventListener=function(e,t,n){var o=original_EventTarget_removeEventListener.call(this,e,t,n);if(removeEventListener_alias[e]&&removeEventListener_alias[e][t]){var i=original_EventTarget_removeEventListener.call(this,e,removeEventListener_alias[e][t],n);return o||i}return o};var original_EventTarget_addEventListener=EventTarget.prototype.addEventListener;if(EventTarget.prototype.addEventListener=function(e,o,t){var i=this,r=e;if("string"!=typeof r&&(r=JSON.stringify(e)),get_options().injection_disabled)return original_EventTarget_addEventListener.call(i,e,o,t);if(is_allowed("addEventListener",r)){var n=performance.now(),a={handleEvent:function(e){if(is_allowed("handleEvent",r)){var t=performance.now();if("function"==typeof o)var n=o(e);else if(o&&"function"==typeof o.handleEvent)n=o.handleEvent(e);return increment_counter("handleEvent",r,!0,i,o,performance.now()-t),n}increment_counter("handleEvent",r,!1,i,o,0)}};removeEventListener_alias[e]||(removeEventListener_alias[e]={}),removeEventListener_alias[e][o]=a;var s=original_EventTarget_addEventListener.call(i,e,a,t);return increment_counter("addEventListener",r,!0,i,o,performance.now()-n),s}increment_counter("addEventListener",r,!1,i,o,0)},Navigator.prototype.getBattery){var original_Navigator_getBattery=Navigator.prototype.getBattery;Navigator.prototype.getBattery=function(){var e=this;if(!get_options().injection_disabled){if(is_allowed("WebAPIs","getBattery")){var t=performance.now(),n=original_Navigator_getBattery.call(e);return increment_counter("WebAPIs","getBattery",!0,e,void 0,performance.now()-t),n}return increment_counter("WebAPIs","getBattery",!1,e,void 0,0),new Promise(function(e,t){})}original_Navigator_getBattery.call(e)}}var original_window_fetch=window.fetch;if(window.fetch=function(e,t){var n=this;if(get_options().injection_disabled)return original_window_fetch.call(n,e,t);if(is_allowed("WebAPIs","fetch")){var o=performance.now(),i=original_window_fetch.call(n,e,t);return increment_counter("WebAPIs","fetch",!0,n,e,0,performance.now()-o),i}return increment_counter("WebAPIs","fetch",!1,n,e,0),new Promise(function(e,t){})},navigator.getGamepads){var original_navigator_getGamepads=navigator.getGamepads;navigator.getGamepads=function(){var e=this;if(get_options().injection_disabled)return original_navigator_getGamepads.call(e);if(is_allowed("WebAPIs","getGamepads")){var t=performance.now(),n=original_navigator_getGamepads.call(e);return increment_counter("WebAPIs","getGamepads",!0,e,void 0,performance.now()-t),n}return increment_counter("WebAPIs","getGamepads",!1,e,void 0,0),[]}}if("geolocation"in navigator){var original_navigator_geolocation_getCurrentPosition=navigator.geolocation.getCurrentPosition;navigator.geolocation.getCurrentPosition=function(o,e,t){var i=this;if(!get_options().injection_disabled){return original_navigator_geolocation_getCurrentPosition.call(i,function(e){if(is_allowed("WebAPIs","geo.getCurrentPosition")){var t=performance.now(),n=o(e);return increment_counter("WebAPIs","geo.getCurrentPosition",!0,i,o,performance.now()-t),n}increment_counter("WebAPIs","geo.getCurrentPosition",!1,i,o,0)},e,t)}original_navigator_geolocation_getCurrentPosition.call(i,o,e,t)}}if("geolocation"in navigator){var original_navigator_geolocation_watchPosition=navigator.geolocation.watchPosition;navigator.geolocation.watchPosition=function(o,e,t){var i=this;if(get_options().injection_disabled)return original_navigator_geolocation_watchPosition.call(i,o,e,t);return original_navigator_geolocation_watchPosition.call(i,function(e){if(is_allowed("WebAPIs","geo.watchPosition")){var t=performance.now(),n=o(e);return increment_counter("WebAPIs","geo.watchPosition",!0,i,o,performance.now()-t),n}increment_counter("WebAPIs","geo.watchPosition",!1,i,o,0)},e,t)}}var original_window_navigator_userAgent=window.navigator.userAgent;is_allowed("WebAPIs","headers.User-Agent")?increment_counter("WebAPIs","headers.User-Agent",!0,"HTTP headers",void 0,0):increment_counter("WebAPIs","headers.User-Agent",!1,"HTTP headers",void 0,0),Object.defineProperty(window.navigator,"userAgent",{get:function(){if(get_options().injection_disabled)return original_window_navigator_userAgent;if(is_allowed("WebAPIs","NavigatorID.userAgent")){var e=performance.now(),t=original_window_navigator_userAgent;return increment_counter("WebAPIs","NavigatorID.userAgent",!0,this,void 0,performance.now()-e),t}return increment_counter("WebAPIs","NavigatorID.userAgent",!1,this,void 0,0),"Mozilla/5.0"}}),window.setInterval=function(function_or_code,delay,p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12){var super_this=this;if(get_options().injection_disabled||"__INTERNAL_LUMINOUS_CODE__"==p1)return original_window_setInterval.call(super_this,function_or_code,delay,p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12);if(is_allowed("WebAPIs","setInterval")){var timer=performance.now();wraped_function_or_code=function(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12){if(is_allowed("WebAPIs","setInterval.call")){var timer=performance.now();if("string"==typeof function_or_code||function_or_code instanceof String)var execution_return=eval(function_or_code);else var execution_return=function_or_code(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12);return increment_counter("WebAPIs","setInterval.call",!0,super_this,function_or_code,performance.now()-timer),execution_return}return increment_counter("WebAPIs","setInterval.call",!1,super_this,function_or_code,0),0};var execution_return=original_window_setInterval.call(super_this,wraped_function_or_code,delay,p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12);return increment_counter("WebAPIs","setInterval",!0,super_this,function_or_code,performance.now()-timer),execution_return}increment_counter("WebAPIs","setInterval",!1,super_this,function_or_code,0)},window.setTimeout=function(function_or_code,delay,p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12){var super_this=this;if(get_options().injection_disabled||"__INTERNAL_LUMINOUS_CODE__"==p1)return original_window_setTimeout.call(super_this,function_or_code,delay,p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12);if(is_allowed("WebAPIs","setTimeout")){var timer=performance.now();wraped_function_or_code=function(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12){if(is_allowed("WebAPIs","setTimeout.call")){var timer=performance.now();if("string"==typeof function_or_code||function_or_code instanceof String)var execution_return=eval(function_or_code);else var execution_return=function_or_code(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12);return increment_counter("WebAPIs","setTimeout.call",!0,super_this,function_or_code,performance.now()-timer),execution_return}return increment_counter("WebAPIs","setTimeout.call",!1,super_this,function_or_code,0),0};var execution_return=original_window_setTimeout.call(super_this,wraped_function_or_code,delay,p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12);return increment_counter("WebAPIs","setTimeout",!0,super_this,function_or_code,performance.now()-timer),execution_return}increment_counter("WebAPIs","setTimeout",!1,super_this,function_or_code,0)};var original_WebSocket_send=WebSocket.prototype.send;WebSocket.prototype.send=function(e){if(get_options().injection_disabled)return original_WebSocket_send.call(this,e);if(is_allowed("WebAPIs","WebSocket.send")){var t=performance.now(),n=original_WebSocket_send.call(this,e);return increment_counter("WebAPIs","WebSocket.send",!0,this,e,performance.now()-t),n}increment_counter("WebAPIs","WebSocket.send",!1,this,e,0)};var original_XMLHttpRequest_open=XMLHttpRequest.prototype.open;XMLHttpRequest.prototype.open=function(e,t,n,o,i){if(void 0===n&&(n=!0),get_options().injection_disabled)return original_XMLHttpRequest_open.call(this,e,t,n,o,i);if(is_allowed("WebAPIs","XMLHttpRequest.open")){var r=performance.now(),a=original_XMLHttpRequest_open.call(this,e,t,n,o,i);return increment_counter("WebAPIs","XMLHttpRequest.open",!0,e,t,performance.now()-r),a}increment_counter("WebAPIs","XMLHttpRequest.open",!1,e,t,0)};var original_XMLHttpRequest_send=XMLHttpRequest.prototype.send;XMLHttpRequest.prototype.send=function(e){if(get_options().injection_disabled)return original_XMLHttpRequest_send.call(this,e);if(is_allowed("WebAPIs","XMLHttpRequest.send")){var t=performance.now(),n=original_XMLHttpRequest_send.call(this,e);return increment_counter("WebAPIs","XMLHttpRequest.send",!0,this,e,performance.now()-t),n}increment_counter("WebAPIs","XMLHttpRequest.send",!1,this,e,0)};var original_window_requestAnimationFrame=window.requestAnimationFrame;window.requestAnimationFrame=function(e){if(get_options().injection_disabled)return original_window_requestAnimationFrame.call(this,e);if(is_allowed("WebAPIs","requestAnimationFrame")){var t=performance.now(),n=original_window_requestAnimationFrame.call(this,e);return increment_counter("WebAPIs","requestAnimationFrame",!0,this,e,0,performance.now()-t),n}return increment_counter("WebAPIs","requestAnimationFrame",!1,this,e,0),1}}}</script><input type="hidden" id="luminous-data" data-from="contentScript" class="luminous-data" data-ready="true" data-tab="1597169395"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script type="module">import { injectIntoGlobalHook } from "/@react-refresh";
+injectIntoGlobalHook(window);
+window.$RefreshReg$ = () => {};
+window.$RefreshSig$ = () => (type) => type;</script>
+
+    <script type="module" src="./Connect_files/client"></script>
+
+    
+    <link rel="icon" type="image" href="http://localhost:5173/connect2.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect</title>
+  <style type="text/css" data-vite-dev-id="/Users/daniel/Documents/Builds/Teams 2.0 Project/Teams-2.0/src/index.css">/*
+! tailwindcss v3.3.5 | MIT License | https://tailwindcss.com
+*//*
+1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
+2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
+*/
+
+*,
+::before,
+::after {
+  box-sizing: border-box; /* 1 */
+  border-width: 0; /* 2 */
+  border-style: solid; /* 2 */
+  border-color: #e5e7eb; /* 2 */
+}
+
+::before,
+::after {
+  --tw-content: '';
+}
+
+/*
+1. Use a consistent sensible line-height in all browsers.
+2. Prevent adjustments of font size after orientation changes in iOS.
+3. Use a more readable tab size.
+4. Use the user's configured `sans` font-family by default.
+5. Use the user's configured `sans` font-feature-settings by default.
+6. Use the user's configured `sans` font-variation-settings by default.
+*/
+
+html {
+  line-height: 1.5; /* 1 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+  -moz-tab-size: 4; /* 3 */
+  -o-tab-size: 4;
+     tab-size: 4; /* 3 */
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; /* 4 */
+  font-feature-settings: normal; /* 5 */
+  font-variation-settings: normal; /* 6 */
+}
+
+/*
+1. Remove the margin in all browsers.
+2. Inherit line-height from `html` so users can set them as a class directly on the `html` element.
+*/
+
+body {
+  margin: 0; /* 1 */
+  line-height: inherit; /* 2 */
+}
+
+/*
+1. Add the correct height in Firefox.
+2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)
+3. Ensure horizontal rules are visible by default.
+*/
+
+hr {
+  height: 0; /* 1 */
+  color: inherit; /* 2 */
+  border-top-width: 1px; /* 3 */
+}
+
+/*
+Add the correct text decoration in Chrome, Edge, and Safari.
+*/
+
+abbr:where([title]) {
+  -webkit-text-decoration: underline dotted;
+          text-decoration: underline dotted;
+}
+
+/*
+Remove the default font size and weight for headings.
+*/
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/*
+Reset links to optimize for opt-in styling instead of opt-out.
+*/
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+/*
+Add the correct font weight in Edge and Safari.
+*/
+
+b,
+strong {
+  font-weight: bolder;
+}
+
+/*
+1. Use the user's configured `mono` font family by default.
+2. Correct the odd `em` font sizing in all browsers.
+*/
+
+code,
+kbd,
+samp,
+pre {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}
+
+/*
+Add the correct font size in all browsers.
+*/
+
+small {
+  font-size: 80%;
+}
+
+/*
+Prevent `sub` and `sup` elements from affecting the line height in all browsers.
+*/
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+/*
+1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)
+2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)
+3. Remove gaps between table borders by default.
+*/
+
+table {
+  text-indent: 0; /* 1 */
+  border-color: inherit; /* 2 */
+  border-collapse: collapse; /* 3 */
+}
+
+/*
+1. Change the font styles in all browsers.
+2. Remove the margin in Firefox and Safari.
+3. Remove default padding in all browsers.
+*/
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit; /* 1 */
+  font-feature-settings: inherit; /* 1 */
+  font-variation-settings: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  font-weight: inherit; /* 1 */
+  line-height: inherit; /* 1 */
+  color: inherit; /* 1 */
+  margin: 0; /* 2 */
+  padding: 0; /* 3 */
+}
+
+/*
+Remove the inheritance of text transform in Edge and Firefox.
+*/
+
+button,
+select {
+  text-transform: none;
+}
+
+/*
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Remove default button styles.
+*/
+
+button,
+[type='button'],
+[type='reset'],
+[type='submit'] {
+  -webkit-appearance: button; /* 1 */
+  background-color: transparent; /* 2 */
+  background-image: none; /* 2 */
+}
+
+/*
+Use the modern Firefox focus style for all focusable elements.
+*/
+
+:-moz-focusring {
+  outline: auto;
+}
+
+/*
+Remove the additional `:invalid` styles in Firefox. (https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737)
+*/
+
+:-moz-ui-invalid {
+  box-shadow: none;
+}
+
+/*
+Add the correct vertical alignment in Chrome and Firefox.
+*/
+
+progress {
+  vertical-align: baseline;
+}
+
+/*
+Correct the cursor style of increment and decrement buttons in Safari.
+*/
+
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/*
+1. Correct the odd appearance in Chrome and Safari.
+2. Correct the outline style in Safari.
+*/
+
+[type='search'] {
+  -webkit-appearance: textfield; /* 1 */
+  outline-offset: -2px; /* 2 */
+}
+
+/*
+Remove the inner padding in Chrome and Safari on macOS.
+*/
+
+::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/*
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Change font properties to `inherit` in Safari.
+*/
+
+::-webkit-file-upload-button {
+  -webkit-appearance: button; /* 1 */
+  font: inherit; /* 2 */
+}
+
+/*
+Add the correct display in Chrome and Safari.
+*/
+
+summary {
+  display: list-item;
+}
+
+/*
+Removes the default spacing and border for appropriate elements.
+*/
+
+blockquote,
+dl,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+figure,
+p,
+pre {
+  margin: 0;
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+}
+
+legend {
+  padding: 0;
+}
+
+ol,
+ul,
+menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/*
+Reset default styling for dialogs.
+*/
+dialog {
+  padding: 0;
+}
+
+/*
+Prevent resizing textareas horizontally by default.
+*/
+
+textarea {
+  resize: vertical;
+}
+
+/*
+1. Reset the default placeholder opacity in Firefox. (https://github.com/tailwindlabs/tailwindcss/issues/3300)
+2. Set the default placeholder color to the user's configured gray 400 color.
+*/
+
+input::-moz-placeholder, textarea::-moz-placeholder {
+  opacity: 1; /* 1 */
+  color: #9ca3af; /* 2 */
+}
+
+input::placeholder,
+textarea::placeholder {
+  opacity: 1; /* 1 */
+  color: #9ca3af; /* 2 */
+}
+
+/*
+Set the default cursor for buttons.
+*/
+
+button,
+[role="button"] {
+  cursor: pointer;
+}
+
+/*
+Make sure disabled buttons don't get the pointer cursor.
+*/
+:disabled {
+  cursor: default;
+}
+
+/*
+1. Make replaced elements `display: block` by default. (https://github.com/mozdevs/cssremedy/issues/14)
+2. Add `vertical-align: middle` to align replaced elements more sensibly by default. (https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210)
+   This can trigger a poorly considered lint error in some tools but is included by design.
+*/
+
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+  display: block; /* 1 */
+  vertical-align: middle; /* 2 */
+}
+
+/*
+Constrain images and videos to the parent width and preserve their intrinsic aspect ratio. (https://github.com/mozdevs/cssremedy/issues/14)
+*/
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Make elements with the HTML hidden attribute stay hidden by default */
+[hidden] {
+  display: none;
+}
+
+:root,
+[data-theme] {
+  background-color: var(--fallback-b1,oklch(var(--b1)/1));
+  color: var(--fallback-bc,oklch(var(--bc)/1));
+}
+
+@supports not (color: oklch(0 0 0)) {
+
+  :root {
+    color-scheme: light;
+    --fallback-p: #491eff;
+    --fallback-pc: #d4dbff;
+    --fallback-s: #ff41c7;
+    --fallback-sc: #fff9fc;
+    --fallback-a: #00cfbd;
+    --fallback-ac: #00100d;
+    --fallback-n: #2b3440;
+    --fallback-nc: #d7dde4;
+    --fallback-b1: #ffffff;
+    --fallback-b2: #e5e6e6;
+    --fallback-b3: #e5e6e6;
+    --fallback-bc: #1f2937;
+    --fallback-in: #00b3f0;
+    --fallback-inc: #000000;
+    --fallback-su: #00ca92;
+    --fallback-suc: #000000;
+    --fallback-wa: #ffc22d;
+    --fallback-wac: #000000;
+    --fallback-er: #ff6f70;
+    --fallback-erc: #000000;
+  }
+
+  @media (prefers-color-scheme: dark) {
+
+    :root {
+      color-scheme: dark;
+      --fallback-p: #7582ff;
+      --fallback-pc: #050617;
+      --fallback-s: #ff71cf;
+      --fallback-sc: #190211;
+      --fallback-a: #00c7b5;
+      --fallback-ac: #000e0c;
+      --fallback-n: #2a323c;
+      --fallback-nc: #a6adbb;
+      --fallback-b1: #1d232a;
+      --fallback-b2: #191e24;
+      --fallback-b3: #15191e;
+      --fallback-bc: #a6adbb;
+      --fallback-in: #00b3f0;
+      --fallback-inc: #000000;
+      --fallback-su: #00ca92;
+      --fallback-suc: #000000;
+      --fallback-wa: #ffc22d;
+      --fallback-wac: #000000;
+      --fallback-er: #ff6f70;
+      --fallback-erc: #000000;
+    }
+  }
+}
+
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+  color-scheme: light;
+  --in: 0.7206 0.191 231.6;
+  --su: 0.7441 0.213 164.75;
+  --wa: 0.8471 0.199 83.87;
+  --er: 0.7176 0.221 22.18;
+  --pc: 0.89824 0.06192 275.75;
+  --ac: 0.15352 0.0368 183.61;
+  --inc: 0 0 0;
+  --suc: 0 0 0;
+  --wac: 0 0 0;
+  --erc: 0 0 0;
+  --rounded-box: 1rem;
+  --rounded-btn: 0.5rem;
+  --rounded-badge: 1.9rem;
+  --animation-btn: 0.25s;
+  --animation-input: .2s;
+  --btn-focus-scale: 0.95;
+  --border-btn: 1px;
+  --tab-border: 1px;
+  --tab-radius: 0.5rem;
+  --p: 0.4912 0.3096 275.75;
+  --s: 0.6971 0.329 342.55;
+  --sc: 0.9871 0.0106 342.55;
+  --a: 0.7676 0.184 183.61;
+  --n: 0.321785 0.02476 255.701624;
+  --nc: 0.894994 0.011585 252.096176;
+  --b1: 1 0 0;
+  --b2: 0.961151 0 0;
+  --b3: 0.924169 0.00108 197.137559;
+  --bc: 0.278078 0.029596 256.847952;
+}
+
+@media (prefers-color-scheme: dark) {
+
+  :root {
+    color-scheme: dark;
+    --in: 0.7206 0.191 231.6;
+    --su: 0.7441 0.213 164.75;
+    --wa: 0.8471 0.199 83.87;
+    --er: 0.7176 0.221 22.18;
+    --pc: 0.13138 0.0392 275.75;
+    --sc: 0.1496 0.052 342.55;
+    --ac: 0.14902 0.0334 183.61;
+    --inc: 0 0 0;
+    --suc: 0 0 0;
+    --wac: 0 0 0;
+    --erc: 0 0 0;
+    --rounded-box: 1rem;
+    --rounded-btn: 0.5rem;
+    --rounded-badge: 1.9rem;
+    --animation-btn: 0.25s;
+    --animation-input: .2s;
+    --btn-focus-scale: 0.95;
+    --border-btn: 1px;
+    --tab-border: 1px;
+    --tab-radius: 0.5rem;
+    --p: 0.6569 0.196 275.75;
+    --s: 0.748 0.26 342.55;
+    --a: 0.7451 0.167 183.61;
+    --n: 0.313815 0.021108 254.139175;
+    --nc: 0.746477 0.0216 264.435964;
+    --b1: 0.253267 0.015896 252.417568;
+    --b2: 0.232607 0.013807 253.100675;
+    --b3: 0.211484 0.01165 254.087939;
+    --bc: 0.746477 0.0216 264.435964;
+  }
+}
+
+[data-theme=light] {
+  color-scheme: light;
+  --in: 0.7206 0.191 231.6;
+  --su: 0.7441 0.213 164.75;
+  --wa: 0.8471 0.199 83.87;
+  --er: 0.7176 0.221 22.18;
+  --pc: 0.89824 0.06192 275.75;
+  --ac: 0.15352 0.0368 183.61;
+  --inc: 0 0 0;
+  --suc: 0 0 0;
+  --wac: 0 0 0;
+  --erc: 0 0 0;
+  --rounded-box: 1rem;
+  --rounded-btn: 0.5rem;
+  --rounded-badge: 1.9rem;
+  --animation-btn: 0.25s;
+  --animation-input: .2s;
+  --btn-focus-scale: 0.95;
+  --border-btn: 1px;
+  --tab-border: 1px;
+  --tab-radius: 0.5rem;
+  --p: 0.4912 0.3096 275.75;
+  --s: 0.6971 0.329 342.55;
+  --sc: 0.9871 0.0106 342.55;
+  --a: 0.7676 0.184 183.61;
+  --n: 0.321785 0.02476 255.701624;
+  --nc: 0.894994 0.011585 252.096176;
+  --b1: 1 0 0;
+  --b2: 0.961151 0 0;
+  --b3: 0.924169 0.00108 197.137559;
+  --bc: 0.278078 0.029596 256.847952;
+}
+
+[data-theme=dark] {
+  color-scheme: dark;
+  --in: 0.7206 0.191 231.6;
+  --su: 0.7441 0.213 164.75;
+  --wa: 0.8471 0.199 83.87;
+  --er: 0.7176 0.221 22.18;
+  --pc: 0.13138 0.0392 275.75;
+  --sc: 0.1496 0.052 342.55;
+  --ac: 0.14902 0.0334 183.61;
+  --inc: 0 0 0;
+  --suc: 0 0 0;
+  --wac: 0 0 0;
+  --erc: 0 0 0;
+  --rounded-box: 1rem;
+  --rounded-btn: 0.5rem;
+  --rounded-badge: 1.9rem;
+  --animation-btn: 0.25s;
+  --animation-input: .2s;
+  --btn-focus-scale: 0.95;
+  --border-btn: 1px;
+  --tab-border: 1px;
+  --tab-radius: 0.5rem;
+  --p: 0.6569 0.196 275.75;
+  --s: 0.748 0.26 342.55;
+  --a: 0.7451 0.167 183.61;
+  --n: 0.313815 0.021108 254.139175;
+  --nc: 0.746477 0.0216 264.435964;
+  --b1: 0.253267 0.015896 252.417568;
+  --b2: 0.232607 0.013807 253.100675;
+  --b3: 0.211484 0.01165 254.087939;
+  --bc: 0.746477 0.0216 264.435964;
+}
+
+*, ::before, ::after {
+  --tw-border-spacing-x: 0;
+  --tw-border-spacing-y: 0;
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  --tw-pan-x:  ;
+  --tw-pan-y:  ;
+  --tw-pinch-zoom:  ;
+  --tw-scroll-snap-strictness: proximity;
+  --tw-gradient-from-position:  ;
+  --tw-gradient-via-position:  ;
+  --tw-gradient-to-position:  ;
+  --tw-ordinal:  ;
+  --tw-slashed-zero:  ;
+  --tw-numeric-figure:  ;
+  --tw-numeric-spacing:  ;
+  --tw-numeric-fraction:  ;
+  --tw-ring-inset:  ;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: rgb(59 130 246 / 0.5);
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  --tw-blur:  ;
+  --tw-brightness:  ;
+  --tw-contrast:  ;
+  --tw-grayscale:  ;
+  --tw-hue-rotate:  ;
+  --tw-invert:  ;
+  --tw-saturate:  ;
+  --tw-sepia:  ;
+  --tw-drop-shadow:  ;
+  --tw-backdrop-blur:  ;
+  --tw-backdrop-brightness:  ;
+  --tw-backdrop-contrast:  ;
+  --tw-backdrop-grayscale:  ;
+  --tw-backdrop-hue-rotate:  ;
+  --tw-backdrop-invert:  ;
+  --tw-backdrop-opacity:  ;
+  --tw-backdrop-saturate:  ;
+  --tw-backdrop-sepia:  ;
+}
+
+::backdrop {
+  --tw-border-spacing-x: 0;
+  --tw-border-spacing-y: 0;
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  --tw-pan-x:  ;
+  --tw-pan-y:  ;
+  --tw-pinch-zoom:  ;
+  --tw-scroll-snap-strictness: proximity;
+  --tw-gradient-from-position:  ;
+  --tw-gradient-via-position:  ;
+  --tw-gradient-to-position:  ;
+  --tw-ordinal:  ;
+  --tw-slashed-zero:  ;
+  --tw-numeric-figure:  ;
+  --tw-numeric-spacing:  ;
+  --tw-numeric-fraction:  ;
+  --tw-ring-inset:  ;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: rgb(59 130 246 / 0.5);
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  --tw-blur:  ;
+  --tw-brightness:  ;
+  --tw-contrast:  ;
+  --tw-grayscale:  ;
+  --tw-hue-rotate:  ;
+  --tw-invert:  ;
+  --tw-saturate:  ;
+  --tw-sepia:  ;
+  --tw-drop-shadow:  ;
+  --tw-backdrop-blur:  ;
+  --tw-backdrop-brightness:  ;
+  --tw-backdrop-contrast:  ;
+  --tw-backdrop-grayscale:  ;
+  --tw-backdrop-hue-rotate:  ;
+  --tw-backdrop-invert:  ;
+  --tw-backdrop-opacity:  ;
+  --tw-backdrop-saturate:  ;
+  --tw-backdrop-sepia:  ;
+}
+.avatar.placeholder > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.input {
+  flex-shrink: 1;
+  height: 3rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-size: 1rem;
+  line-height: 2;
+  line-height: 1.5rem;
+  border-radius: var(--rounded-btn, 0.5rem);
+  border-width: 1px;
+  border-color: transparent;
+  --tw-bg-opacity: 1;
+  background-color: var(--fallback-b1,oklch(var(--b1)/var(--tw-bg-opacity)));
+}
+.link {
+  cursor: pointer;
+  text-decoration-line: underline;
+}
+@keyframes button-pop {
+
+  0% {
+    transform: scale(var(--btn-focus-scale, 0.98));
+  }
+
+  40% {
+    transform: scale(1.02);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes checkmark {
+
+  0% {
+    background-position-y: 5px;
+  }
+
+  50% {
+    background-position-y: -2px;
+  }
+
+  100% {
+    background-position-y: 0;
+  }
+}
+.input input:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+.input[list]::-webkit-calendar-picker-indicator {
+  line-height: 1em;
+}
+.input:focus,
+  .input:focus-within {
+  box-shadow: none;
+  border-color: var(--fallback-bc,oklch(var(--bc)/0.2));
+  outline-style: solid;
+  outline-width: 2px;
+  outline-offset: 2px;
+  outline-color: var(--fallback-bc,oklch(var(--bc)/0.2));
+}
+.input-disabled,
+  .input:disabled,
+  .input[disabled] {
+  cursor: not-allowed;
+  --tw-border-opacity: 1;
+  border-color: var(--fallback-b2,oklch(var(--b2)/var(--tw-border-opacity)));
+  --tw-bg-opacity: 1;
+  background-color: var(--fallback-b2,oklch(var(--b2)/var(--tw-bg-opacity)));
+  color: var(--fallback-bc,oklch(var(--bc)/0.4));
+}
+.input-disabled::-moz-placeholder, .input:disabled::-moz-placeholder, .input[disabled]::-moz-placeholder {
+  color: var(--fallback-bc,oklch(var(--bc)/var(--tw-placeholder-opacity)));
+  --tw-placeholder-opacity: 0.2;
+}
+.input-disabled::placeholder,
+  .input:disabled::placeholder,
+  .input[disabled]::placeholder {
+  color: var(--fallback-bc,oklch(var(--bc)/var(--tw-placeholder-opacity)));
+  --tw-placeholder-opacity: 0.2;
+}
+.link:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+.link:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+.mockup-browser .mockup-browser-toolbar .input {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  height: 1.75rem;
+  width: 24rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  --tw-bg-opacity: 1;
+  background-color: var(--fallback-b2,oklch(var(--b2)/var(--tw-bg-opacity)));
+  padding-left: 2rem;
+  direction: ltr;
+}
+.mockup-browser .mockup-browser-toolbar .input:before {
+  content: "";
+  position: absolute;
+  left: 0.5rem;
+  top: 50%;
+  aspect-ratio: 1 / 1;
+  height: 0.75rem;
+  --tw-translate-y: -50%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  border-radius: 9999px;
+  border-width: 2px;
+  border-color: currentColor;
+  opacity: 0.6;
+}
+.mockup-browser .mockup-browser-toolbar .input:after {
+  content: "";
+  position: absolute;
+  left: 1.25rem;
+  top: 50%;
+  height: 0.5rem;
+  --tw-translate-y: 25%;
+  --tw-rotate: -45deg;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  border-radius: 9999px;
+  border-width: 1px;
+  border-color: currentColor;
+  opacity: 0.6;
+}
+@keyframes modal-pop {
+
+  0% {
+    opacity: 0;
+  }
+}
+@keyframes progress-loading {
+
+  50% {
+    background-position-x: -115%;
+  }
+}
+@keyframes radiomark {
+
+  0% {
+    box-shadow: 0 0 0 12px var(--fallback-b1,oklch(var(--b1)/1)) inset,
+      0 0 0 12px var(--fallback-b1,oklch(var(--b1)/1)) inset;
+  }
+
+  50% {
+    box-shadow: 0 0 0 3px var(--fallback-b1,oklch(var(--b1)/1)) inset,
+      0 0 0 3px var(--fallback-b1,oklch(var(--b1)/1)) inset;
+  }
+
+  100% {
+    box-shadow: 0 0 0 4px var(--fallback-b1,oklch(var(--b1)/1)) inset,
+      0 0 0 4px var(--fallback-b1,oklch(var(--b1)/1)) inset;
+  }
+}
+@keyframes rating-pop {
+
+  0% {
+    transform: translateY(-0.125em);
+  }
+
+  40% {
+    transform: translateY(-0.125em);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+@keyframes skeleton {
+
+  from {
+    background-position: 150%;
+  }
+
+  to {
+    background-position: -50%;
+  }
+}
+@keyframes toast-pop {
+
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.mb-10 {
+  margin-bottom: 2.5rem;
+}
+.mb-16 {
+  margin-bottom: 4rem;
+}
+.flex {
+  display: flex;
+}
+.h-screen {
+  height: 100vh;
+}
+.h-72 {
+  height: 18rem;
+}
+.h-80 {
+  height: 20rem;
+}
+.h-96 {
+  height: 24rem;
+}
+.w-52 {
+  width: 13rem;
+}
+.w-72 {
+  width: 18rem;
+}
+.w-96 {
+  width: 24rem;
+}
+.flex-col {
+  flex-direction: column;
+}
+.items-center {
+  align-items: center;
+}
+.justify-center {
+  justify-content: center;
+}
+.space-y-4 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(1rem * var(--tw-space-y-reverse));
+}
+.space-y-2 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
+}
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+.border {
+  border-width: 1px;
+}
+.border-r-4 {
+  border-right-width: 4px;
+}
+.border-blue-500 {
+  --tw-border-opacity: 1;
+  border-color: rgb(59 130 246 / var(--tw-border-opacity));
+}
+.bg-white {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+.bg-black {
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
+}
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+.text-3xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+.italic {
+  font-style: italic;
+}
+.text-blue-500 {
+  --tw-text-opacity: 1;
+  color: rgb(59 130 246 / var(--tw-text-opacity));
+}</style></head>
+  <body data-new-gr-c-s-check-loaded="14.1137.0" data-gr-ext-installed="">
+    <div id="root"><div class="h-screen flex flex-col justify-center items-center bg-black "><div class="flex flex-col items-center justify-center space-y-2 w-96 h-96 border border-blue-500 rounded-lg"><span class="logo text-3xl text-blue-500 italic mb-16">Register</span><form action="http://localhost:5173/" class="flex flex-col space-y-4"><input type="text" placeholder="Username"><input type="email" placeholder="Email"><input type="password" placeholder="Password"><input type="file"><button>Sign up</button></form></div></div></div>
+    <script type="module" src="./Connect_files/main.tsx"></script>
+  
+
+</body><grammarly-desktop-integration data-grammarly-shadow-root="true"><template shadowrootmode="open"><style>
+      div.grammarly-desktop-integration {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select:none;
+        user-select:none;
+      }
+
+      div.grammarly-desktop-integration:before {
+        content: attr(data-content);
+      }
+    </style><div aria-label="grammarly-integration" role="group" tabindex="-1" class="grammarly-desktop-integration" data-content="{&quot;mode&quot;:&quot;full&quot;,&quot;isActive&quot;:true,&quot;isUserDisabled&quot;:false}"></div></template></grammarly-desktop-integration></html>
