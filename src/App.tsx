@@ -1,18 +1,15 @@
 // import { useState } from 'react'
-
-import { Navbar } from './components/Navbar/Navbar'
 import './index.css'
-import { Login } from './views/Login/Login'
-import { Register } from './views/Register/Register'
+import { Home } from './views/Home/Home'
+
+
 
 function App() {
   // const [count, setCount] = useState(0)
 
   return (
     <div>
-      <Register />
-      <Login />
-      <Navbar />
+      <Home />
     </div>
   )
 }
