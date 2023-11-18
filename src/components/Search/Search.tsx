@@ -6,7 +6,7 @@ export const Search = () => {
       <input
        type="text"
        placeholder="Find a user"
-       className="p-3 bg-white/90 w-full h-15" />
+       className="p-3 bg-white/90 w-full h-15 focus:outline-none outline-none" />
     </div>
   )
 }
