@@ -1,16 +1,16 @@
 // type Props = {}
 
-import { Chat } from '../../components/Chat/Chat';
+import { ChatWindow } from '../../components/ChatWindow/ChatWindow';
 import { Navbar } from '../../components/Navbar/Navbar';
 import { Sidebar } from '../../components/Sidebar/Sidebar';
 
 export const Home = () => {
 	return (
-		<div className="fixed flex flex-row h-screen w-24">
+		<div className="flex flex-row h-screen w-full">
 			<Navbar />
-			<div className="flex flex-row z-1 items-start justify-start">
+			<div className="flex flex-row z-1 w-full items-start justify-start">
 				<Sidebar />
-				<Chat />
+				<ChatWindow />
 			</div>
 		</div>
 	);
