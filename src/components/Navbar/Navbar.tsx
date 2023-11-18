@@ -1,6 +1,7 @@
 import { RiTeamFill } from 'react-icons/ri';
 import { BsChatTextFill } from 'react-icons/bs';
 import { IoCall, IoCalendar, IoNotifications } from 'react-icons/io5';
+import { DarkMode } from '../DarkMode/DarkMode';
 
 // type Props = {}
 
@@ -38,6 +39,11 @@ export const Navbar = () => {
 							<li>
 								<a>
 									<IoCalendar className="active:fill-blue-500" size={30} />
+								</a>
+							</li>
+							<li>
+								<a>
+									<DarkMode />
 								</a>
 							</li>
 						</ul>

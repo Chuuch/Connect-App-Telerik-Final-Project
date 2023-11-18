@@ -7,7 +7,7 @@ export const ChatHeader = () => {
   return (
     <div className="flex flex-row items-center justify-between bg-white/90 h-24 w-full">
         <div className='flex flex-row items-center ml-96'>
-            <IoIosSearch size={30} className='mr-2 fill-blue-500'/>
+            <IoIosSearch size={30} className='mr-2 fill-blue-500 cursor-pointer'/>
         <input 
             type="text"
             placeholder='Search'
