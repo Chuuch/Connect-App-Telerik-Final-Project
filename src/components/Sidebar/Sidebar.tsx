@@ -5,7 +5,7 @@ import { SidebarHeader } from "../SidebarHeader/SidebarHeader.tsx"
 
 export const Sidebar = () => {
   return (
-      <div className="border-r w-96 bg-white/95 h-screen shadow-lg">
+      <div className="border-r w-96 bg-white h-screen shadow-lg">
         <SidebarHeader />
         <Search />
         <Conversations />
