@@ -7,7 +7,7 @@ import { DarkMode } from '../DarkMode/DarkMode';
 
 export const Navbar = () => {
 	return (
-		<div className="drawer h-screen relative w-full z-20">
+		<div className="drawer h-screen z-20 w-24">
 			<input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
 			<div className="drawer-content flex flex-col">
 				{/* Navbar */}
