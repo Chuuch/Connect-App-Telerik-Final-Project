@@ -11,7 +11,7 @@ export const Navbar = () => {
 			<input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
 			<div className="drawer-content flex flex-col">
 				{/* Navbar */}
-				<div className="w-24 h-full navbar bg-white flex flex-col justify-start shadow-sm">
+				<div className="w-24 h-full navbar bg-white border-r flex flex-col justify-start shadow-sm">
 					<div className="flex flex-col">
 						<img src="connect2.png" alt="logo" className="w-16 h-16" />
 						<ul className="menu menu-vertical">

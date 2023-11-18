@@ -15,7 +15,7 @@ export const ChatWindow = () => {
       <div className="h-screen w-fit">
         <Messages />
       </div>
-      <div className="h-32 border-t justify-end w-full">
+      <div className="h-32 justify-end w-full">
         <MessageBox />
       </div>
     </div>
