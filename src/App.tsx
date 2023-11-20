@@ -1,7 +1,7 @@
 // import { useState } from 'react'
 import './index.css'
 import { Home } from './views/Home/Home'
-import { Login } from './views/Login/Login'
+// import { Login } from './views/Login/Login'
 import { Register } from './views/Register/Register'
 
 function App() {
@@ -10,7 +10,7 @@ function App() {
   return (
     <div>
       <Register />
-      <Login />
+      {/* <Login /> */}
       <Home />
     </div>
   )

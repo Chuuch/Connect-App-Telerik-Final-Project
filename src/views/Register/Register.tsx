@@ -1,12 +1,27 @@
 import { motion } from "framer-motion";
-import { MdOutlineAddPhotoAlternate } from 'react-icons/md';
-import { FieldValues, useForm } from 'react-hook-form';
-import { emailPattern, passwordPattern, phonePattern, usernamePattern } from '../../utils/regexPatterns';
 import { FC } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-hot-toast';
+import { MdOutlineAddPhotoAlternate } from 'react-icons/md';
+import { registerUser } from '../../services/auth.services';
+import { emailPattern, passwordPattern, phonePattern, usernamePattern } from '../../utils/regexPatterns';
+import { UserType } from '../../types/UserType';
 
 export const Register: FC = () => {
-	const { register, handleSubmit, formState: { errors } } = useForm();
-	const onSubmit = (data: FieldValues) => console.log(data);
+	const { register, handleSubmit, formState: { errors }, reset } = useForm();
+
+	const onSubmit = async ({ username, email, password, phone }: Partial<UserType>) => {
+
+		const data = await registerUser(username, email, password, phone)
+		if (data?.user) {
+			toast.success('Registration successful! Please, verify your account via sent email!')
+			reset()
+		} else if (data.error) {
+			toast.error('Something went wrong! Please try again!')
+		}
+		reset({ keepErrors: false })
+	};
+
 
 	return (
 		<div className="h-screen flex flex-col justify-center items-center">
