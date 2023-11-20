@@ -1,13 +1,12 @@
 import { motion } from "framer-motion";
 import { MdOutlineAddPhotoAlternate } from 'react-icons/md';
-import { useForm } from 'react-hook-form';
+import { FieldValues, useForm } from 'react-hook-form';
 import { emailPattern, passwordPattern, phonePattern, usernamePattern } from '../../utils/regexPatterns';
+import { FC } from 'react';
 
-// type Props = {}
-
-export const Register = () => {
+export const Register: FC = () => {
 	const { register, handleSubmit, formState: { errors } } = useForm();
-	const onSubmit = (data: any) => console.log(data);
+	const onSubmit = (data: FieldValues) => console.log(data);
 
 	return (
 		<div className="h-screen flex flex-col justify-center items-center">
