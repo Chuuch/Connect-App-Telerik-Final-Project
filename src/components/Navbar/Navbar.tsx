@@ -13,7 +13,6 @@ export const Navbar = () => {
 				{/* Navbar */}
 				<div className="w-24 h-full navbar bg-white border-r flex flex-col justify-start shadow-sm">
 					<div className="flex flex-col">
-						<img src="connect2.png" alt="logo" className="w-16 h-16" />
 						<ul className="menu menu-vertical">
 							{/* Navbar menu content here */}
 							<li>
