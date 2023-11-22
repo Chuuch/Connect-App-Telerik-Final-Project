@@ -4,13 +4,16 @@ import { Header } from '../../components/Header/Header';
 
 export const Home = () => {
 	return (
-		<div>
+		<div className=''>
 			<div>
 				<Header />
-				<Navbar />
 			</div>
-			<div className="">
+			<div className='flex h-full'>
+				<Navbar />
 				<Outlet />
+			</div>
+			<div>
+				
 			</div>
 		</div>
 	);

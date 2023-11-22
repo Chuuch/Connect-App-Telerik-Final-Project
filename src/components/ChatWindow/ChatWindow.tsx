@@ -8,18 +8,18 @@ import { Messages } from "../Messages/Messages"
 
 export const ChatWindow = () => {
   return (
-    <div className="flex bg-white">
-      <div className="flex flex-col items-start justify-start h-[600px]">
+    <div className="bg-white flex flex-row items-start justify-start h-[845px]">
+      <div className="h-fit">
         <Conversations />
       </div>
-    <div className="h-full flex flex-col items-start justify-start">
-      <div className="h-full w-fit">
+    <div className="flex flex-col w-[1440px]">
+      <div className="h-[710px]">
         <Messages />
       </div>
-      <div className="h-32 justify-end w-full">
+      <div className="">
         <MessageBox />
       </div>
-    Co</div>
+    </div>
     </div>
   );
 };
