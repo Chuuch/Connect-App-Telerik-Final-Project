@@ -28,7 +28,7 @@ export const MessageBox = () => {
         onChange={(e)=>setMsg(e.target.value)}
         onKeyDown={(e)=>{if (e.key==='Enter'){handleSubmit(e)}}}
         required
-        className="text-lg p-5 h-16 rounded-full w-full mr-5 bg-transparent border-2 flex-grow outline-none focus:outline-none"/>
+        className="text-lg p-5 h-12 rounded-full w-full mr-5 bg-transparent border-2 flex-grow outline-none focus:outline-none"/>
         {/* <Emoji />  */}
         
       <IoMdAttach size={30} className='cursor-pointer fill-blue-500 hover:fill-blue-500/90'/>
