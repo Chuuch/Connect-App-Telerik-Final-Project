@@ -12,7 +12,7 @@ export const Navbar = () => {
 			<input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
 			<div className="drawer-content flex flex-col">
 				{/* Navbar */}
-				<div className="w-24 h-full navbar bg-white border-r flex flex-col justify-start shadow-xl">
+				<div className="w-24 h-full navbar bg-white border-r flex flex-col justify-start shadow-md">
 					<div className="flex flex-col">
 						<ul className="menu menu-vertical">
 							{/* Navbar menu content here */}
