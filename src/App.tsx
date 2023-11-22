@@ -4,9 +4,9 @@ import { Home } from './views/Home/Home';
 // import { Login } from './views/Login/Login'
 // import { Register } from './views/Register/Register'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Teams } from './components/Teams/Teams';
-import { CallsView } from './views/CallsView/CallsView';
 import { ChatWindow } from './components/ChatWindow/ChatWindow';
+import { CalendarView } from './views/CalendarView/CalendarView';
+import { CallsView } from './views/CallsView/CallsView';
 import { NotificationsView } from './views/NotificationsView/Notifications';
 import { TeamsView } from './views/TeamsView/TeamsView';
 
@@ -21,7 +21,7 @@ function App() {
 					<Route path="teams" element={<TeamsView />} />
 					<Route path="messages" element={<ChatWindow />} />
 					<Route path="calls" element={<CallsView />} />
-					<Route path="calendar" element={<Teams />} />
+					<Route path="calendar" element={<CalendarView />} />
 				</Route>
 			</Routes>
 		</BrowserRouter>
