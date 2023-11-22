@@ -6,8 +6,9 @@ import { Home } from './views/Home/Home';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Teams } from './components/Teams/Teams';
 import { Calls } from './views/Calls/Calls';
-import { Notifications } from './views/Notifications/Notifications';
 import { ChatWindow } from './components/ChatWindow/ChatWindow';
+import { NotificationsView } from './views/NotificationsView/Notifications';
+import { TeamsView } from './views/TeamsView/TeamsView';
 
 function App() {
 	// const [count, setCount] = useState(0)
@@ -16,8 +17,8 @@ function App() {
 		<BrowserRouter>
 			<Routes>
 				<Route path="/" element={<Home />}>
-					<Route path="notifications" element={<Notifications />} />
-					<Route path="teams" element={<Teams />} />
+					<Route path="notifications" element={<NotificationsView />} />
+					<Route path="teams" element={<TeamsView />} />
 					<Route path="messages" element={<ChatWindow />} />
 					<Route path="calls" element={<Calls />} />
 					<Route path="calendar" element={<Teams />} />
