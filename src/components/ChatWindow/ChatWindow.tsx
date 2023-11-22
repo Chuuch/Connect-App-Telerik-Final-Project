@@ -2,22 +2,24 @@
 
 // type Props = {}
 
-import { ChatHeader } from "../ChatHeader/ChatHeader"
+import { Conversations } from "../Conversations/Conversations"
 import { MessageBox } from "../MessageBox/MessageBox"
 import { Messages } from "../Messages/Messages"
 
 export const ChatWindow = () => {
   return (
-    <div className="bg-white h-screen w-full flex flex-col">
-      <div className="border-b bg-white/30 w-full">
-        <ChatHeader />
+    <div className="bg-white flex flex-row items-start justify-start h-[845px]">
+      <div className="h-full shadow-xl">
+        <Conversations />
       </div>
-      <div className="h-screen w-fit">
+    <div className="flex flex-col w-[1440px]">
+      <div className="h-[710px] border-l shadow-inner">
         <Messages />
       </div>
-      <div className="h-32 justify-end w-full">
+      <div className="border-l">
         <MessageBox />
       </div>
+    </div>
     </div>
   );
 };

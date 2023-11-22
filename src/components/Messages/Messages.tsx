@@ -34,10 +34,10 @@ export const Messages = () => {
   return (
     <div>
     {msg && msg.map((m: { id: Key | null | undefined; timestamp: number; author: string; content: string })=>(
-    <div className="chat chat-start" key={m.id}>
+    <div className="chat chat-start ml-5" key={m.id}>
     <div className="chat-image avatar">
       <div className="w-10 rounded-full">
-        <PiUserCircleFill size={30} className='fill-gray-500 cursor-pointer' />
+        <PiUserCircleFill size={35} className='fill-gray-500 cursor-pointer' />
       </div>
     </div>
     <div className="chat-header">
@@ -51,7 +51,7 @@ export const Messages = () => {
         second: "2-digit",
         }).format(m.timestamp)}</time>
     </div>
-    <div className="chat-bubble">{m.content}</div>
+    <div className="chat-bubble bg-blue-500 text-white">{m.content}</div>
     <div className="chat-footer opacity-50">
       Delivered
     </div>

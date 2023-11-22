@@ -2,44 +2,44 @@ import { RiTeamFill } from 'react-icons/ri';
 import { BsChatTextFill } from 'react-icons/bs';
 import { IoCall, IoCalendar, IoNotifications } from 'react-icons/io5';
 import { DarkMode } from '../DarkMode/DarkMode';
+import { NavLink } from 'react-router-dom';
 
 // type Props = {}
 
 export const Navbar = () => {
 	return (
-		<div className="drawer h-screen z-20 w-24">
+		<div className="drawer z-20 w-24">
 			<input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
 			<div className="drawer-content flex flex-col">
 				{/* Navbar */}
-				<div className="w-24 h-full navbar bg-white border-r flex flex-col justify-start shadow-sm">
+				<div className="w-24 h-full navbar bg-white border-r flex flex-col justify-start shadow-md">
 					<div className="flex flex-col">
-						<img src="connect2.png" alt="logo" className="w-16 h-16" />
 						<ul className="menu menu-vertical">
 							{/* Navbar menu content here */}
 							<li>
-								<a>
-									<IoNotifications className="active:fill-blue-500" size={30} />
-								</a>
+								<NavLink to='/notifications'>
+									<IoNotifications className="fill-blue-500" size={30} />
+								</NavLink>
 							</li>
 							<li>
-								<a>
-									<RiTeamFill className="active:fill-blue-500" size={30} />
-								</a>
+								<NavLink to='/teams'>
+									<RiTeamFill className="fill-blue-500" size={30} />
+								</NavLink>
 							</li>
 							<li>
-								<a>
-									<BsChatTextFill className="active:fill-blue-500" size={30} />
-								</a>
+								<NavLink to='/messages'>
+									<BsChatTextFill className="fill-blue-500" size={30} />
+								</NavLink>
 							</li>
 							<li>
-								<a>
-									<IoCall className="active:fill-blue-500" size={30} />
-								</a>
+								<NavLink to='/calls'>
+									<IoCall className="fill-blue-500" size={30} />
+								</NavLink>
 							</li>
 							<li>
-								<a>
-									<IoCalendar className="active:fill-blue-500" size={30} />
-								</a>
+								<NavLink to='/calendar'>
+									<IoCalendar className="fill-blue-500" size={30} />
+								</NavLink>
 							</li>
 							<li>
 								<a>
