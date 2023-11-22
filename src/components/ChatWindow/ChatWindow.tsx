@@ -9,7 +9,7 @@ import { Messages } from "../Messages/Messages"
 export const ChatWindow = () => {
   return (
     <div className="bg-white flex flex-row items-start justify-start h-[845px]">
-      <div className="h-full shadow-xl">
+      <div className="h-full shadow-xl w-96">
         <Conversations />
       </div>
     <div className="flex flex-col w-[1440px]">
