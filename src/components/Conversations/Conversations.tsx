@@ -4,7 +4,7 @@ import { SingleConversation } from "../SingleConversation/SingleConversation";
 
 export const Conversations = () => {
 	return ( 
-	<div className="pt-4 flex flex-col space-y-10">
+	<div className="flex flex-col space-y-10 w-96">
 		<SingleConversation 	/>
 	</div>
 	)

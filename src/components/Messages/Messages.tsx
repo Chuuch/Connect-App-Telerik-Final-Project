@@ -32,7 +32,7 @@ export const Messages = () => {
   },[])
 
   return (
-    <div>
+    <div className="pt-5">
     {msg && msg.map((m: { id: Key | null | undefined; timestamp: number; author: string; content: string })=>(
     <div className="chat chat-start ml-5" key={m.id}>
     <div className="chat-image avatar">
@@ -41,7 +41,7 @@ export const Messages = () => {
       </div>
     </div>
     <div className="chat-header">
-      {m.author}
+      {m.author}{' '}
       <time className="text-xs opacity-50">{new Intl.DateTimeFormat("en-US", {
         year: "numeric",
         month: "2-digit",
