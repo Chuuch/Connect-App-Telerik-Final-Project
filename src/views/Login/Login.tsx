@@ -1,8 +1,42 @@
 import { motion } from "framer-motion";
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { loginUser } from '../../services/auth.services';
+import { auth } from '../../config/firebase-config';
+import { emailPattern, passwordPattern } from '../../utils/regexPatterns';
+import { FC } from 'react';
+import toast from 'react-hot-toast';
 
-// type Props = {}
 
-export const Login = () => {
+
+type FormData = {
+	email: string;
+	password: string;
+};
+type Props = object;
+export const Login: FC<Props> = () => {
+
+	const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+
+	const onSubmit: SubmitHandler<FormData> = async ({ email, password }: { email: string; password: string }) => {
+		
+		try {
+			const data = await loginUser(email, password)
+			const currentUser = auth.currentUser;
+			
+			if (data.user && currentUser?.emailVerified) {
+				toast.success('Login successful!')
+				// navigate('/')
+			} else if (data.user && !currentUser?.emailVerified) {
+				toast.error('Please verify your email first!')
+			} else {
+				toast.error(data.error || 'Something went wrong! Please try again!')
+			}
+		} catch (error) {
+			toast.error('Unexpected error! Please try again!')
+		}
+	}
+
+
 	return (
 		<div className="h-screen w-screen flex flex-col justify-center items-center">
 			<motion.div
@@ -13,19 +47,34 @@ export const Login = () => {
 				<span className="logo text-4xl text-blue-500 italic mb-12 mt-10">
 					Login
 				</span>
-				<form action="" className="flex flex-col text-lg">
+				<form onSubmit={handleSubmit(onSubmit)} action="" className="flex flex-col text-lg">
 					<input
 						type="email"
 						placeholder="Email"
-                        required
 						className="p-1 mb-4 bg-white text-blue-500 border border-t-0 border-l-0 border-r-0 border-b-blue-500"
+						{...register('email', {
+							required: 'Email is required',
+							pattern: {
+								value: emailPattern,
+								message: 'Invalid email',
+							}
+						}
+						)}
 					/>
+					{errors.email && <span className="text-red-500">{errors.email.message}</span>}
 					<input
 						type="password"
-						placeholder="Password"
-                        required
+						placeholder="Password" 
 						className="p-1 bg-white text-blue-500 border border-t-0 border-l-0 border-r-0 border-b-blue-500"
+						{...register('password', {
+							required: 'Password is required',
+							pattern: {
+								value: passwordPattern,
+								message: 'Invalid password',
+							},
+						})}
 					/>
+					{errors.password && <span className="text-red-500">{errors.password.message}</span>}
                     <p className="text-md cursor-pointer hover:underline pb-10 mt-4">
                         Forgotten password
                     </p>
