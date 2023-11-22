@@ -1,4 +1,4 @@
-import { AuthError, User, createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword } from "firebase/auth";
+import { AuthError, User, createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { ref, set } from 'firebase/database';
 import toast from 'react-hot-toast';
 import { auth } from '../config/firebase-config';
@@ -57,5 +57,17 @@ export const loginUser = async (email:string, password:string) => {
             errMsg = 'Something went wrong. Please, try again.'
         }
         return { error: errMsg }
+    }
+}
+
+export const logoutUser = async () => {
+    try {
+        localStorage.removeItem('email')
+        await signOut(auth);
+        toast.success('Logout successful!')
+        return true
+    } catch (error) {
+        toast.error('Something went wrong. Please, try again.')
+        return false
     }
 }

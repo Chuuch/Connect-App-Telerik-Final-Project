@@ -5,6 +5,7 @@ import { auth } from '../../config/firebase-config';
 import { emailPattern, passwordPattern } from '../../utils/regexPatterns';
 import { FC } from 'react';
 import toast from 'react-hot-toast';
+import { Link } from "react-router-dom";
 
 
 
@@ -83,7 +84,7 @@ export const Login: FC<Props> = () => {
 					</button>
 					<p className="text-blue-500 mb-4">
 						You don't have an account?{' '}
-						<span className="hover:underline cursor-pointer">Register</span>
+						<Link to="/register" className="hover:underline cursor-pointer">Register</Link>
 					</p>
                     <div className="flex flex-row items-center justify-center">
                         <img src='connect2.png' alt='connect_logo' className="h-10 w-10"/>

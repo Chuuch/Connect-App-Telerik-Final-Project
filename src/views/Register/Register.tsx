@@ -6,6 +6,7 @@ import { MdOutlineAddPhotoAlternate } from 'react-icons/md';
 import { registerUser } from '../../services/auth.services';
 import { emailPattern, passwordPattern, phonePattern, usernamePattern } from '../../utils/regexPatterns';
 import { UserType } from '../../types/UserType';
+import { Link } from "react-router-dom";
 
 export const Register: FC = () => {
 	const { register, handleSubmit, formState: { errors }, reset } = useForm();
@@ -97,7 +98,7 @@ export const Register: FC = () => {
 					</button>
 					<p className="text-blue-500">
 						You already have an account?{' '}
-						<span className="hover:underline cursor-pointer">Log in</span>
+						<Link to="/login" className="hover:underline cursor-pointer">Log in</Link>
 					</p>
 					<div className="flex flex-row items-center justify-center">
 						<img src='connect2.png' alt='connect_logo' className="h-10 w-10" />
