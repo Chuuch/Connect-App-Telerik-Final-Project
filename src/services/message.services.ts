@@ -3,11 +3,11 @@
 // import moment from 'moment-timezone';
 // import { toast } from 'react-hot-toast';
 import { ref, get, update, push } from 'firebase/database';
-import { db } from '../config/firebase-config';
+import { auth, db } from '../config/firebase-config';
 
 export const createMsg = async (content: string): Promise<string> => {
   const userSnapshot = await get(
-    ref(db, `/users/uid`)
+    ref(db, `/users/${auth?.currentUser?.uid}`)
   );
   const username: string = userSnapshot.val()?.username || ''; 
 
@@ -15,7 +15,7 @@ export const createMsg = async (content: string): Promise<string> => {
     content,
     id: '',
     author: username,
-    userID: 'uid',
+    userID: auth?.currentUser?.uid,
     timestamp: Date.now(),
   };
 
