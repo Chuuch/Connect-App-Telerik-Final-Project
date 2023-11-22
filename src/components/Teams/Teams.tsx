@@ -37,7 +37,7 @@ export const Teams = () => {
         Create Team
       </button>
       </div>
-      <ul className="flex flex-col">
+      <ul className="flex flex-col pt-2 space-y-2">
     <li className="flex flex-row space-x-1 items-center text-md hover:bg-gray-100 cursor-pointer h-full w-96">
         <RiTeamFill size={40} className='fill-blue-500  cursor-pointer'/>
         <p className='text-gray-500'>Team Alpha</p>
