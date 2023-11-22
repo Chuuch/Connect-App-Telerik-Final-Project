@@ -3,6 +3,8 @@ import './index.css'
 import { Home } from './views/Home/Home'
 // import { Login } from './views/Login/Login'
 import { Register } from './views/Register/Register'
+// import { Route } from 'react-router-dom'
+import { Login } from './views/Login/Login'
 
 function App() {
   // const [count, setCount] = useState(0)
@@ -10,7 +12,7 @@ function App() {
   return (
     <div>
       <Register />
-      {/* <Login /> */}
+      <Login />
       <Home />
     </div>
   )

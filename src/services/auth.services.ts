@@ -1,4 +1,4 @@
-import { User, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import { AuthError, User, createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword } from "firebase/auth";
 import { ref, set } from 'firebase/database';
 import toast from 'react-hot-toast';
 import { auth } from '../config/firebase-config';
@@ -39,3 +39,23 @@ export const registerUser = async (username: string, email: string, password: st
         }
     }
 };
+
+export const loginUser = async (email:string, password:string) => {
+    try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password)
+        // Signed in
+        const user = userCredential.user;
+        return { user: user?.uid }
+    } catch (error) {
+        console.error('Login error:', error);
+        const authError = error as AuthError;
+        const errorMessage = authError.code;
+        let errMsg = ''
+        if (errorMessage==='auth/invalid-login-credentials') {
+            errMsg = 'Please check your credentials.'
+        } else {
+            errMsg = 'Something went wrong. Please, try again.'
+        }
+        return { error: errMsg }
+    }
+}
