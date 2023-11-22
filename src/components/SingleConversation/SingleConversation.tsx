@@ -13,10 +13,10 @@ export const SingleConversation = () => {
         <li className="flex flex-row space-x-1 items-center text-md hover:bg-gray-100 cursor-pointer h-full w-96">
             <PiUserCircleFill size={60} className='fill-gray-500'/>
             <p className='text-gray-500'>Vasil Ivanov</p>
-            <IoCall className="fill-gray-500 active:fill-blue-500" size={25} />
-            <IoVideocam className="fill-gray-500 active:fill-blue-500" size={25} />
-            <IoMic className="text-gray-500 fill-gray-500 active:fill-blue-500" size={25} />
-            <BsChatTextFill className="fill-gray-500 active:fill-blue-500" size={25} />
+            <IoCall className="fill-gray-500 hover:fill-blue-500 active:fill-blue-500" size={25} />
+            <IoVideocam className="fill-gray-500 hover:fill-blue-500 active:fill-blue-500" size={25} />
+            <IoMic className="text-gray-500 fill-gray-500 hover:fill-blue-500 active:fill-blue-500" size={25} />
+            <BsChatTextFill className="fill-gray-500 hover:fill-blue-500 active:fill-blue-500" size={25} />
         </li>
         <li className="flex flex-row space-x-1 items-center text-md hover:bg-gray-100 cursor-pointer h-full w-96">
             <PiUserCircleFill size={60} className='fill-gray-500 cursor-pointer'/>
