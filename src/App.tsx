@@ -5,7 +5,7 @@ import { Home } from './views/Home/Home';
 // import { Register } from './views/Register/Register'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Teams } from './components/Teams/Teams';
-import { Calls } from './views/Calls/Calls';
+import { CallsView } from './views/CallsView/CallsView';
 import { ChatWindow } from './components/ChatWindow/ChatWindow';
 import { NotificationsView } from './views/NotificationsView/Notifications';
 import { TeamsView } from './views/TeamsView/TeamsView';
@@ -20,7 +20,7 @@ function App() {
 					<Route path="notifications" element={<NotificationsView />} />
 					<Route path="teams" element={<TeamsView />} />
 					<Route path="messages" element={<ChatWindow />} />
-					<Route path="calls" element={<Calls />} />
+					<Route path="calls" element={<CallsView />} />
 					<Route path="calendar" element={<Teams />} />
 				</Route>
 			</Routes>
