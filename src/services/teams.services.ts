@@ -1,36 +1,27 @@
 import { ref, get, update, push } from 'firebase/database';
-import { db } from '../config/firebase-config';
+import { auth, db } from '../config/firebase-config';
 
-interface Team {
-  id: string;
-  name: string;
-  owner: string;
-  members: string[]; 
-  channels: string[];
-}
+export const createTeam = async (teamName: string): Promise<string> => {
+  const ownerSnapshot = await get(ref(db, `/users/${auth?.currentUser?.uid}`));
+  const username: string = ownerSnapshot.val()?.username || '';
 
-export const createTeam = async (name: string, owner: string): Promise<string> => {
-  // Fetch owner's username
-  const ownerSnapshot = await get(ref(db, `/users/${owner}`));
-  const ownerUsername: string = ownerSnapshot.val()?.username || '';
-
-  // Create a new team object
-  const team: Team = {
+  const team = {
     id: '',
-    name,
-    owner: ownerUsername,
-    members: [owner], 
+    teamName,
+    owner: username,
+    userID: auth?.currentUser?.uid,
+    timestamp: Date.now(),
+    members: [], 
     channels: [], 
   };
 
-  // Push the new team to the database
   const newTeamRef = push(ref(db, 'teams'), team);
   const newTeamKey: string | null = newTeamRef.key;
 
   if (newTeamKey) {
     const updates = {
       [`teams/${newTeamKey}/id`]: newTeamKey,
-      [`users/${owner}/teams/${newTeamKey}`]: true, // Add team to owner's list of teams
+      [`users/${username}/teams/${newTeamKey}`]: true,
     };
 
     try {
