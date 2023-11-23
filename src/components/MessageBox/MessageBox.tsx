@@ -10,9 +10,11 @@ export const MessageBox = () => {
   const handleSubmit = async (e: { preventDefault: () => void; }) => {
 		e.preventDefault();
 		try {
-      const messageId = await createMsg(msg);
+      if(msg && msg !== '') {
+        const messageId = await createMsg(msg);
+        console.log('Message sent with ID:', messageId);
+      }
       setMsg('');
-      console.log('Message sent with ID:', messageId);
     } catch (error) {
       console.error('Message sent with error:', error);
     }
