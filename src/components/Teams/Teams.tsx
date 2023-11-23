@@ -68,9 +68,9 @@ export const Teams: React.FC = () => {
 
 				{showForm && (
 					<div className="mt-4">
-						<form className="flex flex-col space-y-4 justify-center items-center border border-blue-500 dark:border-purple-600 rounded-md p-4">
-							<div className="flex flex-row items-center justify-center">
-								<button className="">
+						<form className="relative flex flex-col space-y-4 justify-center items-center border border-blue-500 dark:border-purple-600 rounded-md p-4">
+							<div className="absolute top-0 right-0 m-4 z-20">
+								<button onClick={() => setShowForm(false)}>
 									<IoClose
 										size={30}
 										className="fill-blue-500 dark:fill-purple-600"
