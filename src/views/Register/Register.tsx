@@ -3,26 +3,44 @@ import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import { MdOutlineAddPhotoAlternate } from 'react-icons/md';
-import { registerUser } from '../../services/auth.services';
-import { emailPattern, passwordPattern, phonePattern, usernamePattern } from '../../utils/regexPatterns';
-import { UserType } from '../../types/UserType';
 import { Link } from "react-router-dom";
+import { registerUser } from '../../services/auth.services';
+import { checkIfUserExist } from '../../services/users.services';
+import { emailPattern, passwordPattern, phonePattern, usernamePattern } from '../../utils/regexPatterns';
+
+type RegisterFormData = {
+	username: string;
+	email: string;
+	password: string;
+	phone: string;
+	avatar?: string;
+};
 
 export const Register: FC = () => {
-	const { register, handleSubmit, formState: { errors }, reset } = useForm();
+	const { register, handleSubmit, formState: { errors }, setError } = useForm<RegisterFormData>();
 
-	const onSubmit = async ({ username, email, password, phone }: Partial<UserType>) => {
+	const onSubmit = async ({ username, email, password, phone }: RegisterFormData) => {
+		const isUserExist = await checkIfUserExist(username)
 
+		if (isUserExist) {
+			setError('username', {
+				message: 'Username is already taken! Please, choose another one!',
+			})
+			return
+		}
 		const data = await registerUser(username, email, password, phone)
 		if (data?.user) {
 			toast.success('Registration successful! Please, verify your account via sent email!')
-			reset()
-		} else if (data.error) {
+		} else if (data?.error) {
+			if (data?.error.includes('Email')) {
+				setError('email', {
+					message: data.error,
+				})
+				return
+			}
 			toast.error('Something went wrong! Please try again!')
 		}
-		reset({ keepErrors: false })
 	};
-
 
 	return (
 		<div className="h-screen flex flex-col justify-center items-center">
@@ -74,7 +92,7 @@ export const Register: FC = () => {
 							},
 						})}
 					/>
-					{errors.password && <span className="text-red-500">{errors.password?.message}</span>}
+					{errors.password && <span className="text-red-500 pt-1">{errors.password?.message}</span>}
 					<input
 						type="phone"
 						placeholder="Phone number"
