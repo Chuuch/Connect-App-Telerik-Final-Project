@@ -7,7 +7,7 @@ import { Notifications } from "../../components/Notifications/Notifications"
 
 export const NotificationsView = () => {
   return (
-    <div className="bg-white flex flex-grow items-start justify-start">
+    <div className="bg-white dark:bg-black flex flex-grow items-start justify-start">
       <div className="h-full shadow-xl">
         <Notifications />
       </div>
@@ -15,7 +15,7 @@ export const NotificationsView = () => {
       <div className="h-[710px] border-l shadow-inner overflow-auto">
         <Messages />
       </div>
-      <div className="border-l">
+      <div>
         <MessageBox />
       </div>
     </div>

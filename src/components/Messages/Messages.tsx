@@ -47,7 +47,7 @@ export const Messages = () => {
         <PiUserCircleFill size={35} className='fill-gray-500 cursor-pointer' />
       </div>
     </div>
-    <div className="chat-header">
+    <div className="chat-header dark:text-gray-200">
       {m.author}{' '}
       <time className="text-xs opacity-50">{new Intl.DateTimeFormat("en-US", {
         year: "numeric",
@@ -58,8 +58,8 @@ export const Messages = () => {
         second: "2-digit",
         }).format(m.timestamp)}</time>
     </div>
-    <div className="chat-bubble bg-blue-500 text-white">{m.content}</div>
-    <div className="chat-footer opacity-50">
+    <div className="chat-bubble bg-blue-500 dark:bg-purple-600 text-white">{m.content}</div>
+    <div className="chat-footer opacity-50 dark:text-gray-100">
       Delivered
     </div>
   </div>

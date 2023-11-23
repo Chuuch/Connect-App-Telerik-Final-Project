@@ -33,7 +33,7 @@ export const Emoji: React.FC<EmojiProps> = ({ onEmojiSelect }) => {
       <div className="relative">
         <MdOutlineEmojiEmotions
           size={25}
-          className="fill-blue-500 hover:fill-blue-500/90 mt-1 cursor-pointer"
+          className="fill-blue-500 hover:fill-blue-500/90 dark:fill-purple-600/90 dark:hover-fill-purple-600 mt-1 cursor-pointer"
           onClick={() => setShowPicker(!showPicker)}
         />
       </div>

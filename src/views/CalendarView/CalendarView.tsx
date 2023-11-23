@@ -4,7 +4,7 @@ import { Messages } from "../../components/Messages/Messages"
 
 export const CalendarView = () => {
   return (
-    <div className="bg-white flex flex-grow items-start justify-start">
+    <div className="bg-white dark:bg-black flex flex-grow items-start justify-start">
       <div className="h-full shadow-xl">
         <CalendarFeature />
       </div>
