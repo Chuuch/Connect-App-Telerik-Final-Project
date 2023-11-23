@@ -13,7 +13,7 @@ export const ChatWindow = () => {
         <Conversations />
       </div>
     <div className="flex flex-col w-[1440px]">
-      <div className="h-[710px] border-l shadow-inner">
+      <div className="h-[710px] border-l shadow-inner overflow-auto">
         <Messages />
       </div>
       <div className="border-l">
