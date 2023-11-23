@@ -21,7 +21,7 @@ export const createTeam = async (teamName: string): Promise<string> => {
   if (newTeamKey) {
     const updates = {
       [`teams/${newTeamKey}/id`]: newTeamKey,
-      [`users/${username}/teams/${newTeamKey}`]: true,
+      [`users/${auth?.currentUser?.uid}/teams/${newTeamKey}`]: true,
     };
 
     try {
