@@ -3,6 +3,7 @@ import { BsChatTextFill } from 'react-icons/bs';
 import { IoCall, IoCalendar, IoNotifications } from 'react-icons/io5';
 import { DarkMode } from '../DarkMode/DarkMode';
 import { NavLink } from 'react-router-dom';
+import { logoutUser } from '../../services/auth.services';
 
 // type Props = {}
 
@@ -90,7 +91,7 @@ export const Navbar = () => {
 						<a className="text-lg">Privacy settings</a>
 					</li>
 					<li>
-						<a className="text-lg">Log out</a>
+						<a className="text-lg" onClick={()=>logoutUser()}>Log out</a>
 					</li>
 				</ul>
 			</div>
