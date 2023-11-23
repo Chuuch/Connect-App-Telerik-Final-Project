@@ -5,7 +5,7 @@ import { IoPersonAdd } from 'react-icons/io5';
 
 export const Header = () => {
   return (
-    <div className="flex flex-row items-center border-b bg-white h-24">
+    <div className="relative flex flex-row items-center border-b bg-white h-24">
       <img src="connect2.png" alt="logo" className="w-14 h-14 ml-5" />
       <div className="flex flex-row items-center w-full justify-center space-x-1 ml-60">
         <input

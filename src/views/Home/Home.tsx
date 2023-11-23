@@ -4,15 +4,15 @@ import { Header } from '../../components/Header/Header';
 
 export const Home = () => {
 	return (
-		<div className=''>
-			<div>
+		<div className='h-screen flex flex-col'>
+			<div className='flex-grow'>
 				<Header />
 			</div>
-			<div className='flex h-full'>
+			<div className='flex-grow flex h-full'>
 				<Navbar />
 				<Outlet />
 			</div>
-			<div>
+			<div className='flex-grow'>
 				
 			</div>
 		</div>

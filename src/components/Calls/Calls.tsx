@@ -2,7 +2,7 @@ import { IoCall } from "react-icons/io5"
 
 export const Calls = () => {
   return (
-    <div className="div">
+    <div className="">
       <div className="flex items-center justify-center border-b p-2">
         <h2 className="text-blue-500 text-2xl font-bold p-2 ">Calls</h2>
       </div>

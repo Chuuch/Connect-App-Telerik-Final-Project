@@ -37,7 +37,7 @@ export const Messages = () => {
   }, [msg]);
 
   return (
-    <div className="pt-5">
+    <div className="pt-5 h-full">
     {msg && msg.map((m: { id: Key | null | undefined; timestamp: number; author: string; content: string; userID: string })=>(
       <div>
         {m.userID===auth?.currentUser?.uid ?
