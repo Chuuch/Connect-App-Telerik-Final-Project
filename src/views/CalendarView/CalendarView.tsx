@@ -9,10 +9,10 @@ export const CalendarView = () => {
         <CalendarFeature />
       </div>
     <div className="flex-grow flex-col w-[1440px]">
-      <div className="h-[710px] border-l shadow-inner overflow-auto">
+      <div className="h-[710px] border-l dark:border-purple-600 shadow-inner overflow-auto">
         <Messages />
       </div>
-      <div className="border-l">
+      <div>
         <MessageBox />
       </div>
     </div>
