@@ -1,4 +1,4 @@
-import { useState, useEffect, Key } from "react"
+import { useState, useEffect, Key, useRef } from "react"
 import { PiUserCircleFill } from "react-icons/pi"
 import { auth, db } from "../../config/firebase-config";
 import {ref, onValue} from "firebase/database";
@@ -14,6 +14,7 @@ interface Message {
 
 export const Messages = () => {
   const [msg, setMsg]=useState<Message[]>([]);
+  const msgRefContainer = useRef<HTMLDivElement | null>(null);
 
   useEffect(()=>{
     const msgRef=ref(db, 'messages');
@@ -30,6 +31,10 @@ export const Messages = () => {
       unsubscribe();
     };
   },[])
+
+  useEffect(() => {
+    msgRefContainer.current?.scrollIntoView({behavior: 'smooth'});
+  }, [msg]);
 
   return (
     <div className="pt-5">
@@ -84,7 +89,7 @@ export const Messages = () => {
   )}
   </div>
   ))}
+  <div  ref = {msgRefContainer}></div>
   </div>
-    
   )
 }
