@@ -3,6 +3,7 @@ import { ref, onValue } from 'firebase/database';
 import { db } from '../../config/firebase-config';
 import { createTeam } from '../../services/teams.services';
 import { SingleTeam } from '../SingleTeam/SingleTeam';
+import { IoClose } from 'react-icons/io5';
 
 interface Team {
 	id: string;
@@ -48,7 +49,7 @@ export const Teams: React.FC = () => {
 
 	return (
 		<div className="w-96">
-			<div className="flex flex-row justify-center items-center border-b dark:border-purple-600 p-2">
+			<div className="flex flex-row justify-center items-center border-b dark:border-gray-600 p-2">
 				<div className="flex items-center justify-center">
 					<h2 className="text-blue-500 dark:text-purple-600 text-2xl font-bold p-2 ">
 						Teams
@@ -64,18 +65,22 @@ export const Teams: React.FC = () => {
 							</div>
 						))}
 				</ul>
-				<div className="flex items-center justify-center pt-5">
-					<button
-						onClick={() => setShowForm(true)}
-						className="bg-blue-500 hover:bg-blue-500/90 dark:bg-purple-600 text-white p-2 rounded-md text-sm"
-					>
-						Create Team
-					</button>
-				</div>
+
 				{showForm && (
 					<div className="mt-4">
 						<form className="flex flex-col space-y-4 justify-center items-center border border-blue-500 dark:border-purple-600 rounded-md p-4">
-							<label htmlFor="teamName" className="text-lg font-semibold dark:text-gray-300">
+							<div className="flex flex-row items-center justify-center">
+								<button className="">
+									<IoClose
+										size={30}
+										className="fill-blue-500 dark:fill-purple-600"
+									/>
+								</button>
+							</div>
+							<label
+								htmlFor="teamName"
+								className="flex flex-row items-center justify-center text-lg font-semibold dark:text-gray-300"
+							>
 								Team Name:
 							</label>
 							<input
@@ -102,6 +107,14 @@ export const Teams: React.FC = () => {
 						</form>
 					</div>
 				)}
+				<div className="flex items-center justify-center pt-5">
+					<button
+						onClick={() => setShowForm(true)}
+						className="bg-blue-500 hover:bg-blue-500/90 dark:bg-purple-600 text-white p-2 rounded-md text-sm"
+					>
+						Create Team
+					</button>
+				</div>
 			</div>
 		</div>
 	);

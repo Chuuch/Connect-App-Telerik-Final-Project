@@ -38,7 +38,7 @@ export const Conversations: React.FC = () => {
 				</h2>
 			</div>
 			{conversations && conversations.map((conversation) => (
-				<div className="flex flex-col space-y-10 w-96" key={conversation.id}>
+				<div className="flex flex-col w-96" key={conversation.id}>
 				<SingleConversation conversation={conversation}/>
 			</div>
 			))}

@@ -13,9 +13,9 @@ interface Conversation {
 export const SingleConversation: React.FC<{ conversation: Conversation}> = ({ conversation }) => {
 	return (
 		<div>
-			<div className="w-96 shadow-inner">
+			<div className="w-96">
 				<ul className="flex flex-col pt-4">
-					<li className="flex flex-row space-x-1 items-center text-md hover:bg-gray-100 dark:hover:bg-gray-900 cursor-pointer h-full w-full p-2">
+					<li className="flex flex-row space-x-1 items-center text-md hover:bg-gray-100 dark:hover:bg-gray-900 cursor-pointer h-full w-full pl-2">
 						<PiUserCircleFill
 							size={50}
 							className="fill-blue-500 dark:fill-purple-600 cursor-pointer"
