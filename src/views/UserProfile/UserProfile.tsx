@@ -15,9 +15,9 @@ export const UserProfile = () => {
 			transition={{ duration: 1.2 }}
 			whileInView={{ opacity: 1, y: 0 }}
 			viewport={{ once: true }}
-			className="flex justify-center items-center bg-gray-100 dark:bg-gray-800 rounded-lg"
+			className="flex justify-center items-center bg-white dark:bg-gray-800 rounded-lg"
 		>
-			<form className="flex flex-col justify-center items-center rounded-lg dark:rounded-lg bg-gray-200 dark:bg-gray-900 shadow-lg p-10 w-[500px] cursor-pointer overflow-hidden">
+			<form className="flex flex-col justify-center items-center rounded-lg dark:rounded-lg bg-gray-100 dark:bg-gray-900 shadow-lg p-10 w-[500px] cursor-pointer overflow-hidden">
 				<div className="flex justify-center mb-6">
 					<HiUserCircle className="w-32 h-32 rounded-full fill-gray-400" />
 				</div>
@@ -39,7 +39,7 @@ export const UserProfile = () => {
 							<input
 								type="text"
 								id="username"
-								className="border p-2 rounded-md focus:outline-none focus:border-blue-500 dark:focus:border-purple-600 dark:bg-slate-800 dark:text-gray-200"
+								className="border dark:border-gray-700 p-2 rounded-md focus:outline-none focus:border-blue-500 dark:focus:border-purple-600 dark:bg-slate-800 dark:text-gray-200"
 								placeholder="Your Username"
 							/>
 						</div>
@@ -54,7 +54,7 @@ export const UserProfile = () => {
 							<input
 								type="email"
 								id="email"
-								className="border p-2 rounded-md focus:outline-none focus:border-blue-500 dark:focus:border-purple-600 dark:bg-slate-800 dark:text-gray-200"
+								className="border dark:border-gray-700 p-2 rounded-md focus:outline-none focus:border-blue-500 dark:focus:border-purple-600 dark:bg-slate-800 dark:text-gray-200"
 								placeholder="Your Email"
 							/>
 						</div>
@@ -69,7 +69,7 @@ export const UserProfile = () => {
 							<input
 								type="tel"
 								id="phone"
-								className="border p-2 rounded-md focus:outline-none focus:border-blue-500 dark:focus:border-purple-600 dark:bg-slate-800 dark:text-gray-200"
+								className="border dark:border-gray-700 p-2 rounded-md focus:outline-none focus:border-blue-500 dark:focus:border-purple-600 dark:bg-slate-800 dark:text-gray-200"
 								placeholder="Your Phone Number"
 							/>
 						</div>
@@ -84,7 +84,7 @@ export const UserProfile = () => {
 							<input
 								type="password"
 								id="password"
-								className="border p-2 rounded-md focus:outline-none focus:border-blue-500 dark:focus:border-purple-600 dark:bg-slate-800 dark:text-gray-200"
+								className="border dark:border-gray-700 p-2 rounded-md focus:outline-none focus:border-blue-500 dark:focus:border-purple-600 dark:bg-slate-800 dark:text-gray-200"
 								placeholder="Your Password"
 							/>
 						</div>
