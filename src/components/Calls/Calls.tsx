@@ -1,4 +1,5 @@
 import { IoCall } from "react-icons/io5"
+import { motion } from 'framer-motion';
 
 export const Calls = () => {
   return (
@@ -8,7 +9,12 @@ export const Calls = () => {
       </div>
     
     <div className="pt-4 w-96 space-y-2 shadow-inner">
-    <ul className="flex flex-col space-y-2">
+    <motion.ul
+    initial={{ y: -100, opacity: 0 }}
+    transition={{ duration: 1.2 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }} 
+    className="flex flex-col space-y-2">
     <li className="flex flex-row space-x-1 items-center text-md hover:bg-gray-100 cursor-pointer h-full w-full p-2">
         <IoCall size={35} className='fill-blue-500 dark:fill-purple-600 cursor-pointer'/>
         <p className='text-gray-600 dark:text-gray-200'>You missed a call from Stoyan Peshev</p>
@@ -17,7 +23,7 @@ export const Calls = () => {
         <IoCall size={35} className='fill-blue-500 dark:fill-purple-600 cursor-pointer'/>
         <p className='text-gray-600 dark:text-gray-200'>Call with Miroslav Genchev ended in 32:34 min.</p>
     </li>
-  </ul>
+  </motion.ul>
   </div>
   </div>
   )
