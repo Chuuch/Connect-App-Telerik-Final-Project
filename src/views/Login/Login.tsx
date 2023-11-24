@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { auth } from '../../config/firebase-config';
 import { loginUser } from '../../services/auth.services';
 import { emailPattern, passwordPattern } from '../../utils/regexPatterns';
+import { HiKey, HiOutlineMail } from "react-icons/hi";
 
 type FormData = {
 	email: string;
@@ -51,15 +52,18 @@ export const Login: FC<Props> = () => {
 				initial={{ y: -300, opacity: 0 }}
 				transition={{ duration: 1.5 }}
 				whileInView={{ opacity: 1, y: 0 }}
-				className="bg-white flex flex-col items-center justify-center space-y-2 w-[400px] h-[500px] border border-blue-500 rounded-lg">
+				className="bg-gray-100 flex flex-col items-center justify-center space-y-2 w-[400px] h-[500px]  shadow-lg rounded-lg">
 				<span className="logo text-4xl text-blue-500 italic mb-12 mt-10">
 					Login
 				</span>
-				<form onSubmit={handleSubmit(onSubmit)} action="" className="flex flex-col text-lg">
+				<form onSubmit={handleSubmit(onSubmit)} action="" className="flex flex-col items-center text-lg">
+					<div className="flex flex-row items-center">
+						<HiOutlineMail className="mr-2 text-gray-500 mb-4"/>
+					
 					<input
 						type="email"
 						placeholder="Email"
-						className="p-1 mb-4 bg-white text-blue-500 border border-t-0 border-l-0 border-r-0 border-b-blue-500"
+						className="p-1 mb-4 bg-white rounded-md text-blue-500 border focus:outline-blue-500"
 						{...register('email', {
 							required: 'Email is required',
 							pattern: {
@@ -69,11 +73,15 @@ export const Login: FC<Props> = () => {
 						}
 						)}
 					/>
+					</div>
 					{errors.email && <span className="text-red-500">{errors.email.message}</span>}
+					<div className="flex flex-row items-center">
+						<HiKey className="mr-2 text-gray-500"/>
+					
 					<input
 						type="password"
 						placeholder="Password"
-						className="p-1 bg-white text-blue-500 border border-t-0 border-l-0 border-r-0 border-b-blue-500"
+						className="p-1 bg-white rounded-md text-blue-500 border focus:outline-blue-500"
 						{...register('password', {
 							required: 'Password is required',
 							pattern: {
@@ -82,16 +90,17 @@ export const Login: FC<Props> = () => {
 							},
 						})}
 					/>
+					</div>
 					{errors.password && <span className="text-red-500">{errors.password.message}</span>}
-					<p className="text-md cursor-pointer hover:underline pb-10 mt-4">
+					<p className="text-sm text-gray-500 hover:text-blue-500 cursor-pointer hover:underline pb-4 mr-24 mt-2">
 						Forgotten password
 					</p>
-					<button className="bg-blue-500 hover:bg-blue-500/90 text-white rounded-md h-12 mb-4">
+					<button className="bg-blue-500 hover:bg-blue-500/90 text-white rounded-md h-12 mb-4 w-36">
 						Log in
 					</button>
-					<p className="text-blue-500 mb-4">
+					<p className="text-blue-500 mb-4 text-base">
 						You don't have an account?{' '}
-						<Link to="/register" className="hover:underline cursor-pointer">Register</Link>
+						<Link to="/register" className="hover:underline cursor-pointer text-base">Register</Link>
 					</p >
 					<div className="flex flex-row items-center justify-center">
 						<img src='connect2.png' alt='connect_logo' className="h-10 w-10" />
