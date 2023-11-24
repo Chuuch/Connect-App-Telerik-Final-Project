@@ -16,7 +16,7 @@ export const ChatWindow = () => {
       <div className="h-[710px] border-l dark:border-gray-600 shadow-inner overflow-auto">
         <Messages />
       </div>
-      <div className="border-l dark:border-gray-600 flex-grow h-32">
+      <div className=" dark:border-gray-600 flex-grow h-32">
         <MessageBox />
       </div>
     </div>

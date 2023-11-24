@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 export const Calls = () => {
   return (
     <div className="">
-      <div className="flex items-center justify-center border-b dark:border-purple-600 p-2">
+      <div className="flex items-center justify-center border-b dark:border-gray-600 p-2">
         <h2 className="text-blue-500 dark:text-purple-600 text-2xl font-bold p-2 ">Calls</h2>
       </div>
     
