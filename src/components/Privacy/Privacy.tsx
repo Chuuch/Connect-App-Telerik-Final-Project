@@ -11,12 +11,13 @@ export const Privacy = () => {
   };
 
   return (
+    <div className="div">
     <motion.div
     initial={{ y: -100, opacity: 0 }}
 			transition={{ duration: 1.2 }}
 			whileInView={{ opacity: 1, y: 0 }}
 			viewport={{ once: true }}
-     className="flex items-start pt-24 justify-center h-screen w-full bg-white dark:bg-black">
+     className="flex items-start justify-center bg-white dark:bg-black">
       <form className="flex flex-col items-center rounded-lg bg-gray-100 dark:bg-gray-900 shadow-md p-10 cursor-pointer overflow-hidden">
         <div className="flex flex-col space-y-4">
           <div className="flex flex-col">
@@ -28,7 +29,7 @@ export const Privacy = () => {
               id="blockedUser"
               value={blockedUser}
               onChange={(e) => setBlockedUser(e.target.value)}
-              className="border p-2 rounded-md focus:outline-none focus:border-blue-500 dark:bg-gray-800 dark:focus:border-purple-600 dark:text-gray-200"
+              className="border dark:border-gray-700 p-2 rounded-md focus:outline-none focus:border-blue-500 dark:bg-gray-800 dark:focus:border-purple-600 dark:text-gray-200"
               placeholder="Username"
             />
           </div>
@@ -47,5 +48,6 @@ export const Privacy = () => {
         </div>
       </form>
     </motion.div>
+    </div>
   );
 };

@@ -24,7 +24,7 @@ export const MessageBox = () => {
 	};
 
   return (
-    <div className="flex flex-grow h-32 border-t border-l dark:border-gray-600 items-center space-x-2 w-full">
+    <div className="flex flex-grow h-32 border-t border-l bg-gray-100 text-gray-700 dark:bg-black dark:border-gray-600 items-center space-x-2 w-full">
       <div className='flex flex-grow items-center w-full ml-5 mr-2 space-x-2'>
       <input
         type="text"
@@ -33,7 +33,7 @@ export const MessageBox = () => {
         onChange={(e)=>setMsg(e.target.value)}
         onKeyDown={(e)=>{if (e.key==='Enter'){handleSubmit(e)}}}
         required
-        className="text-lg p-5 h-12 rounded-full w-full mr-5 bg-transparent border-2 dark:border-gray-600 flex-grow outline-none focus:outline-none"/>
+        className="text-lg p-5 h-12 rounded-full w-full mr-5 bg-transparent border bg-white focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:focus:border-purple-600 dark:text-gray-300 flex-grow outline-none focus:outline-none"/>
         <Emoji onEmojiSelect={setEmoji} /> 
         
       <IoMdAttach size={30} className='cursor-pointer fill-blue-500 hover:fill-blue-500/90 dark:fill-purple-600/90 hover:dark:fill-purple-600'/>

@@ -3,8 +3,8 @@ import { ref, onValue } from 'firebase/database';
 import { db } from '../../config/firebase-config';
 import { createTeam } from '../../services/teams.services';
 import { SingleTeam } from '../SingleTeam/SingleTeam';
-import { IoClose } from 'react-icons/io5';
 import { createChannel } from '../../services/channels.services';
+import { motion } from 'framer-motion';
 
 interface Team {
   id: string;
@@ -13,6 +13,7 @@ interface Team {
   members: object;
   channels: object;
   timeStamp: number;
+  teamId: string;
 }
 
 interface Channel {
@@ -97,13 +98,18 @@ export const Teams: React.FC = () => {
 
   return (
     <div className="w-96">
-      <div className="flex flex-row justify-center items-center border-b p-2">
+      <div className="flex flex-row justify-center items-center border-b dark:border-gray-500 p-2">
         <div className="flex items-center justify-center">
-          <h2 className="text-blue-500 text-2xl font-bold p-2">Teams</h2>
+          <h2 className="text-blue-500 dark:text-purple-500 text-2xl font-bold p-2">Teams</h2>
         </div>
       </div>
       <div className="shadow-inner">
-        <ul className="flex flex-col pt-4 space-y-2">
+        <motion.ul
+        initial={{ y: -100, opacity: 0 }}
+        transition={{ duration: 1.2 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="flex flex-col pt-4 space-y-2">
           {teams &&
             teams.map((team) => (
               <div
@@ -122,7 +128,7 @@ export const Teams: React.FC = () => {
                         setShowForm(false);
                         setShowChannelForm(true);
                       }}
-                      className="bg-blue-500 hover:bg-blue-500/90 text-white p-2 rounded-md text-sm"
+                      className="bg-blue-500 hover:bg-blue-500/90 dark:bg-purple-600 dark:hover:bg-purple-500 m-3 text-white p-2 rounded-md text-sm"
                     >
                       New Channel
                     </button>
@@ -132,8 +138,8 @@ export const Teams: React.FC = () => {
             ))}
           {showChannelForm && (
             <div className="mt-4">
-              <form className="flex flex-col space-y-4 justify-center items-center border border-blue-500 rounded-md p-4">
-                <label htmlFor="channelName" className="text-lg font-semibold">
+              <form className="flex flex-col space-y-4 justify-center items-center border dark:bg-gray-900 border-blue-500 dark:border-purple-600 rounded-md p-4">
+                <label htmlFor="channelName" className="text-lg font-semibold dark:text-gray-400">
                   Channel Name:
                 </label>
                 <input
@@ -148,38 +154,43 @@ export const Teams: React.FC = () => {
                     }
                   }}
                   required
-                  className="px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+                  className="px-4 py-2 border dark:border-gray-700 dark:text-gray-300 rounded-md focus:outline-none focus:border-blue-500 dark:bg-gray-800 dark:focus:border-purple-600"
                 />
                 <button
                   type="button"
                   onClick={handleCreateChannel}
-                  className="bg-blue-500 hover:bg-blue-600 text-white w-28 px-4 py-2 rounded-md text-sm"
+                  className="bg-blue-500 hover:bg-blue-600 dark:bg-purple-600 hover:dark:bg-purple-500 text-white w-28 px-4 py-2 rounded-md text-sm"
                 >
                   Submit
                 </button>
                 <button
                   type="button"
                   onClick={() => setShowChannelForm(false)}
-                  className="bg-blue-500 hover:bg-blue-600 text-white w-28 px-4 py-2 rounded-md text-sm"
+                  className="bg-blue-500 hover:bg-blue-600 dark:bg-purple-600 hover:dark:bg-purple-500 text-white w-28 px-4 py-2 rounded-md text-sm"
                 >
                   Close
                 </button>
               </form>
             </div>
           )}
-        </ul>
-        <div className="flex items-center justify-center pt-5">
+        </motion.ul>
+        <motion.div
+        initial={{ y: -100, opacity: 0 }}
+        transition={{ duration: 1.2 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }} 
+        className="flex items-center justify-center pt-5">
           <button
             onClick={() => setShowForm(true)}
-            className="bg-blue-500 hover:bg-blue-500/90 text-white p-2 rounded-md text-sm"
+            className="bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 hover:dark:bg-purple-500 text-white p-2 rounded-md text-sm"
           >
             Create Team
           </button>
-        </div>
+        </motion.div>
         {showForm && (
           <div className="mt-4">
-            <form className="flex flex-col space-y-4 justify-center items-center border border-blue-500 rounded-md p-4">
-              <label htmlFor="teamName" className="text-lg font-semibold">
+            <form className="flex flex-col space-y-4 justify-center items-center border bg-gray-100 dark:bg-gray-900 border-blue-500 dark:border-purple-500 rounded-md p-4">
+              <label htmlFor="teamName" className="text-lg font-semibold dark:text-gray-400">
                 Team Name:
               </label>
               <input
@@ -194,19 +205,19 @@ export const Teams: React.FC = () => {
                   }
                 }}
                 required
-                className="px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+                className="px-4 py-2 border dark:border-gray-700 rounded-md focus:outline-none dark:text-gray-300 focus:border-blue-500 dark:focus:border-purple-500 dark:bg-slate-800"
               />
               <button
                 type="button"
                 onClick={handleCreateTeam}
-                className="bg-blue-500 hover:bg-blue-600 text-white w-28 px-4 py-2 rounded-md text-sm"
+                className="bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 dark:hover:bg-purple-500 text-white w-28 px-4 py-2 rounded-md text-sm"
               >
                 Submit
               </button>
               <button
                   type="button"
                   onClick={() => setShowForm(false)}
-                  className="bg-blue-500 hover:bg-blue-600 text-white w-28 px-4 py-2 rounded-md text-sm"
+                  className="bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 hover:dark:bg-purple-500 text-white w-28 px-4 py-2 rounded-md text-sm"
                 >
                   Close
                 </button>
