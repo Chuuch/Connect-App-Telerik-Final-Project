@@ -36,7 +36,7 @@ export const Privacy = () => {
           <button
             type="button"
             onClick={handleBlockUser}
-            className="bg-red-500 hover:bg-red-600 text-white w-full py-2 rounded-md"
+            className="bg-red-600 hover:bg-red-500 text-white w-full py-2 rounded-md"
           >
             {isBlocked ? 'User Blocked' : 'Block User'}
           </button>
