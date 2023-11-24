@@ -20,7 +20,7 @@ export const Privacy = () => {
       <form className="flex flex-col items-center rounded-lg bg-gray-100 dark:bg-gray-900 shadow-md p-10 cursor-pointer overflow-hidden">
         <div className="flex flex-col space-y-4">
           <div className="flex flex-col">
-            <label htmlFor="blockedUser" className="text-gray-700">
+            <label htmlFor="blockedUser" className="text-gray-500">
               Enter Username to Block
             </label>
             <input
