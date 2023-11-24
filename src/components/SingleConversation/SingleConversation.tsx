@@ -1,6 +1,7 @@
 import { BsChatTextFill } from 'react-icons/bs';
 import { IoCall, IoMic, IoVideocam } from 'react-icons/io5';
 import { PiUserCircleFill } from 'react-icons/pi';
+import { motion } from 'framer-motion';
 
 interface Conversation {
     id: string;
@@ -14,7 +15,12 @@ export const SingleConversation: React.FC<{ conversation: Conversation}> = ({ co
 	return (
 		<div>
 			<div className="w-96">
-				<ul className="flex flex-col pt-4">
+				<motion.ul
+				initial={{ y: -100, opacity: 0 }}
+				transition={{ duration: 1.2 }}
+				whileInView={{ opacity: 1, y: 0 }}
+				viewport={{ once: true }}
+				className="flex flex-col pt-4">
 					<li className="flex flex-row space-x-1 items-center text-md hover:bg-gray-100 dark:hover:bg-gray-900 cursor-pointer h-full w-full pl-2">
 						<PiUserCircleFill
 							size={50}
@@ -40,7 +46,7 @@ export const SingleConversation: React.FC<{ conversation: Conversation}> = ({ co
 							/>
 						</div>
 					</li>
-				</ul>
+				</motion.ul>
 			</div>
 		</div>
 	);
