@@ -13,6 +13,7 @@ import { CalendarView } from './views/CalendarView/CalendarView';
 import { CallsView } from './views/CallsView/CallsView';
 import { TeamsView } from './views/TeamsView/TeamsView';
 import { NotificationsView } from './views/NotificationsView/Notifications';
+import { UserView } from './views/Home/UserView/UserView';
 
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
 					<Route path="messages" element={<ChatWindow />} />
 					<Route path="calls" element={<CallsView />} />
 					<Route path="calendar" element={<CalendarView />} />
+					<Route path="user" element={<UserView />} />
 				</Route>
 			</Routes>
 		</BrowserRouter >
