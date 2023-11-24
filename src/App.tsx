@@ -14,6 +14,7 @@ import { CallsView } from './views/CallsView/CallsView';
 import { TeamsView } from './views/TeamsView/TeamsView';
 import { NotificationsView } from './views/NotificationsView/Notifications';
 import { UserView } from './views/Home/UserView/UserView';
+import { PrivacyView } from './views/PrivacyView/PrivacyView';
 
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
 					<Route path="calls" element={<CallsView />} />
 					<Route path="calendar" element={<CalendarView />} />
 					<Route path="user" element={<UserView />} />
+					<Route path="privacy" element={<PrivacyView />} />
 				</Route>
 			</Routes>
 		</BrowserRouter >
