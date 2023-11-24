@@ -57,7 +57,7 @@ export const Navbar = () => {
 								xmlns="http://www.w3.org/2000/svg"
 								fill="none"
 								viewBox="0 0 24 24"
-								className="inline-block w-6 h-6 stroke-current dark:stroke-slate-400"
+								className="inline-block w-6 h-6 stroke-slate-400 dark:stroke-slate-400"
 							>
 								<path
 									strokeLinecap="round"
@@ -81,17 +81,17 @@ export const Navbar = () => {
 					className="drawer-overlay"
 				></label>
 
-				<ul className="menu p-4 w-96 min-h-full bg-gray-100 dark:bg-gray-900 text-blue-500 dark:text-purple-600">
+				<ul className="menu p-4 w-96 min-h-full bg-gray-100 dark:bg-gray-900 text-blue-500 dark:text-purple-600 dark:focus:text-purple-600">
 					{/* Sidebar content here */}
 					<h1 className="text-3xl ml-3 mb-4 text-blue-500 dark:text-purple-600">Personal Profile</h1>
-					<li>
-						<NavLink to='/user' className="text-lg text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-purple-600">User settings</NavLink>
+					<li className='dark:hover:bg-gray-800 rounded-md '>
+						<NavLink to='/user' className="text-lg text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:focus:text-purple-600 dark:hover:text-purple-600">User settings</NavLink>
 					</li>
-					<li>
+					<li className='dark:hover:bg-gray-800 rounded-md'>
 						<NavLink to='/privacy' className="text-lg text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-purple-600">Privacy settings</NavLink>
 					</li>
-					<li>
-						<a className="text-lg text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-purple-600" onClick={()=>logoutUser()}>Log out</a>
+					<li className='dark:hover:bg-gray-800 rounded-md'>
+						<a className="text-lg text-gray-600 dark:text-gray-300  hover:text-blue-500 dark:hover:text-purple-600" onClick={()=>logoutUser()}>Log out</a>
 					</li>
 				</ul>
 			</div>
