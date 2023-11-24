@@ -15,9 +15,9 @@ export const UserProfile = () => {
 			transition={{ duration: 1.2 }}
 			whileInView={{ opacity: 1, y: 0 }}
 			viewport={{ once: true }}
-			className="flex justify-center items-center bg-gray-100 dark:bg-gray-800"
+			className="flex justify-center items-center bg-gray-100 dark:bg-gray-800 rounded-lg"
 		>
-			<form className="flex flex-col justify-center items-center rounded-lg dark:rounded-lg bg-gray-200 dark:bg-gray-800 shadow-lg p-10 w-[500px] cursor-pointer overflow-hidden">
+			<form className="flex flex-col justify-center items-center rounded-lg dark:rounded-lg bg-gray-200 dark:bg-gray-900 shadow-lg p-10 w-[500px] cursor-pointer overflow-hidden">
 				<div className="flex justify-center mb-6">
 					<HiUserCircle className="w-32 h-32 rounded-full fill-gray-400" />
 				</div>
