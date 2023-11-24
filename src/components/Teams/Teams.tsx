@@ -138,7 +138,7 @@ export const Teams: React.FC = () => {
             ))}
           {showChannelForm && (
             <div className="mt-4">
-              <form className="flex flex-col space-y-4 justify-center items-center border dark:bg-gray-900 border-blue-500 dark:border-purple-600 rounded-md p-4">
+              <form className="flex flex-col space-y-4 justify-center items-center border bg-gray-100 dark:bg-gray-900 border-blue-500 dark:border-purple-600 rounded-md p-4">
                 <label htmlFor="channelName" className="text-lg font-semibold dark:text-gray-400">
                   Channel Name:
                 </label>
