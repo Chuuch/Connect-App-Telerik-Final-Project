@@ -85,10 +85,10 @@ export const Navbar = () => {
 					{/* Sidebar content here */}
 					<h1 className="text-3xl ml-3 mb-4 text-blue-500 dark:text-purple-600">Personal Profile</h1>
 					<li>
-						<a className="text-lg text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-purple-600">User settings</a>
+						<NavLink to='/user' className="text-lg text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-purple-600">User settings</NavLink>
 					</li>
 					<li>
-						<a className="text-lg text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-purple-600">Privacy settings</a>
+						<NavLink to='/privacy' className="text-lg text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-purple-600">Privacy settings</NavLink>
 					</li>
 					<li>
 						<a className="text-lg text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-purple-600" onClick={()=>logoutUser()}>Log out</a>
