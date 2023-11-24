@@ -121,8 +121,11 @@ export const Teams: React.FC = () => {
                 {selectedTeam === team.id && (
                   <div className="channels-drawer">
                     {channels.map((channel) => (
-                      <div key={channel.id}>{channel.channelName}</div>
+                      <div>
+                      <button key={channel.id}>Channel: {channel.channelName}</button>
+                      </div>
                     ))}
+                    <p></p>
                     <button
                       onClick={() => {
                         setShowForm(false);
