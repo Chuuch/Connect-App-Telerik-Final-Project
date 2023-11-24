@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { registerUser } from '../../services/auth.services';
 import { checkIfUserExist } from '../../services/users.services';
 import { emailPattern, passwordPattern, phonePattern, usernamePattern } from '../../utils/regexPatterns';
+import { HiKey, HiOutlineMail, HiOutlineUser, HiPhone } from "react-icons/hi";
 
 type RegisterFormData = {
 	username: string;
@@ -48,15 +49,17 @@ export const Register: FC = () => {
 				initial={{ y: -300, opacity: 0 }}
 				transition={{ duration: 1.5 }}
 				whileInView={{ opacity: 1, y: 0 }}
-				className="bg-white flex flex-col items-center justify-center space-y-2 w-[500px] h-[600px] border border-blue-500 rounded-lg">
+				className="bg-gray-100 flex flex-col items-center justify-center space-y-2 w-[500px] h-[600px] shadow-lg rounded-lg">
 				<span className="logo text-4xl text-blue-500 italic mb-6">
 					Register
 				</span>
 				<form onSubmit={handleSubmit(onSubmit)} action="" className="flex flex-col space-y-6 text-lg">
+					<div className="flex flex-row items-center justify-start">
+					<HiOutlineUser className="mr-2 text-gray-500"/>
 					<input
 						type="text"
 						placeholder="Username"
-						className="p-1 bg-white text-blue-500 border border-t-0 border-l-0 border-r-0 border-b-blue-500 focus:border-none"
+						className="p-1 bg-white text-blue-500 border rounded-md focus:outline-blue-500"
 						title="Username must be between 5 and 35 symbols"
 						{...register('username', {
 							required: 'Username is required',
@@ -66,11 +69,14 @@ export const Register: FC = () => {
 							},
 						})}
 					/>
+					</div>
 					{errors.username && <span className="text-red-500">{errors.username?.message}</span>}
+					<div className="flex items-center">
+					<HiOutlineMail className="mr-2 text-gray-500"/>
 					<input
 						type="email"
 						placeholder="Email"
-						className="p-1 bg-white text-blue-500 border border-t-0 border-l-0 border-r-0 border-b-blue-500"
+						className="p-1 bg-white text-blue-500 border rounded-md focus:outline-blue-500"
 						{...register('email', {
 							required: 'Email is required',
 							pattern: {
@@ -79,11 +85,14 @@ export const Register: FC = () => {
 							},
 						})}
 					/>
+					</div>
 					{errors.email && <span className="text-red-500">{errors.email?.message}</span>}
+					<div className="flex items-center">
+						<HiKey className="mr-2 text-gray-500"/>
 					<input
 						type="password"
 						placeholder="Password"
-						className="p-1 bg-white text-blue-500 border border-t-0 border-l-0 border-r-0 border-b-blue-500"
+						className="p-1 bg-white text-blue-500 border rounded-md focus:outline-blue-500"
 						{...register('password', {
 							required: 'Password is required',
 							pattern: {
@@ -92,11 +101,14 @@ export const Register: FC = () => {
 							},
 						})}
 					/>
+					</div>
 					{errors.password && <span className="text-red-500 pt-1">{errors.password?.message}</span>}
+					<div className="flex items-center">
+						<HiPhone className='mr-2 text-gray-500'/>
 					<input
 						type="phone"
 						placeholder="Phone number"
-						className="p-1 bg-white text-blue-500 border border-t-0 border-l-0 border-r-0 border-b-blue-500"
+						className="p-1 bg-white text-blue-500 border rounded-md focus:outline-blue-500"
 						{...register('phone', {
 							required: 'Phone is required',
 							pattern: {
@@ -105,6 +117,7 @@ export const Register: FC = () => {
 							},
 						})}
 					/>
+					</div>
 					{errors.phone && <span className="text-red-500">{errors.phone?.message}</span>}
 					<input style={{ display: 'none' }} type="file" />
 					<label htmlFor="file" className="flex flex-row items-center space-x-2 cursor-pointer">
@@ -114,9 +127,9 @@ export const Register: FC = () => {
 					<button type="submit" className="bg-blue-500 hover:bg-blue-500/90 text-white rounded-md h-12">
 						Sign up
 					</button>
-					<p className="text-blue-500">
+					<p className="text-blue-500 text-base">
 						You already have an account?{' '}
-						<Link to="/login" className="hover:underline cursor-pointer">Log in</Link>
+						<Link to="/login" className="hover:underline cursor-pointer text-base">Log in</Link>
 					</p>
 					<div className="flex flex-row items-center justify-center">
 						<img src='connect2.png' alt='connect_logo' className="h-10 w-10" />
