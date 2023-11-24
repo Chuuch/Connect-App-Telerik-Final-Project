@@ -3,6 +3,7 @@ import { ref, onValue } from 'firebase/database';
 import { db } from '../../config/firebase-config';
 import { createTeam } from '../../services/teams.services';
 import { SingleTeam } from '../SingleTeam/SingleTeam';
+import { IoClose } from 'react-icons/io5';
 import { createChannel } from '../../services/channels.services';
 
 interface Team {
