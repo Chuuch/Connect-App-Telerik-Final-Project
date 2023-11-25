@@ -10,7 +10,7 @@ export const CalendarView = () => {
       </div>
     <div className="flex-grow flex-col w-[1440px]">
       <div className="border-l dark:border-gray-600 shadow-inner overflow-auto">
-        <Messages />
+        <Messages msg={[]} />
       </div>
       <div>
         <MessageBox />
