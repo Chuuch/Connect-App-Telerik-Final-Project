@@ -41,18 +41,24 @@ import { auth, db } from '../config/firebase-config';
 //   }
 // };
 
+interface Notification {
+  id: string;
+  type: string;
+  author: string;
+}
+
 export const createMsg = async (content: string): Promise<string> => {
   const userSnapshot = await get(
     ref(db, `/users/${auth?.currentUser?.uid}`)
   );
   const username: string = userSnapshot.val()?.username || ''; 
 
-  // Check if the content contains a GIF URL
+  
   const gifUrlRegex = /(https?:\/\/\S+\.(?:png|jpe?g|gif|svg))/i;
   const gifUrlMatch = content.match(gifUrlRegex);
   const hasGif = gifUrlMatch !== null;
 
-  // Use the GIF URL as the content if a GIF is detected
+  
   const msgContent = hasGif ? gifUrlMatch[0] : content;
 
   const msg = {
@@ -61,7 +67,7 @@ export const createMsg = async (content: string): Promise<string> => {
     author: username,
     userID: auth?.currentUser?.uid,
     timestamp: Date.now(),
-    hasGif, // Add a flag indicating whether the message contains a GIF
+    hasGif,
   };
 
   const newMsgRef = push(ref(db, 'messages'), msg);
@@ -75,6 +81,29 @@ export const createMsg = async (content: string): Promise<string> => {
 
     try {
       await update(ref(db), updates);
+
+      const notification: Notification = {
+        id: newMsgKey,
+        type: 'message',
+        author: username,
+      }
+
+      const newNotiRef = push(ref(db, 'notifications'), notification);
+      const newNotiKey: string | null = newNotiRef.key;
+      
+      if (newNotiKey) {
+        const updates = {
+          [`notifications/${newNotiKey}/id`]: newNotiKey,
+          [`chats/chatID1/notifications/${newNotiKey}`]: true,
+        };
+
+        try {
+          await update(ref(db), updates);
+        } catch (error) {
+          console.error('Error updating data');
+        }
+      }
+
       return newMsgKey;
     } catch (error) {
       console.error('Error updating data:', error);

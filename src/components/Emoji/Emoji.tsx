@@ -27,7 +27,7 @@ export const Emoji: React.FC<EmojiProps> = ({ onEmojiSelect }) => {
         <Picker
           data={data}
           onSelect={handleEmojiSelect}
-          className="absolute bottom-12 right-0 z-10"
+          className=" right-0 z-10"
         />
       )}
       <div className="relative">

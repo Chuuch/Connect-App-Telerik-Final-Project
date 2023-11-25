@@ -40,7 +40,7 @@ export const Messages: React.FC<MessagesProps> = ({ msg }) => {
   }, [msg]);
 
   return (
-    <div className="pt-5 h-full">
+    <div className="pt-5 h-[824px]">
     {msg && msg.map((m: { id: Key | null | undefined; timestamp: number; author: string; content: string; userID: string; hasGif: boolean })=>(
       <div>
         {m.userID===auth?.currentUser?.uid ?
