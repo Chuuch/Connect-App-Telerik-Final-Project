@@ -1,6 +1,19 @@
-import { Database, get, ref, update } from 'firebase/database';
+import { get, ref, set, update } from 'firebase/database';
 import { db } from '../config/firebase-config';
 import { UserType } from './auth.services';
+import toast from 'react-hot-toast';
+
+export const getUserByID = (uid: string) => {
+    return get(ref(db, `users/${uid}`)).then((snapshot) => {
+        if (!snapshot.exists()) {
+            return null
+        }
+        return snapshot.val();
+    })
+        .catch((error) => {
+            toast.error(error.message);
+        });
+}
 
 export const getAllUsers = () => {
     return get(ref(db, 'users'))
@@ -21,14 +34,26 @@ export const checkIfUserExist = async (username: string) => {
     return false
 }
 
-export const updateUserStatus = (db: Database, uid: string, status: string) => {
+export const updateUserStatus = (uid: string, status: string) => {
     return update(ref(db), {
         [`users/${uid}/status`]: status,
     });
 };
 
-export const updateUserIsLogged = (handle, isLogged) => {
+export const updateUserIsLogged = (uid: string, isLogged: boolean) => {
     return update(ref(db), {
-        [`users/${handle}/status`]: isLogged,
+        [`users/${uid}/isLogged`]: isLogged,
+    });
+};
+
+export const updateUserAvatar = async (uid: string, avatar: string) => {
+    return update(ref(db), {
+        [`users/${uid}/avatar`]: avatar,
+    });
+}
+
+export const updateUserPhone = (uid: string, phone: string) => {
+    return update(ref(db), {
+        [`users/${uid}/phone`]: phone,
     });
 };
