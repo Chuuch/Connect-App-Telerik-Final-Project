@@ -158,7 +158,6 @@ export const UserProfile = () => {
 						className="w-32 h-32 rounded-full mx-auto"
 					/>
 					<input
-						disabled
 						type="file"
 						accept="image/*"
 						id="avatar-upload"
