@@ -9,7 +9,7 @@ import { logoutUser } from '../../services/auth.services';
 
 export const Navbar = () => {
 	return (
-		<div className="drawer z-20 w-24">
+		<div className="drawer  w-24">
 			<input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
 			<div className="drawer-content flex flex-col">
 				{/* Navbar */}
