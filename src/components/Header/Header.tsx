@@ -11,6 +11,7 @@ export const Header = () => {
   const [results, setResults] = useState<Array<string>>([]);
 	const [queryVal, setQueryVal] = useState<string>('');
   const navigate = useNavigate();
+  const [showForm, setShowForm] = useState<boolean>(false);
 
   useEffect(() => {
 		const searchFunc = async () => {
@@ -62,34 +63,71 @@ export const Header = () => {
         e.preventDefault();
         navigate(`/search/${queryVal}`, { state: { results } });
     };
-  return (
-    <div className="relative flex flex-row items-center border-b dark:border-gray-600 bg-gray-100 dark:bg-gray-900 h-24">
-      <img src="connect2.png" alt="logo" className="w-14 h-14 ml-5" />
-      <div className="flex flex-row items-center w-full justify-center space-x-1 ml-60">
-        <input
-          type="text"
-          placeholder="Search in chat"
-          onChange={handleSearch} value={queryVal}
-          className="rounded-full w-96 h-8 p-4 bg-white dark:bg-gray-800 text-gray-700  focus:border-blue-500 dark:text-gray-300 border dark:border-gray-700 dark:focus:border-purple-600 outline-none focus:outline-none bg-transparent"
-        />
-        <NavLink to='/search'>
-        <IoSearch size={25} onClick={handleSubmit} className="mr-2 fill-blue-500 dark:fill-purple-600 cursor-pointer" />
-        </NavLink>
+    return (
+      <div className="relative flex flex-row items-center justify-between border-b dark:border-gray-600 bg-gray-100 dark:bg-gray-900 h-24">
+        <img src="connect2.png" alt="logo" className="w-14 h-14 ml-5" />
+        <div className="flex flex-row items-center space-x-1">
+          <input
+            type="text"
+            placeholder="Search in chat"
+            onChange={handleSearch}
+            value={queryVal}
+            className="rounded-full w-96 h-8 p-4 bg-white dark:bg-gray-800 text-gray-700 focus:border-blue-500 dark:text-gray-300 border dark:border-gray-700 dark:focus:border-purple-600 outline-none focus:outline-none bg-transparent"
+          />
+          <NavLink to="/search">
+            <IoSearch
+              size={25}
+              onClick={handleSubmit}
+              className="mr-2 fill-blue-500 dark:fill-purple-600 cursor-pointer"
+            />
+          </NavLink>
+        </div>
+        <div className="flex flex-row items-center space-x-4 mr-10">
+          <IoCall
+            size={25}
+            className="fill-blue-500 hover:fill-blue-500/90 dark:fill-purple-600/90 hover:dark:fill-purple-600 cursor-pointer"
+          />
+          <IoMdVideocam
+            size={25}
+            className="fill-blue-500 hover:fill-blue-500/90 dark:fill-purple-600/90 hover:dark:fill-purple-600 cursor-pointer"
+          />
+          <IoPersonAdd
+            size={25}
+            onClick={() => setShowForm(true)}
+            className="fill-blue-500 hover:fill-blue-500/90 dark:fill-purple-600/90 hover:dark:fill-purple-600 cursor-pointer"
+          />
+        </div>
+        {showForm && (
+          <div className="absolute top-[50%] left-[50%] transform -translate-x-1/2 -translate-y-1/2 translate-y-4">
+            <div className="mt-4">
+              <form className="flex flex-col space-y-4 justify-center items-center border bg-gray-100 dark:bg-gray-900 border-blue-500 dark:border-purple-500 rounded-md p-4">
+                <label htmlFor="teamName" className="text-lg font-semibold dark:text-gray-400">
+                  Add friend:
+                </label>
+                <input
+                  type="text"
+                  id="teamName"
+                  placeholder="Please select a team name"
+                  required
+                  className="px-4 py-2 border dark:border-gray-700 rounded-md focus:outline-none dark:text-gray-300 focus:border-blue-500 dark:focus:border-purple-500 dark:bg-slate-800"
+                />
+                <button
+                  type="button"
+                  className="bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 dark:hover:bg-purple-500 text-white w-28 px-4 py-2 rounded-md text-sm"
+                >
+                  Submit
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowForm(false)}
+                  className="bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 hover:dark:bg-purple-500 text-white w-28 px-4 py-2 rounded-md text-sm"
+                >
+                  Close
+                </button>
+              </form>
+            </div>
+          </div>
+        )}
       </div>
-      <div className="flex flex-row items-center space-x-4 mr-10">
-        <IoCall
-          size={25}
-          className="fill-blue-500 hover:fill-blue-500/90 dark:fill-purple-600/90 hover:dark:fill-purple-600 cursor-pointer"
-        />
-        <IoMdVideocam
-          size={25}
-          className="fill-blue-500 hover:fill-blue-500/90 dark:fill-purple-600/90 hover:dark:fill-purple-600 cursor-pointer"
-        />
-        <IoPersonAdd
-          size={25}
-          className="fill-blue-500 hover:fill-blue-500/90 dark:fill-purple-600/90 hover:dark:fill-purple-600 cursor-pointer"
-        />
-      </div>
-    </div>
-  );
+    );
 };
