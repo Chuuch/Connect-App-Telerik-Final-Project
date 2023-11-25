@@ -55,20 +55,22 @@ export const Notifications: React.FC<NotificationsProps> = ({
 					))}
 				</ul>
 			</motion.div>
-			<motion.div
-				initial={{ y: -100, opacity: 0 }}
-				transition={{ duration: 1.2 }}
-				whileInView={{ opacity: 1, y: 0 }}
-				viewport={{ once: true }}
-				className="flex items-center justify-center pt-5"
-			>
-				<button
-					onClick={handleClearNotifications}
-					className="bg-blue-500 hover:bg-blue-500/90 dark:bg-purple-600 text-white p-2 rounded-md text-sm"
+			{notification.length > 0 && ( // Conditional rendering
+				<motion.div
+					initial={{ y: -100, opacity: 0 }}
+					transition={{ duration: 1.2 }}
+					whileInView={{ opacity: 1, y: 0 }}
+					viewport={{ once: true }}
+					className="flex items-center justify-center pt-5"
 				>
-					Clear Notifications
-				</button>
-			</motion.div>
+					<button
+						onClick={handleClearNotifications}
+						className="bg-blue-500 hover:bg-blue-500/90 dark:bg-purple-600 text-white p-2 rounded-md text-sm"
+					>
+						Clear Notifications
+					</button>
+				</motion.div>
+			)}
 		</div>
 	);
 };
