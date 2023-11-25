@@ -1,36 +1,39 @@
-import { useState, useEffect, Key, useRef } from "react"
+import { useEffect, Key, useRef } from "react"
 import { PiUserCircleFill } from "react-icons/pi"
-import { auth, db } from "../../config/firebase-config";
-import {ref, onValue} from "firebase/database";
+import { auth } from "../../config/firebase-config";
+//import {ref, onValue} from "firebase/database";
 
-interface Message {
-  content:string,
-  id:string,
-  author:string,
-  userID:string,
-  timestamp: number,
+// interface Message {
+//   content:string,
+//   id:string,
+//   author:string,
+//   userID:string,
+//   timestamp: number,
   
+// }
+interface MessagesProps {
+  msg: Message[];
 }
 
-export const Messages = () => {
-  const [msg, setMsg]=useState<Message[]>([]);
-  const msgRefContainer = useRef<HTMLDivElement | null>(null);
+export const Messages: React.FC<MessagesProps> = ({ msg }) => {
+  // const [msg, setMsg]=useState<Message[]>([]);
+   const msgRefContainer = useRef<HTMLDivElement | null>(null);
 
-  useEffect(()=>{
-    const msgRef=ref(db, 'messages');
-    const unsubscribe = onValue(msgRef, (snapshot) => {
-      const data = snapshot.val();
-      if (data) {
-        setMsg(Object.values(data));
-      } else {
-        setMsg([]);
-      }
-    });
+  // useEffect(()=>{
+  //   const msgRef=ref(db, 'messages');
+  //   const unsubscribe = onValue(msgRef, (snapshot) => {
+  //     const data = snapshot.val();
+  //     if (data) {
+  //       setMsg(Object.values(data));
+  //     } else {
+  //       setMsg([]);
+  //     }
+  //   });
 
-    return () => {
-      unsubscribe();
-    };
-  },[])
+  //   return () => {
+  //     unsubscribe();
+  //   };
+  // },[])
 
   useEffect(() => {
     msgRefContainer.current?.scrollIntoView({behavior: 'smooth'});

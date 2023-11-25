@@ -15,6 +15,7 @@ import { TeamsView } from './views/TeamsView/TeamsView';
 import { NotificationsView } from './views/NotificationsView/Notifications';
 import { UserView } from './views/Home/UserView/UserView';
 import { PrivacyView } from './views/PrivacyView/PrivacyView';
+import { Search } from './components/Search/Search';
 
 
 function App() {
@@ -37,22 +38,23 @@ function App() {
 			<Routes>
 				{/* <Route path="/" element={<Home />} />
 				<Route path="notifications" element={<Authenticated><NotificationsView /></Authenticated>} />
-		<Route path="teams" element={<Authenticated><TeamsView /></Authenticated>} />
-		<Route path="messages" element={<Authenticated><ChatWindow /></Authenticated>} />
-		<Route path="calls" element={<Authenticated><CallsView /></Authenticated>} />
-		<Route path="calendar" element={<Authenticated><CalendarView /></Authenticated>} />
-		<Route path="login" element={<Login />} />
-		<Route path='register' element={<Register />} /> */}
+				<Route path="teams" element={<Authenticated><TeamsView /></Authenticated>} />
+				<Route path="messages" element={<Authenticated><ChatWindow /></Authenticated>} />
+				<Route path="calls" element={<Authenticated><CallsView /></Authenticated>} />
+				<Route path="calendar" element={<Authenticated><CalendarView /></Authenticated>} />
+				<Route path="login" element={<Login />} />
+				<Route path='register' element={<Register />} /> */}
 				<Route path="/register" element={<Register />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/" element={user ? <Home /> : <Login />}>
-					<Route path="notifications" element={<NotificationsView />} />
-					<Route path="teams" element={<TeamsView />} />
-					<Route path="messages" element={<ChatWindow />} />
-					<Route path="calls" element={<CallsView />} />
-					<Route path="calendar" element={<CalendarView />} />
-					<Route path="user" element={<UserView />} />
-					<Route path="privacy" element={<PrivacyView />} />
+				<Route path="notifications" element={<NotificationsView />} />
+				<Route path="teams" element={<TeamsView />} />
+				<Route path="messages" element={<ChatWindow />} />
+				<Route path="calls" element={<CallsView />} />
+				<Route path="calendar" element={<CalendarView />} />
+				<Route path="user" element={<UserView />} />
+				<Route path="privacy" element={<PrivacyView />} />
+				<Route path="search/:query" element={<Search/>} />
 				</Route>
 			</Routes>
 		</BrowserRouter >
