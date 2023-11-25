@@ -28,7 +28,7 @@ export const Header = () => {
 					if (msgQuery.exists()) {
 						const msgData = msgQuery.val();
 						const dataArray = Object.values(msgData);
-						const matches=[];
+						const matches: Array<string>=[];
 						for(const msg of dataArray){
 							console.log("data: ", msg.content)
 							if(msg.content && msg.content.toLowerCase().includes(queryVal.toLowerCase()))

@@ -41,7 +41,7 @@ export const Messages: React.FC<MessagesProps> = ({ msg }) => {
 
   return (
     <div className="pt-5 h-full">
-    {msg && msg.map((m: { id: Key | null | undefined; timestamp: number; author: string; content: string; userID: string })=>(
+    {msg && msg.map((m: { id: Key | null | undefined; timestamp: number; author: string; content: string; userID: string; hasGif: boolean })=>(
       <div>
         {m.userID===auth?.currentUser?.uid ?
         (<div className="chat chat-end ml-5" key={m.id}>
@@ -61,7 +61,10 @@ export const Messages: React.FC<MessagesProps> = ({ msg }) => {
         second: "2-digit",
         }).format(m.timestamp)}</time>
     </div>
-    <div className="chat-bubble bg-blue-500 dark:bg-purple-600 text-white">{m.content}</div>
+    <div>
+      {m.hasGif ? (<img src={m.content}></img>) 
+      : (<div className="chat-bubble bg-blue-500 dark:bg-purple-600 text-white">{m.content}</div>)
+      }</div>
     <div className="chat-footer opacity-50 dark:text-gray-100">
       Delivered
     </div>
@@ -84,7 +87,10 @@ export const Messages: React.FC<MessagesProps> = ({ msg }) => {
         second: "2-digit",
         }).format(m.timestamp)}</time>
     </div>
-    <div className="chat-bubble bg-blue-500 dark:bg-purple-600 text-white">{m.content}</div>
+    <div>
+      {m.hasGif ? (<img src={m.content}></img>) 
+      : (<div className="chat-bubble bg-blue-500 dark:bg-purple-600 text-white">{m.content}</div>)
+      }</div>
     <div className="chat-footer opacity-50 dark:text-gray-100">
       Delivered
     </div>
