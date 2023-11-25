@@ -61,7 +61,7 @@ export const NotificationsView = () => {
         } } />
       </div>
       <div className="flex flex-col w-full">
-        <div className="h-[710px] border-l dark:border-gray-600 shadow-inner overflow-auto">
+        <div className=" border-l dark:border-gray-600 shadow-inner overflow-auto">
           <Messages msg={msg} />
         </div>
         <div>
