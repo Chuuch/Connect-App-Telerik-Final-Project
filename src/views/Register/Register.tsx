@@ -2,14 +2,16 @@ import { motion } from "framer-motion";
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
-import { MdOutlineAddPhotoAlternate } from 'react-icons/md';
+// import { MdOutlineAddPhotoAlternate } from 'react-icons/md';
+import { HiKey, HiOutlineMail, HiOutlineUser, HiPhone } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import { registerUser } from '../../services/auth.services';
 import { checkIfUserExist } from '../../services/users.services';
-import { emailPattern, passwordPattern, phonePattern, usernamePattern } from '../../utils/regexPatterns';
-import { HiKey, HiOutlineMail, HiOutlineUser, HiPhone } from "react-icons/hi";
+import { emailPattern, namePattern, passwordPattern, phonePattern, usernamePattern } from '../../utils/regexPatterns';
 
 type RegisterFormData = {
+	firstName: string;
+	lastName: string;
 	username: string;
 	email: string;
 	password: string;
@@ -20,7 +22,7 @@ type RegisterFormData = {
 export const Register: FC = () => {
 	const { register, handleSubmit, formState: { errors }, setError } = useForm<RegisterFormData>();
 
-	const onSubmit = async ({ username, email, password, phone }: RegisterFormData) => {
+	const onSubmit = async ({ firstName, lastName, username, email, password, phone }: RegisterFormData) => {
 		const isUserExist = await checkIfUserExist(username)
 
 		if (isUserExist) {
@@ -29,7 +31,9 @@ export const Register: FC = () => {
 			})
 			return
 		}
-		const data = await registerUser(username, email, password, phone)
+
+		const data = await registerUser(firstName, lastName, username, email, password, phone)
+
 		if (data?.user) {
 			toast.success('Registration successful! Please, verify your account via sent email!')
 		} else if (data?.error) {
@@ -55,75 +59,111 @@ export const Register: FC = () => {
 				</span>
 				<form onSubmit={handleSubmit(onSubmit)} action="" className="flex flex-col space-y-6 text-lg">
 					<div className="flex flex-row items-center justify-start">
-					<HiOutlineUser className="mr-2 text-gray-500"/>
-					<input
-						type="text"
-						placeholder="Username"
-						className="p-1 bg-white text-blue-500 border rounded-md focus:outline-blue-500"
-						title="Username must be between 5 and 35 symbols"
-						{...register('username', {
-							required: 'Username is required',
-							pattern: {
-								value: usernamePattern,
-								message: 'Invalid username',
-							},
-						})}
-					/>
+						<HiOutlineUser className="mr-2 text-gray-500" />
+						<input
+							type="text"
+							placeholder="First Name"
+							className="p-1 bg-white text-blue-500 border border-t-0 border-l-0 border-r-0 border-b-blue-500 focus:border-none"
+							title="First name must be between 3 and 35 symbols"
+							{...register('firstName', {
+								required: 'First name is required',
+								pattern: {
+									value: namePattern,
+									message: 'Invalid first name',
+								},
+							})}
+						/>
+						{errors.firstName && <span className="text-red-500">{errors.firstName?.message}</span>}
+						<input
+							type="text"
+							placeholder="Last Name"
+							className="p-1 bg-white text-blue-500 border border-t-0 border-l-0 border-r-0 border-b-blue-500 focus:border-none"
+							title="Last name must be between 3 and 35 symbols"
+							{...register('lastName', {
+								required: 'Last name is required',
+								pattern: {
+									value: namePattern,
+									message: 'Invalid last name',
+								},
+							})}
+						/>
+						{errors.lastName && <span className="text-red-500">{errors.lastName?.message}</span>}
+						<input
+							type="text"
+							placeholder="Username"
+							className="p-1 bg-white text-blue-500 border rounded-md focus:outline-blue-500"
+							title="Username must be between 5 and 35 symbols"
+							{...register('username', {
+								required: 'Username is required',
+								pattern: {
+									value: usernamePattern,
+									message: 'Invalid username',
+								},
+							})}
+						/>
 					</div>
 					{errors.username && <span className="text-red-500">{errors.username?.message}</span>}
 					<div className="flex items-center">
-					<HiOutlineMail className="mr-2 text-gray-500"/>
-					<input
-						type="email"
-						placeholder="Email"
-						className="p-1 bg-white text-blue-500 border rounded-md focus:outline-blue-500"
-						{...register('email', {
-							required: 'Email is required',
-							pattern: {
-								value: emailPattern,
-								message: 'Invalid email',
-							},
-						})}
-					/>
+						<HiOutlineMail className="mr-2 text-gray-500" />
+						<input
+							type="email"
+							placeholder="Email"
+							className="p-1 bg-white text-blue-500 border rounded-md focus:outline-blue-500"
+							{...register('email', {
+								required: 'Email is required',
+								pattern: {
+									value: emailPattern,
+									message: 'Invalid email',
+								},
+							})}
+						/>
 					</div>
 					{errors.email && <span className="text-red-500">{errors.email?.message}</span>}
 					<div className="flex items-center">
-						<HiKey className="mr-2 text-gray-500"/>
-					<input
-						type="password"
-						placeholder="Password"
-						className="p-1 bg-white text-blue-500 border rounded-md focus:outline-blue-500"
-						{...register('password', {
-							required: 'Password is required',
-							pattern: {
-								value: passwordPattern,
-								message: 'Invalid password',
-							},
-						})}
-					/>
+						<HiKey className="mr-2 text-gray-500" />
+						<input
+							type="password"
+							placeholder="Password"
+							className="p-1 bg-white text-blue-500 border rounded-md focus:outline-blue-500"
+							{...register('password', {
+								required: 'Password is required',
+								pattern: {
+									value: passwordPattern,
+									message: 'Invalid password',
+								},
+							})}
+						/>
 					</div>
 					{errors.password && <span className="text-red-500 pt-1">{errors.password?.message}</span>}
 					<div className="flex items-center">
-						<HiPhone className='mr-2 text-gray-500'/>
-					<input
-						type="phone"
-						placeholder="Phone number"
-						className="p-1 bg-white text-blue-500 border rounded-md focus:outline-blue-500"
-						{...register('phone', {
-							required: 'Phone is required',
-							pattern: {
-								value: phonePattern,
-								message: 'Invalid phone number',
-							},
-						})}
-					/>
+						<HiPhone className='mr-2 text-gray-500' />
+						<input
+							type="phone"
+							placeholder="Phone number"
+							className="p-1 bg-white text-blue-500 border rounded-md focus:outline-blue-500"
+							{...register('phone', {
+								required: 'Phone is required',
+								pattern: {
+									value: phonePattern,
+									message: 'Invalid phone number',
+								},
+							})}
+						/>
 					</div>
 					{errors.phone && <span className="text-red-500">{errors.phone?.message}</span>}
-					<input style={{ display: 'none' }} type="file" />
-					<label htmlFor="file" className="flex flex-row items-center space-x-2 cursor-pointer">
-						<MdOutlineAddPhotoAlternate size={35} className='fill-blue-500' />
-						<span className="text-blue-500">Add an avatar</span>
-					</label>
+					{/* <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+						<span className="font-medium text-gray-600 dark:text-gray-100">JL</span>
+					</div> */}
+					{/* <input style={{ display: 'none' }} type="file" id='file' /> */}
+					{/* <label htmlFor="file" className="flex flex-row items-center space-x-2 cursor-pointer"> */}
+					{/* <MdOutlineAddPhotoAlternate size={35} className='fill-blue-500' /> */}
+					{/* <div className="relative">
+							<img className="w-10 h-10 rounded-full" src="/docs/images/people/profile-picture-5.jpg" alt="" />
+							<span className="top-0 left-7 absolute  w-3.5 h-3.5 bg-green-400 border-2 border-white dark:border-gray-800 rounded-full">GS</span>
+						</div> */}
+					{/* <img src={Add} alt="" className="h-10 w-10 rounded-full" /> */}
+					{/* <span className="text-blue-500">Add an avatar</span> */}
+					{/* </label> */}
 					<button type="submit" className="bg-blue-500 hover:bg-blue-500/90 text-white rounded-md h-12">
 						Sign up
 					</button>

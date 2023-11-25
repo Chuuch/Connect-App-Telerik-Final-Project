@@ -3,6 +3,7 @@ import { ref, set } from 'firebase/database';
 import toast from 'react-hot-toast';
 import { auth } from '../config/firebase-config';
 import { db } from './../config/firebase-config';
+import { Status } from '../utils/status';
 
 export interface UserType {
     uid: string;
@@ -21,7 +22,7 @@ export const verifyUser = async (user: User) => {
     }
 }
 
-export const registerUser = async (username: string, email: string, password: string, phone: string) => {
+export const registerUser = async (firstName: string, lastName: string, username: string, email: string, password: string, phone: string) => {
     try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password)
         // Signed up
@@ -29,7 +30,7 @@ export const registerUser = async (username: string, email: string, password: st
         console.log(user)
         // Register user in database
         set(ref(db, `users/${user?.uid}`), {
-            uid: user?.uid, username, email, phone,
+            uid: user?.uid, firstName, lastName, username, email, phone, isLogged: false, status: Status.OFFLINE, avatar: '',
             createdOn: Date.now(),
         } as UserType & { createdOn: number });
         await verifyUser(user)
