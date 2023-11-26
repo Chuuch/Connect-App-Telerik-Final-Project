@@ -2,8 +2,8 @@ import { AuthError, User, createUserWithEmailAndPassword, sendEmailVerification,
 import { ref, set } from 'firebase/database';
 import toast from 'react-hot-toast';
 import { auth } from '../config/firebase-config';
-import { db } from './../config/firebase-config';
 import { Status } from '../utils/status';
+import { db } from './../config/firebase-config';
 import { updateUserIsLogged, updateUserStatus } from './users.services';
 
 export interface UserType {
@@ -72,10 +72,10 @@ export const loginUser = async (email: string, password: string) => {
 export const logoutUser = async () => {
     try {
         localStorage.removeItem('email')
-        await signOut(auth);
-
         await updateUserIsLogged(auth.currentUser?.uid as string, false)
         await updateUserStatus(auth.currentUser?.uid as string, Status.OFFLINE)
+
+        await signOut(auth);
 
         toast.success('Logout successful!')
         return true
