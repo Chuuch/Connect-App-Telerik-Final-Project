@@ -5,16 +5,16 @@ import Badge from '../Badge/Badge';
 
 const Avatar = ({ userID }: { userID?: string }) => {
 
-    const [userData, setUserData] = useState<UserDB>();
+    const [userData, setUserData] = useState<UserDB | null>(null);
 
     useEffect(() => {
         if (!userID) return;
         const fetchUser = async () => {
             try {
-                const res = await getUserByID(userID);
-                setUserData(res);
-                console.log("userID: ", res);
-                console.log("data: ", res);
+                const userByID = await getUserByID(userID);
+                setUserData(userByID);
+                console.log("userID: ", userByID);
+                console.log("data: ", userByID);
             } catch (error) {
                 console.log("An error occurred: " + error);
             }

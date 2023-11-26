@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { FC, useContext, useEffect } from 'react';
+import { FC, useContext } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -22,7 +22,6 @@ type Props = object;
 export const Login: FC<Props> = () => {
 	const navigate = useNavigate();
 	const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
-	const [user] = useAuthState(auth)
 	const { currentUserDB, setCurrentUserDB } = useContext(UserContext);
 
 	// useEffect(() => {
@@ -45,8 +44,8 @@ export const Login: FC<Props> = () => {
 				await updateUserIsLogged(currentUser?.uid, true)
 
 				getUserByID(currentUser?.uid).then((userDB) => {
-					console.log(userDB)
 					userDB && setCurrentUserDB?.(userDB)
+					console.log(currentUserDB)
 				})
 				navigate('/notifications')
 			} else if (data.user && !currentUser?.emailVerified) {
