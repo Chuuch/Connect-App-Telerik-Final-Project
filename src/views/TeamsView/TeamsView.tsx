@@ -9,7 +9,7 @@ export const TeamsView = () => {
         <Teams />
       </div>
     <div className="flex-grow flex-col w-[1440px]">
-      <div className="flex-grow border-l dark:border-gray-600 shadow-inner overflow-auto">
+      <div className="h-[859px] flex-grow border-l dark:border-gray-600 shadow-inner overflow-auto">
         <Messages msg={[]} />
       </div>
       <div>
