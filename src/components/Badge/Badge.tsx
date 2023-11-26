@@ -10,7 +10,7 @@ const Badge = ({ status }: { status?: `${Status}` }) => {
             }
             {status === Status.DO_NOT_DISTURB && <span className="top-0 left-7 absolute  w-3.5 h-3.5 bg-orange-400 border-2 border-white dark:border-gray-800 rounded-full" />
             }
-            {status === Status.OFFLINE && <span className="top-0 left-7 absolute  w-3.5 h-3.5 bg-blue-400 border-2 border-white dark:border-gray-800 rounded-full" />
+            {status === Status.OFFLINE && <span className="top-0 left-7 absolute  w-3.5 h-3.5 bg-gray-400 border-2 border-white dark:border-gray-800 rounded-full" />
             }
         </>
     )

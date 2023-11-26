@@ -1,4 +1,4 @@
-import { get, ref, update } from 'firebase/database';
+import { get, ref, set, update } from 'firebase/database';
 import { db, auth } from '../config/firebase-config';
 import { UserType } from './auth.services';
 import toast from 'react-hot-toast';
@@ -84,12 +84,16 @@ export const setUserFriend = async (username: string) => {
     try {
     const userId = await getUserByUsername(username);
     const currentFriendsRef = await get(ref(db, `users/${auth?.currentUser?.uid}/friends` ));
-    const currentFriends = currentFriendsRef.val();
-    if (userId && !currentFriends.hasOwnProperty(userId) && userId !== auth?.currentUser?.uid) {
+    let currentFriends = currentFriendsRef.val();
+    if (!Array.isArray(currentFriends)) {
+        currentFriends = [];
+      }
+    if (userId && !currentFriends.includes(userId) && userId !== auth?.currentUser?.uid) {
+        currentFriends.push(userId);
         await update(ref(db, `users/${auth?.currentUser?.uid}/friends/${userId}`), {
           isFriend: true,
         });
-        console.log(`Friend ${username} added successfully!`);
+        toast.success(`Friend ${username} added successfully!`);
 } else {
   console.log(`Friend ${username} is already in the list!`);
 }
