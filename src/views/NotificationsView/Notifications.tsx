@@ -54,7 +54,7 @@ export const NotificationsView = () => {
 
 	return (
 		<div className="bg-white dark:bg-black flex flex-grow items-start justify-start">
-			<div className="h-full shadow-xl">
+			<div className="h-full shadow-xl dark:bg-gray-900">
 				<Notifications
 					notification={notification}
 					userID={''}
@@ -64,7 +64,7 @@ export const NotificationsView = () => {
 				/>
 			</div>
 			<div className="flex flex-col w-full">
-				<div className=" border-l dark:border-gray-600 shadow-inner overflow-auto scrollbar-thin scrollbar-track-gray-200 scrollbar-thumb-blue-500 dark:scrollbar-thumb-purple-600 dark:scrollbar-track-gray-600">
+				<div className="h-[859px] border-l dark:border-gray-600 shadow-inner overflow-auto scrollbar-thin scrollbar-track-gray-200 scrollbar-thumb-blue-500 dark:scrollbar-thumb-purple-600 dark:scrollbar-track-gray-600">
 					<Messages msg={msg} />
 				</div>
 				<div>

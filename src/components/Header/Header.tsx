@@ -114,7 +114,7 @@ const handleSubmitUser = (e: { preventDefault: () => void;}) => {
           />
         </div>
         {showForm && (
-          <div className="absolute top-[50%] left-[50%] transform -translate-x-1/2 -translate-y-1/2 translate-y-4">
+          <div className="absolute top-[50%] left-[50%] transform -translate-x-1/2  translate-y-4">
             <div className="mt-4">
               <form className="flex flex-col space-y-4 justify-center items-center border bg-gray-100 dark:bg-gray-900 border-blue-500 dark:border-purple-500 rounded-md p-4">
                 <label htmlFor="teamName" className="text-lg font-semibold dark:text-gray-400">

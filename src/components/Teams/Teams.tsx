@@ -109,7 +109,7 @@ export const Teams: React.FC = () => {
         transition={{ duration: 1.2 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="flex flex-col pt-4 space-y-2">
+        className="flex flex-col pt-4 space-y-">
           {teams &&
             teams.map((team) => (
               <div
@@ -122,20 +122,22 @@ export const Teams: React.FC = () => {
                   <div className="channels-drawer">
                     {channels.map((channel) => (
                       <div>
-                      <button className="bg-blue-400 hover:bg-blue-500/90 dark:bg-blue-600 dark:hover:bg-purple-500 m-3 text-white p-2 rounded-md text-sm"
+                      <button className="bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 dark:hover:bg-purple-500 m-3 text-white p-2 rounded-md text-sm"
                       key={channel.id}>Channel: {channel.channelName}</button>
                       </div>
                     ))}
                     <p></p>
+                    <div className="flex justify-center">
                     <button
                       onClick={() => {
                         setShowForm(false);
                         setShowChannelForm(true);
                       }}
-                      className="bg-blue-500 hover:bg-blue-500/90 dark:bg-purple-600 dark:hover:bg-purple-500 m-3 text-white p-2 rounded-md text-sm"
+                      className="bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 dark:hover:bg-purple-500 m-3 text-white p-2 rounded-md text-sm"
                     >
                       New Channel
                     </button>
+                  </div>
                   </div>
                 )}
               </div>
