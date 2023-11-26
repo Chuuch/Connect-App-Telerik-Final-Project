@@ -21,6 +21,7 @@ import { PrivacyView } from './views/PrivacyView/PrivacyView';
 import { Register } from './views/Register/Register';
 import { TeamsView } from './views/TeamsView/TeamsView';
 import Authenticated from './hoc/Authentication';
+import { VideoCallView } from './components/VideoCall/VideoCallView';
 
 export interface UserDB {
 	firstName: string;
@@ -110,6 +111,7 @@ function App() {
 						<Route path="user" element={<Authenticated><UserView /></Authenticated>} />
 						<Route path="privacy" element={<Authenticated><PrivacyView /></Authenticated>} />
 						<Route path="search/:query" element={<Authenticated><Search /></Authenticated>} />
+						<Route path='videocall' element={<Authenticated><VideoCallView /></Authenticated>} />
 					</Route>
 				</Routes>
 			</UserContext.Provider >
