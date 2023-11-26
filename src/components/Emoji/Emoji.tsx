@@ -22,15 +22,16 @@ export const Emoji: React.FC<EmojiProps> = ({ onEmojiSelect }) => {
   };
 
   return (
-    <div className="relative inline-block">
+    <div className="relative flex flex-row items-center">
+      <div className="absolute right-10 bottom-10">
       {showPicker && (
         <Picker
           data={data}
           onSelect={handleEmojiSelect}
-          className=" right-0 z-10"
         />
       )}
-      <div className="relative">
+      </div>
+      <div className="">
         <MdOutlineEmojiEmotions
           size={25}
           className="fill-blue-500 hover:fill-blue-500/90 dark:fill-purple-600/90 dark:hover-fill-purple-600 mt-1 cursor-pointer"
