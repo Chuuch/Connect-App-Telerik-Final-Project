@@ -42,7 +42,7 @@ export const Notifications: React.FC<NotificationsProps> = ({
 					{notification.map((notif) => (
 						<li
 							key={notif.id}
-							className="flex flex-row space-x-1 items-center text-md hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer h-full w-full p-2"
+							className="flex flex-row space-x-1 items-center text-md hover:bg-gray-200 dark:hover:bg-gray-800 cursor-pointer h-full w-full p-2"
 						>
 							<PiUserCircleFill
 								size={50}

@@ -8,7 +8,7 @@ import { Messages } from "../../components/Messages/Messages"
 export const CallsView = () => {
   return (
     <div className="bg-white dark:bg-black flex flex-grow items-start justify-start">
-      <div className="h-full shadow-xl dark:bg-gray-900">
+      <div className="h-full shadow-xl bg-gray-100 dark:bg-gray-900">
         <Calls />
       </div>
     <div className="flex-grow flex-col w-[1440px]">
