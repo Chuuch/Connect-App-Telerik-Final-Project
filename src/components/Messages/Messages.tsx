@@ -43,7 +43,7 @@ export const Messages: React.FC<MessagesProps> = ({ msg }) => {
       {msg && msg.map((m: { id: Key | null | undefined; timestamp: number; author: string; content: string; userID: string; hasGif: boolean }) => (
         <div>
           {m.userID === auth?.currentUser?.uid ?
-            (<div className="chat chat-end ml-5" key={m.id}>
+            (<div className="chat chat-end mr-5" key={m.id}>
 
               {/* <div className="chat-image avatar"> */}
               {/* <div className="w-10 rounded-full">
