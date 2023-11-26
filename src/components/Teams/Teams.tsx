@@ -122,7 +122,8 @@ export const Teams: React.FC = () => {
                   <div className="channels-drawer">
                     {channels.map((channel) => (
                       <div>
-                      <button key={channel.id}>Channel: {channel.channelName}</button>
+                      <button className="bg-blue-400 hover:bg-blue-500/90 dark:bg-blue-600 dark:hover:bg-purple-500 m-3 text-white p-2 rounded-md text-sm"
+                      key={channel.id}>Channel: {channel.channelName}</button>
                       </div>
                     ))}
                     <p></p>

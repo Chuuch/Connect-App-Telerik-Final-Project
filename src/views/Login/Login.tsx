@@ -1,14 +1,17 @@
 import { motion } from "framer-motion";
-import { FC, useEffect } from 'react';
+import { FC, useContext, useEffect } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { HiKey, HiOutlineMail } from "react-icons/hi";
 import { useNavigate } from 'react-router';
 import { Link } from "react-router-dom";
 import { auth } from '../../config/firebase-config';
+import UserContext from '../../context/UserContext';
 import { loginUser } from '../../services/auth.services';
+import { getUserByID, updateUserIsLogged, updateUserStatus } from '../../services/users.services';
 import { emailPattern, passwordPattern } from '../../utils/regexPatterns';
-import { HiKey, HiOutlineMail } from "react-icons/hi";
+import { Status } from '../../utils/status';
 
 type FormData = {
 	email: string;
@@ -20,22 +23,32 @@ export const Login: FC<Props> = () => {
 	const navigate = useNavigate();
 	const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
 	const [user] = useAuthState(auth)
+	const { currentUserDB, setCurrentUserDB } = useContext(UserContext);
 
 	useEffect(() => {
 		if (user) {
-			navigate('/')
+			navigate('/notifications')
 		}
-	}, [navigate, user])
+		console.log(currentUserDB)
+	}, [currentUserDB, navigate, user])
 
 	const onSubmit: SubmitHandler<FormData> = async ({ email, password }: { email: string; password: string }) => {
 
 		try {
 			const data = await loginUser(email, password)
 			const currentUser = auth.currentUser;
-			console.log(currentUser)
+
 			if (data.user && currentUser?.emailVerified) {
 				toast.success('Login successful!')
-				// navigate('/')
+
+				await updateUserStatus(currentUser?.uid, Status.ONLINE)
+				await updateUserIsLogged(currentUser?.uid, true)
+
+				getUserByID(currentUser?.uid).then((userDB) => {
+					console.log(userDB)
+					userDB && setCurrentUserDB?.(userDB)
+				})
+				// navigate('/notifications')
 			} else if (data.user && !currentUser?.emailVerified) {
 				toast.error('Please verify your email first!')
 			} else {
@@ -58,38 +71,38 @@ export const Login: FC<Props> = () => {
 				</span>
 				<form onSubmit={handleSubmit(onSubmit)} action="" className="flex flex-col items-center text-lg">
 					<div className="flex flex-row items-center">
-						<HiOutlineMail className="mr-2 text-gray-500 mb-4"/>
-					
-					<input
-						type="email"
-						placeholder="Email"
-						className="p-1 mb-4 bg-white rounded-md text-blue-500 border focus:outline-blue-500"
-						{...register('email', {
-							required: 'Email is required',
-							pattern: {
-								value: emailPattern,
-								message: 'Invalid email',
+						<HiOutlineMail className="mr-2 text-gray-500 mb-4" />
+
+						<input
+							type="email"
+							placeholder="Email"
+							className="p-1 mb-4 bg-white rounded-md text-blue-500 border focus:outline-blue-500"
+							{...register('email', {
+								required: 'Email is required',
+								pattern: {
+									value: emailPattern,
+									message: 'Invalid email',
+								}
 							}
-						}
-						)}
-					/>
+							)}
+						/>
 					</div>
 					{errors.email && <span className="text-red-500">{errors.email.message}</span>}
 					<div className="flex flex-row items-center">
-						<HiKey className="mr-2 text-gray-500"/>
-					
-					<input
-						type="password"
-						placeholder="Password"
-						className="p-1 bg-white rounded-md text-blue-500 border focus:outline-blue-500"
-						{...register('password', {
-							required: 'Password is required',
-							pattern: {
-								value: passwordPattern,
-								message: 'Invalid password',
-							},
-						})}
-					/>
+						<HiKey className="mr-2 text-gray-500" />
+
+						<input
+							type="password"
+							placeholder="Password"
+							className="p-1 bg-white rounded-md text-blue-500 border focus:outline-blue-500"
+							{...register('password', {
+								required: 'Password is required',
+								pattern: {
+									value: passwordPattern,
+									message: 'Invalid password',
+								},
+							})}
+						/>
 					</div>
 					{errors.password && <span className="text-red-500">{errors.password.message}</span>}
 					<p className="text-sm text-gray-500 hover:text-blue-500 cursor-pointer hover:underline pb-4 mr-24 mt-2">
