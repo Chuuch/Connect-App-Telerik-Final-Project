@@ -80,14 +80,14 @@ export const MessageBox = () => {
 				</button>
 			</div>
 			{showGif && (
-				<div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
-					<div className="bg-gray-100 dark:bg-gray-800 p-5 rounded-md">
+				<div className="flex flex-col fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 items-center justify-center">
+					<div className="bg-gray-100 dark:bg-gray-800 p-5 rounded-md flex flex-col items-center">
 						<GiphySearch
 							API_SEARCH={API_SEARCH}
 							API_KEY={API_KEY}
 							onGifClick={handleGifClick}
 						/>
-						<button onClick={closeGif} className="dark:text-gray-300 p-2">
+						<button onClick={closeGif} className="dark:text-gray-300 p-2 w-20 mt-4 bg-blue-500 hover:bg-blue-600 dark:bg-purple-600 dark:hover:bg-purple-500 rounded-md">
 							Close
 						</button>
 					</div>
