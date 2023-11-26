@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { registerUser } from '../../services/auth.services';
 import { checkIfUserExist } from '../../services/users.services';
 import { emailPattern, namePattern, passwordPattern, phonePattern, usernamePattern } from '../../utils/regexPatterns';
+import { FaRegAddressCard } from 'react-icons/fa6'
 
 type RegisterFormData = {
 	firstName: string;
@@ -53,17 +54,18 @@ export const Register: FC = () => {
 				initial={{ y: -300, opacity: 0 }}
 				transition={{ duration: 1.5 }}
 				whileInView={{ opacity: 1, y: 0 }}
-				className="bg-gray-100 flex flex-col items-center justify-center space-y-2 w-[500px] h-[600px] shadow-lg rounded-lg">
+				className="bg-gray-100 flex flex-col items-center justify-center space-y-2 w-[500px]  shadow-lg rounded-lg p-10">
 				<span className="logo text-4xl text-blue-500 italic mb-6">
 					Register
 				</span>
-				<form onSubmit={handleSubmit(onSubmit)} action="" className="flex flex-col space-y-6 text-lg">
-					<div className="flex flex-row items-center justify-start">
-						<HiOutlineUser className="mr-2 text-gray-500" />
+				<form onSubmit={handleSubmit(onSubmit)} action="" className="flex flex-col space-y-6 text-lg h-full">
+					<div className="flex flex-col space-y-6 items-center justify-start">
+						<div className="flex flex-row items-center">
+						<FaRegAddressCard className="mr-2 text-gray-500"/>
 						<input
 							type="text"
 							placeholder="First Name"
-							className="p-1 bg-white text-blue-500 border border-t-0 border-l-0 border-r-0 border-b-blue-500 focus:border-none"
+							className="p-1 bg-white text-blue-500 border rounded-md focus:outline-blue-500"
 							title="First name must be between 3 and 35 symbols"
 							{...register('firstName', {
 								required: 'First name is required',
@@ -73,11 +75,14 @@ export const Register: FC = () => {
 								},
 							})}
 						/>
+						</div>
 						{errors.firstName && <span className="text-red-500">{errors.firstName?.message}</span>}
+						<div className="flex flex-row items-center">
+						<FaRegAddressCard className="mr-2 text-gray-500"/>
 						<input
 							type="text"
 							placeholder="Last Name"
-							className="p-1 bg-white text-blue-500 border border-t-0 border-l-0 border-r-0 border-b-blue-500 focus:border-none"
+							className="p-1 bg-white text-blue-500 border rounded-md focus:outline-blue-500"
 							title="Last name must be between 3 and 35 symbols"
 							{...register('lastName', {
 								required: 'Last name is required',
@@ -87,7 +92,10 @@ export const Register: FC = () => {
 								},
 							})}
 						/>
+						</div>
 						{errors.lastName && <span className="text-red-500">{errors.lastName?.message}</span>}
+						<div className="flex flex-row items-center">
+						<HiOutlineUser className="mr-2 text-gray-500" />
 						<input
 							type="text"
 							placeholder="Username"
@@ -101,6 +109,7 @@ export const Register: FC = () => {
 								},
 							})}
 						/>
+						</div>
 					</div>
 					{errors.username && <span className="text-red-500">{errors.username?.message}</span>}
 					<div className="flex items-center">
