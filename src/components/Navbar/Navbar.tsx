@@ -19,27 +19,27 @@ export const Navbar = () => {
 							{/* Navbar menu content here */}
 							<li>
 								<NavLink to='/notifications'>
-									<IoNotifications className="fill-blue-500 dark:fill-purple-600" size={30} />
+									<IoNotifications className="fill-blue-500 dark:fill-purple-600" size={28} />
 								</NavLink>
 							</li>
 							<li>
 								<NavLink to='/teams'>
-									<RiTeamFill className="fill-blue-500 dark:fill-purple-600" size={30} />
+									<RiTeamFill className="fill-blue-500 dark:fill-purple-600" size={28} />
 								</NavLink>
 							</li>
 							<li>
 								<NavLink to='/messages'>
-									<BsChatTextFill className="fill-blue-500 dark:fill-purple-600" size={30} />
+									<BsChatTextFill className="fill-blue-500 dark:fill-purple-600" size={28} />
 								</NavLink>
 							</li>
 							<li>
 								<NavLink to='/calls'>
-									<IoCall className="fill-blue-500 dark:fill-purple-600" size={30} />
+									<IoCall className="fill-blue-500 dark:fill-purple-600" size={28} />
 								</NavLink>
 							</li>
 							<li>
 								<NavLink to='/calendar'>
-									<IoCalendar className="fill-blue-500 dark:fill-purple-600" size={30} />
+									<IoCalendar className="fill-blue-500 dark:fill-purple-600" size={28} />
 								</NavLink>
 							</li>
 							<li>

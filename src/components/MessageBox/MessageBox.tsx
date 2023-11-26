@@ -39,7 +39,7 @@ export const MessageBox = () => {
 	};
 
 	return (
-		<div className="relative flex flex-grow h-32 border-t border-l bg-gray-100 text-gray-700 dark:bg-gray-900 dark:border-gray-600 items-center space-x-2 w-full">
+		<div className="relative flex flex-grow h-24 border-t border-l bg-gray-100 text-gray-700 dark:bg-gray-900 dark:border-gray-600 items-center space-x-2 w-full">
 			<div className="flex flex-grow items-center w-full ml-5 mr-2 space-x-2">
 				<input
 					type="text"
@@ -52,7 +52,7 @@ export const MessageBox = () => {
 						}
 					}}
 					required
-					className="text-lg p-5 h-12 rounded-full w-full mr-5 bg-transparent border bg-white focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:focus:border-purple-600 dark:text-gray-300 flex-grow outline-none focus:outline-none"
+					className="text-base p-5 h-10 rounded-full w-full mr-5 bg-transparent border bg-white focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:focus:border-purple-600 dark:text-gray-300 flex-grow outline-none focus:outline-none"
 				/>
         <div className="relative flex flex-row">
 				<Emoji onEmojiSelect={setEmoji} />
@@ -73,7 +73,7 @@ export const MessageBox = () => {
 			</div>
 			<div className="flex flex-row pr-5">
 				<button
-					className="p-2 w-24 h-10 rounded-md bg-blue-600 hover:bg-blue-500 dark:bg-purple-600/90 dark:hover:bg-purple-600 text-white"
+					className="p-1 w-20 h-10 text-sm rounded-md bg-blue-600 hover:bg-blue-500 dark:bg-purple-600/90 dark:hover:bg-purple-600 text-white"
 					onClick={handleSubmit}
 				>
 					Send

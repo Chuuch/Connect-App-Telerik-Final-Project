@@ -39,11 +39,11 @@ export const Messages: React.FC<MessagesProps> = ({ msg }) => {
     msgRefContainer.current?.scrollIntoView({ behavior: 'smooth' });
   }, [msg]);
   return (
-    <div className="pt-5 h-[824px]">
+    <div className="pt-5 h-[766px]">
       {msg && msg.map((m: { id: Key | null | undefined; timestamp: number; author: string; content: string; userID: string; hasGif: boolean }) => (
         <div>
           {m.userID === auth?.currentUser?.uid ?
-            (<div className="chat chat-end mr-5" key={m.id}>
+            (<div className="chat chat-end mr-5 text-sm" key={m.id}>
 
               {/* <div className="chat-image avatar"> */}
               {/* <div className="w-10 rounded-full">
@@ -67,12 +67,12 @@ export const Messages: React.FC<MessagesProps> = ({ msg }) => {
                 {m.hasGif ? (<img src={m.content}></img>)
                   : (<div className="chat-bubble bg-blue-500 dark:bg-purple-600 text-white">{m.content}</div>)
                 }</div>
-              <div className="chat-footer opacity-50 dark:text-gray-100">
+              <div className="chat-footer opacity-50 text-xs pt-2 dark:text-gray-100">
                 Delivered
               </div>
             </div>
             ) : (
-              <div className="chat chat-start ml-5" key={m.id}>
+              <div className="chat chat-start ml-5 text-sm" key={m.id}>
                 <Avatar userID={m.userID} />
                 {/* <div className="chat-image avatar">
                   <div className="w-10 rounded-full">
@@ -95,7 +95,7 @@ export const Messages: React.FC<MessagesProps> = ({ msg }) => {
                   {m.hasGif ? (<img src={m.content}></img>)
                     : (<div className="chat-bubble bg-blue-500 dark:bg-purple-600 text-white">{m.content}</div>)
                   }</div>
-                <div className="chat-footer opacity-50 dark:text-gray-100">
+                <div className="chat-footer opacity-50 text-xs pt-2 dark:text-gray-100">
                   Delivered
                 </div>
               </div>

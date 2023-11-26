@@ -12,9 +12,6 @@ export const Home = () => {
 				<Navbar />
 				<Outlet />
 			</div>
-			<div className='flex-grow'>
-				
-			</div>
 		</div>
 	);
 };
