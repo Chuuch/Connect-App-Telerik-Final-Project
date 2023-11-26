@@ -54,7 +54,7 @@ export const NotificationsView = () => {
 
 	return (
 		<div className="bg-white dark:bg-black flex flex-grow items-start justify-start">
-			<div className="h-full shadow-xl">
+			<div className="h-full shadow-xl dark:bg-gray-900">
 				<Notifications
 					notification={notification}
 					userID={''}

@@ -73,7 +73,7 @@ export const MessageBox = () => {
 			</div>
 			<div className="flex flex-row pr-5">
 				<button
-					className="p-2 w-24 h-10 rounded-md bg-blue-500 hover:bg-blue-600 dark:bg-purple-600/90 dark:hover:bg-purple-600 text-white"
+					className="p-2 w-24 h-10 rounded-md bg-blue-600 hover:bg-blue-500 dark:bg-purple-600/90 dark:hover:bg-purple-600 text-white"
 					onClick={handleSubmit}
 				>
 					Send
