@@ -148,20 +148,21 @@ export const UserProfile = () => {
 			transition={{ duration: 1.2 }}
 			whileInView={{ opacity: 1, y: 0 }}
 			viewport={{ once: true }}
-			className="flex-col justify-center items-center bg-white dark:bg-gray-800 rounded-lg"
+			className="flex flex-col justify-center items-center bg-white dark:bg-gray-800 rounded-lg"
 		>
-			<div className="flex flex-col justify-center items-center rounded-lg dark:rounded-lg bg-gray-100 dark:bg-gray-900 shadow-lg p-10 w-[500px] cursor-pointer overflow-hidden">
-				<div className="flex-col justify-center">
+			<div className="flex flex-col justify-center items-start rounded-lg dark:rounded-lg bg-gray-100 dark:bg-gray-900 shadow-lg space-y-4 p-10 w-full h-full cursor-pointer overflow-hidden">
+				<div className="flex flex-col items-start ml-10">
+				<div className="flex flex-col justify-start items-start ">
 					<img
 						src={previewImage ?? avatar}
 						alt="User Avatar"
-						className="w-32 h-32 rounded-full mx-auto"
+						className="w-32 h-32 rounded-full text-blue-500 dark:text-purple-500"
 					/>
 					<input
 						type="file"
 						accept="image/*"
 						id="avatar-upload"
-						className="block mx-auto"
+						className="flex  text-blue-500 dark:text-purple-500 mt-4"
 						onChange={onChangeAvatar}
 					/>
 					{/* <HiUserCircle className="w-32 h-32 rounded-full fill-gray-400" /> */}
@@ -174,19 +175,17 @@ export const UserProfile = () => {
 						Save Avatar
 					</button>
 				</div> */}
-
-				<div className="flex justify-center mt-2">
 					<button
 						onClick={() => handleSaveAvatar()}
-						className="bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 dark:hover:bg-purple-500 text-white w-72 py-2 rounded-md">
+						className="bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 dark:hover:bg-purple-500 text-white w-52 py-2 mt-4 rounded-md">
 						Save Avatar
-					</button>
+					</button>				
 				</div>
-
+				<div className="flex flex-row space-x-10">
 				<form onSubmit={handleSubmit1(onChangeProfile)} >
 					<div className="flex flex-col space-y-4">
 						<div className="flex flex-col">
-							<label htmlFor="username" className="text-gray-500" >
+							<label htmlFor="username" className="text-gray-500 pt-4" >
 								Username
 							</label>
 							<div className="flex items-center">
@@ -247,10 +246,11 @@ export const UserProfile = () => {
 						</div>
 					</div>
 				</form>
-
+				
 				<form onSubmit={handleSubmit2(onChangePassword)} >
+					<div className="space-y-4">
 					<div className="flex flex-col">
-						<label htmlFor="currentPassword" className="text-gray-500">
+						<label htmlFor="currentPassword" className="text-gray-500 pt-4">
 							Current Password
 						</label>
 						<div className="flex items-center">
@@ -293,7 +293,7 @@ export const UserProfile = () => {
 						</div>
 						{errors2.newPassword && <span className="text-red-500">{errors2.newPassword?.message}</span>}
 					</div>
-					<div className="flex flex-col">
+					<div className="flex flex-col pb-2">
 						<label htmlFor="password" className="text-gray-500">
 							Confirm New Password
 						</label>
@@ -315,6 +315,7 @@ export const UserProfile = () => {
 						</div>
 						{errors2.confirmNewPassword && <span className="text-red-500">{errors2.confirmNewPassword?.message}</span>}
 					</div>
+					</div>
 					<div className="flex justify-center my-2">
 						<button
 							className="bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 dark:hover:bg-purple-500 text-white w-72 py-2 rounded-md" >
@@ -322,6 +323,7 @@ export const UserProfile = () => {
 						</button>
 					</div>
 				</form>
+				</div>
 			</div>
 		</motion.div >
 	);
