@@ -28,7 +28,7 @@ interface PasswordFormData {
 }
 
 export const UserProfile = () => {
-	const { currentUserDB } = useContext(UserContext);
+	const { currentUserDB, setCurrentUserDB } = useContext(UserContext);
 	const [user] = useAuthState(auth);
 	const { register: register1, handleSubmit: handleSubmit1, formState: { errors: errors1 } } = useForm<UserProfileFormData>();
 	const { register: register2, handleSubmit: handleSubmit2, formState: { errors: errors2 } } = useForm<PasswordFormData>();
@@ -125,6 +125,7 @@ export const UserProfile = () => {
 		if (selectedFile) {
 			setUploadImage(selectedFile);
 			setPreviewImage(URL?.createObjectURL(selectedFile));
+			setCurrentUserDB?.((prev) => ({ ...prev, avatar: URL?.createObjectURL(selectedFile) }));
 			// setErrorMessage(null);
 		} else {
 			setUploadImage(null);
@@ -152,23 +153,24 @@ export const UserProfile = () => {
 		>
 			<div className="flex flex-col justify-center items-start rounded-lg dark:rounded-lg bg-gray-100 dark:bg-gray-900 shadow-lg space-y-4 p-10 w-full h-full cursor-pointer overflow-hidden">
 				<div className="flex flex-col items-start ml-10">
-				<div className="flex flex-col justify-start items-start ">
-					<img
-						src={previewImage ?? avatar}
-						alt="User Avatar"
-						className="w-32 h-32 rounded-full text-blue-500 dark:text-purple-500"
-					/>
-					<input
-						type="file"
-						accept="image/*"
-						id="avatar-upload"
-						className="flex  text-blue-500 dark:text-purple-500 mt-4"
-						onChange={onChangeAvatar}
-					/>
-					{/* <HiUserCircle className="w-32 h-32 rounded-full fill-gray-400" /> */}
-				</div>
+					<div className="flex flex-col justify-start items-start ">
+						{previewImage || avatar ? <img
+							src={previewImage ?? avatar}
+							alt="User Avatar"
+							className="w-32 h-32 rounded-full text-blue-500 dark:text-purple-500"
+						/> : <HiOutlineUser className="w-32 h-32 rounded-full text-blue-500 dark:text-purple-500" />}
 
-				{/* <div className="flex justify-center">
+						<input
+							type="file"
+							accept="image/*"
+							id="avatar-upload"
+							className="flex  text-blue-500 dark:text-purple-500 mt-4"
+							onChange={onChangeAvatar}
+						/>
+						{/* <HiUserCircle className="w-32 h-32 rounded-full fill-gray-400" /> */}
+					</div>
+
+					{/* <div className="flex justify-center">
 					<button className="text-blue-500 hover:underline dark:text-purple-600"
 						onClick={() => handleSaveAvatar()}>
 						<HiPencilAlt className="inline-block mr-2" />
@@ -179,150 +181,150 @@ export const UserProfile = () => {
 						onClick={() => handleSaveAvatar()}
 						className="bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 dark:hover:bg-purple-500 text-white w-52 py-2 mt-4 rounded-md">
 						Save Avatar
-					</button>				
+					</button>
 				</div>
 				<div className="flex flex-row space-x-10">
-				<form onSubmit={handleSubmit1(onChangeProfile)} >
-					<div className="flex flex-col space-y-4">
-						<div className="flex flex-col">
-							<label htmlFor="username" className="text-gray-500 pt-4" >
-								Username
-							</label>
-							<div className="flex items-center">
-								<HiOutlineUser className="mr-2 text-gray-500" />
-								<input
-									type="text"
-									id="username"
-									className="border dark:border-gray-700 p-2 rounded-md focus:outline-none focus:border-blue-500 dark:focus:border-purple-600 dark:bg-slate-800 dark:text-gray-200"
-									placeholder={currentUserDB?.username}
-									disabled
-								/>
+					<form onSubmit={handleSubmit1(onChangeProfile)} >
+						<div className="flex flex-col space-y-4">
+							<div className="flex flex-col">
+								<label htmlFor="username" className="text-gray-500 pt-4" >
+									Username
+								</label>
+								<div className="flex items-center">
+									<HiOutlineUser className="mr-2 text-gray-500" />
+									<input
+										type="text"
+										id="username"
+										className="border dark:border-gray-700 p-2 rounded-md focus:outline-none focus:border-blue-500 dark:focus:border-purple-600 dark:bg-slate-800 dark:text-gray-200"
+										placeholder={currentUserDB?.username}
+										disabled
+									/>
+								</div>
+							</div>
+
+							<div className="flex flex-col">
+								<label htmlFor="email" className="text-gray-500">
+									Email
+								</label>
+								<div className="flex items-center">
+									<HiOutlineMail className="mr-2 text-gray-500" />
+									<input
+										type="email"
+										id="email"
+										className="border dark:border-gray-700 p-2 rounded-md focus:outline-none focus:border-blue-500 dark:focus:border-purple-600 dark:bg-slate-800 dark:text-gray-200"
+										placeholder={currentUserDB?.email}
+										disabled
+									/>
+								</div>
+							</div>
+
+							<div className="flex flex-col">
+								<label htmlFor="phone" className="text-gray-500">
+									Phone
+								</label>
+								<div className="flex items-center">
+									<HiOutlinePhone className="mr-2 text-gray-500" />
+									<input
+										type="tel"
+										id="phone"
+										className="border dark:border-gray-700 p-2 rounded-md focus:outline-none focus:border-blue-500 dark:focus:border-purple-600 dark:bg-slate-800 dark:text-gray-200"
+										placeholder="Your Phone Number"
+										{...register1('phone', {
+											value: currentUserDB?.phone,
+											required: 'Phone is required',
+											pattern: {
+												value: phonePattern,
+												message: 'Invalid phone',
+											},
+										})}
+									/>
+								</div>
+								{errors1.phone && <span className="text-red-500">{errors1.phone?.message}</span>}
+							</div>
+							<div className="flex justify-center my-2">
+								<button className="bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 dark:hover:bg-purple-500 text-white w-72 py-2 rounded-md">
+									Save Profile
+								</button>
 							</div>
 						</div>
+					</form>
 
-						<div className="flex flex-col">
-							<label htmlFor="email" className="text-gray-500">
-								Email
-							</label>
-							<div className="flex items-center">
-								<HiOutlineMail className="mr-2 text-gray-500" />
-								<input
-									type="email"
-									id="email"
-									className="border dark:border-gray-700 p-2 rounded-md focus:outline-none focus:border-blue-500 dark:focus:border-purple-600 dark:bg-slate-800 dark:text-gray-200"
-									placeholder={currentUserDB?.email}
-									disabled
-								/>
+					<form onSubmit={handleSubmit2(onChangePassword)} >
+						<div className="space-y-4">
+							<div className="flex flex-col">
+								<label htmlFor="currentPassword" className="text-gray-500 pt-4">
+									Current Password
+								</label>
+								<div className="flex items-center">
+									<HiKey className="mr-2 text-gray-500" />
+									<input
+										type="password"
+										id="currentPassword"
+										className="border dark:border-gray-700 p-2 rounded-md focus:outline-none focus:border-blue-500 dark:focus:border-purple-600 dark:bg-slate-800 dark:text-gray-200"
+										placeholder="Current Password"
+										{...register2('currentPassword', {
+											required: 'Current Password is required',
+											pattern: {
+												value: passwordPattern,
+												message: 'Invalid current password',
+											},
+										})}
+									/>
+								</div>
+								{errors2.currentPassword && <span className="text-red-500">{errors2.currentPassword?.message}</span>}
 							</div>
-						</div>
-
-						<div className="flex flex-col">
-							<label htmlFor="phone" className="text-gray-500">
-								Phone
-							</label>
-							<div className="flex items-center">
-								<HiOutlinePhone className="mr-2 text-gray-500" />
-								<input
-									type="tel"
-									id="phone"
-									className="border dark:border-gray-700 p-2 rounded-md focus:outline-none focus:border-blue-500 dark:focus:border-purple-600 dark:bg-slate-800 dark:text-gray-200"
-									placeholder="Your Phone Number"
-									{...register1('phone', {
-										value: currentUserDB?.phone,
-										required: 'Phone is required',
-										pattern: {
-											value: phonePattern,
-											message: 'Invalid phone',
-										},
-									})}
-								/>
+							<div className="flex flex-col">
+								<label htmlFor="password" className="text-gray-500">
+									New Password
+								</label>
+								<div className="flex items-center">
+									<HiKey className="mr-2 text-gray-500" />
+									<input
+										type="password"
+										id="newPassword"
+										className="border dark:border-gray-700 p-2 rounded-md focus:outline-none focus:border-blue-500 dark:focus:border-purple-600 dark:bg-slate-800 dark:text-gray-200"
+										placeholder="New Password"
+										{...register2('newPassword', {
+											required: 'New Password is required',
+											pattern: {
+												value: passwordPattern,
+												message: 'Invalid new password',
+											},
+										})}
+									/>
+								</div>
+								{errors2.newPassword && <span className="text-red-500">{errors2.newPassword?.message}</span>}
 							</div>
-							{errors1.phone && <span className="text-red-500">{errors1.phone?.message}</span>}
+							<div className="flex flex-col pb-2">
+								<label htmlFor="password" className="text-gray-500">
+									Confirm New Password
+								</label>
+								<div className="flex items-center">
+									<HiKey className="mr-2 text-gray-500" />
+									<input
+										type="password"
+										id="confirmNewPassword"
+										className="border dark:border-gray-700 p-2 rounded-md focus:outline-none focus:border-blue-500 dark:focus:border-purple-600 dark:bg-slate-800 dark:text-gray-200"
+										placeholder="Confirm New Password"
+										{...register2('confirmNewPassword', {
+											required: 'Confirm New Password is required',
+											pattern: {
+												value: passwordPattern,
+												message: 'Invalid confirm new password',
+											},
+										})}
+									/>
+								</div>
+								{errors2.confirmNewPassword && <span className="text-red-500">{errors2.confirmNewPassword?.message}</span>}
+							</div>
 						</div>
 						<div className="flex justify-center my-2">
-							<button className="bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 dark:hover:bg-purple-500 text-white w-72 py-2 rounded-md">
-								Save Profile
+							<button
+								className="bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 dark:hover:bg-purple-500 text-white w-72 py-2 rounded-md" >
+								Save New Password
 							</button>
 						</div>
-					</div>
-				</form>
-				
-				<form onSubmit={handleSubmit2(onChangePassword)} >
-					<div className="space-y-4">
-					<div className="flex flex-col">
-						<label htmlFor="currentPassword" className="text-gray-500 pt-4">
-							Current Password
-						</label>
-						<div className="flex items-center">
-							<HiKey className="mr-2 text-gray-500" />
-							<input
-								type="password"
-								id="currentPassword"
-								className="border dark:border-gray-700 p-2 rounded-md focus:outline-none focus:border-blue-500 dark:focus:border-purple-600 dark:bg-slate-800 dark:text-gray-200"
-								placeholder="Current Password"
-								{...register2('currentPassword', {
-									required: 'Current Password is required',
-									pattern: {
-										value: passwordPattern,
-										message: 'Invalid current password',
-									},
-								})}
-							/>
-						</div>
-						{errors2.currentPassword && <span className="text-red-500">{errors2.currentPassword?.message}</span>}
-					</div>
-					<div className="flex flex-col">
-						<label htmlFor="password" className="text-gray-500">
-							New Password
-						</label>
-						<div className="flex items-center">
-							<HiKey className="mr-2 text-gray-500" />
-							<input
-								type="password"
-								id="newPassword"
-								className="border dark:border-gray-700 p-2 rounded-md focus:outline-none focus:border-blue-500 dark:focus:border-purple-600 dark:bg-slate-800 dark:text-gray-200"
-								placeholder="New Password"
-								{...register2('newPassword', {
-									required: 'New Password is required',
-									pattern: {
-										value: passwordPattern,
-										message: 'Invalid new password',
-									},
-								})}
-							/>
-						</div>
-						{errors2.newPassword && <span className="text-red-500">{errors2.newPassword?.message}</span>}
-					</div>
-					<div className="flex flex-col pb-2">
-						<label htmlFor="password" className="text-gray-500">
-							Confirm New Password
-						</label>
-						<div className="flex items-center">
-							<HiKey className="mr-2 text-gray-500" />
-							<input
-								type="password"
-								id="confirmNewPassword"
-								className="border dark:border-gray-700 p-2 rounded-md focus:outline-none focus:border-blue-500 dark:focus:border-purple-600 dark:bg-slate-800 dark:text-gray-200"
-								placeholder="Confirm New Password"
-								{...register2('confirmNewPassword', {
-									required: 'Confirm New Password is required',
-									pattern: {
-										value: passwordPattern,
-										message: 'Invalid confirm new password',
-									},
-								})}
-							/>
-						</div>
-						{errors2.confirmNewPassword && <span className="text-red-500">{errors2.confirmNewPassword?.message}</span>}
-					</div>
-					</div>
-					<div className="flex justify-center my-2">
-						<button
-							className="bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 dark:hover:bg-purple-500 text-white w-72 py-2 rounded-md" >
-							Save New Password
-						</button>
-					</div>
-				</form>
+					</form>
 				</div>
 			</div>
 		</motion.div >

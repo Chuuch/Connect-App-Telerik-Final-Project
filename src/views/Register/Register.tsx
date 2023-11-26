@@ -3,8 +3,8 @@ import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 // import { MdOutlineAddPhotoAlternate } from 'react-icons/md';
-import { HiKey, HiOutlineMail, HiOutlineUser, HiPhone } from "react-icons/hi";
-import { Link } from "react-router-dom";
+import { HiKey, HiOutlineIdentification, HiOutlineMail, HiOutlineUser, HiPhone } from "react-icons/hi";
+import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from '../../services/auth.services';
 import { checkIfUserExist } from '../../services/users.services';
 import { emailPattern, namePattern, passwordPattern, phonePattern, usernamePattern } from '../../utils/regexPatterns';
@@ -21,7 +21,8 @@ type RegisterFormData = {
 };
 
 export const Register: FC = () => {
-	const { register, handleSubmit, formState: { errors }, setError } = useForm<RegisterFormData>();
+	const navigate = useNavigate();
+	const { register, handleSubmit, formState: { errors }, setError, reset } = useForm<RegisterFormData>();
 
 	const onSubmit = async ({ firstName, lastName, username, email, password, phone }: RegisterFormData) => {
 		const isUserExist = await checkIfUserExist(username)
@@ -36,7 +37,10 @@ export const Register: FC = () => {
 		const data = await registerUser(firstName, lastName, username, email, password, phone)
 
 		if (data?.user) {
-			toast.success('Registration successful! Please, verify your account via sent email!')
+			// toast.success('Registration successful! Please, verify your account via sent email!')
+			alert('Registration successful! Please, verify your account via sent email!')
+			navigate('/login')
+			reset()
 		} else if (data?.error) {
 			if (data?.error.includes('Email')) {
 				setError('email', {
@@ -58,14 +62,14 @@ export const Register: FC = () => {
 				<span className="logo text-4xl text-blue-500 italic mb-6">
 					Register
 				</span>
-				<form onSubmit={handleSubmit(onSubmit)} action="" className="flex flex-col space-y-6 text-lg h-full">
-					<div className="flex flex-col space-y-6 items-center justify-start">
-						<div className="flex flex-row items-center">
-						<FaRegAddressCard className="mr-2 text-gray-500"/>
+				<form onSubmit={handleSubmit(onSubmit)} action="" className="flex flex-col space-y-6 text-lg">
+					<div className="flex items-center">
+						{/* <div className="flex flex-row items-center justify-start"> */}
+						<HiOutlineIdentification className="mr-2 text-gray-500" />
 						<input
 							type="text"
 							placeholder="First Name"
-							className="p-1 bg-white text-blue-500 border rounded-md focus:outline-blue-500"
+							className="p-1 bg-white text-blue-500 border rounded-mdfocus:border-none"
 							title="First name must be between 3 and 35 symbols"
 							{...register('firstName', {
 								required: 'First name is required',
@@ -75,14 +79,14 @@ export const Register: FC = () => {
 								},
 							})}
 						/>
-						</div>
-						{errors.firstName && <span className="text-red-500">{errors.firstName?.message}</span>}
-						<div className="flex flex-row items-center">
-						<FaRegAddressCard className="mr-2 text-gray-500"/>
+					</div>
+					{errors.firstName && <span className="text-red-500">{errors.firstName?.message}</span>}
+					<div className="flex items-center">
+						<HiOutlineIdentification className="mr-2 text-gray-500" />
 						<input
 							type="text"
 							placeholder="Last Name"
-							className="p-1 bg-white text-blue-500 border rounded-md focus:outline-blue-500"
+							className="p-1 bg-white text-blue-500 border  rounded-mdfocus:border-none"
 							title="Last name must be between 3 and 35 symbols"
 							{...register('lastName', {
 								required: 'Last name is required',
@@ -92,9 +96,9 @@ export const Register: FC = () => {
 								},
 							})}
 						/>
-						</div>
-						{errors.lastName && <span className="text-red-500">{errors.lastName?.message}</span>}
-						<div className="flex flex-row items-center">
+					</div>
+					{errors.lastName && <span className="text-red-500">{errors.lastName?.message}</span>}
+					<div className="flex items-center">
 						<HiOutlineUser className="mr-2 text-gray-500" />
 						<input
 							type="text"
@@ -109,10 +113,9 @@ export const Register: FC = () => {
 								},
 							})}
 						/>
-						</div>
 					</div>
 					{errors.username && <span className="text-red-500">{errors.username?.message}</span>}
-					<div className="flex items-center">
+					< div className="flex items-center" >
 						<HiOutlineMail className="mr-2 text-gray-500" />
 						<input
 							type="email"
@@ -126,9 +129,9 @@ export const Register: FC = () => {
 								},
 							})}
 						/>
-					</div>
+					</div >
 					{errors.email && <span className="text-red-500">{errors.email?.message}</span>}
-					<div className="flex items-center">
+					< div className="flex items-center" >
 						<HiKey className="mr-2 text-gray-500" />
 						<input
 							type="password"
@@ -142,9 +145,9 @@ export const Register: FC = () => {
 								},
 							})}
 						/>
-					</div>
+					</div >
 					{errors.password && <span className="text-red-500 pt-1">{errors.password?.message}</span>}
-					<div className="flex items-center">
+					< div className="flex items-center" >
 						<HiPhone className='mr-2 text-gray-500' />
 						<input
 							type="phone"
@@ -158,7 +161,7 @@ export const Register: FC = () => {
 								},
 							})}
 						/>
-					</div>
+					</div >
 					{errors.phone && <span className="text-red-500">{errors.phone?.message}</span>}
 					{/* <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
 						<span className="font-medium text-gray-600 dark:text-gray-100">JL</span>
@@ -183,8 +186,8 @@ export const Register: FC = () => {
 					<div className="flex flex-row items-center justify-center">
 						<img src='connect2.png' alt='connect_logo' className="h-10 w-10" />
 					</div>
-				</form>
-			</motion.div>
-		</div>
+				</form >
+			</motion.div >
+		</div >
 	);
 };

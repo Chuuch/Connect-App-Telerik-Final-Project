@@ -19,7 +19,7 @@ const Authenticated: React.FC<AuthenticatedProps> = ({ children }) => {
     return <div>{toast.error('Something went wrong!')}</div>;
   }
 
-  if (user) {
+  if (user && user.emailVerified) {
     return children;
   } else {
     return <Navigate to="/login" state={{ from: location }} />;

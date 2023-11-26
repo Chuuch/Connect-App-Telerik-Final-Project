@@ -22,12 +22,12 @@ import { Register } from './views/Register/Register';
 import { TeamsView } from './views/TeamsView/TeamsView';
 import Authenticated from './hoc/Authentication';
 
-export interface CurrentUserDB {
+export interface UserDB {
 	firstName: string;
 	lastName: string;
 	username: string;
 	email: string;
-	avatarUrl: string;
+	avatar: string;
 	status: `${Status}`;
 	phone: string;
 	uid: string;
@@ -36,7 +36,7 @@ export interface CurrentUserDB {
 
 function App() {
 	const [user, loading, error] = useAuthState(auth)
-	const [currentUserDB, setCurrentUserDB] = useState<CurrentUserDB & object>({});
+	const [currentUserDB, setCurrentUserDB] = useState<UserDB & object>({});
 
 	useEffect(() => {
 		const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -48,12 +48,12 @@ function App() {
 					setCurrentUserDB((prev) => {
 						return {
 							...prev,
-							uid: userData.uid,
+							uid: userData?.uid,
 							firstName: userData?.firstName || '', // TODO: because of old data
 							lastName: userData?.lastName || '', // TODO: because of old data
 							username: userData?.username,
-							email: userData.email,
-							avatarUrl: userData?.avatarUrl || '',
+							email: userData?.email,
+							avatar: userData?.avatar || '',
 							status: userData?.status || Status.OFFLINE,
 							phone: userData?.phone || '',
 							isLogged: true,

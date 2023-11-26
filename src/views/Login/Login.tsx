@@ -25,12 +25,12 @@ export const Login: FC<Props> = () => {
 	const [user] = useAuthState(auth)
 	const { currentUserDB, setCurrentUserDB } = useContext(UserContext);
 
-	useEffect(() => {
-		if (user) {
-			navigate('/notifications')
-		}
-		console.log(currentUserDB)
-	}, [currentUserDB, navigate, user])
+	// useEffect(() => {
+	// 	if (user && user.emailVerified) {
+	// 		navigate('/notifications')
+	// 	}
+	// 	console.log(currentUserDB)
+	// }, [currentUserDB, navigate, user])
 
 	const onSubmit: SubmitHandler<FormData> = async ({ email, password }: { email: string; password: string }) => {
 
@@ -48,7 +48,7 @@ export const Login: FC<Props> = () => {
 					console.log(userDB)
 					userDB && setCurrentUserDB?.(userDB)
 				})
-				// navigate('/notifications')
+				navigate('/notifications')
 			} else if (data.user && !currentUser?.emailVerified) {
 				toast.error('Please verify your email first!')
 			} else {

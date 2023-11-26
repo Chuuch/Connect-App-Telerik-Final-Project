@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 import { auth } from '../config/firebase-config';
 import { db } from './../config/firebase-config';
 import { Status } from '../utils/status';
+import { updateUserIsLogged, updateUserStatus } from './users.services';
 
 export interface UserType {
     uid: string;
@@ -27,7 +28,6 @@ export const registerUser = async (firstName: string, lastName: string, username
         const userCredential = await createUserWithEmailAndPassword(auth, email, password)
         // Signed up
         const user = userCredential.user;
-        console.log(user)
         // Register user in database
         set(ref(db, `users/${user?.uid}`), {
             uid: user?.uid, firstName, lastName, username, email, phone, isLogged: false, status: Status.OFFLINE, avatar: '',
@@ -73,6 +73,10 @@ export const logoutUser = async () => {
     try {
         localStorage.removeItem('email')
         await signOut(auth);
+
+        await updateUserIsLogged(auth.currentUser?.uid as string, false)
+        await updateUserStatus(auth.currentUser?.uid as string, Status.OFFLINE)
+
         toast.success('Logout successful!')
         return true
     } catch (error) {
