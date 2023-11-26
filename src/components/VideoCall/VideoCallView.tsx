@@ -7,7 +7,7 @@ interface VideoCallProps {
 export const VideoCallView: React.FC<VideoCallProps> = () => {
   return (
     <div>
-        <VideoChat roomId=""/>
+        <VideoChat roomId={''}/>
     </div>
   )
 }
