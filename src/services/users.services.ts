@@ -1,5 +1,5 @@
-import { get, ref, set, update } from 'firebase/database';
-import { db } from '../config/firebase-config';
+import { get, ref, update } from 'firebase/database';
+import { db, auth } from '../config/firebase-config';
 import { UserType } from './auth.services';
 import toast from 'react-hot-toast';
 
@@ -57,3 +57,44 @@ export const updateUserPhone = (uid: string, phone: string) => {
         [`users/${uid}/phone`]: phone,
     });
 };
+
+
+export const getUserByUsername = async (username: string) => {
+    try {
+    const allUsers = await get(ref(db, `users`));
+    if (allUsers.exists()) {
+        const userData = allUsers.val();
+		const dataArray = Object.values(userData);
+		for(const user of dataArray){
+		console.log("User data: ", user.username)
+		if(user.username && user.username===username)
+            {
+			console.log(`User with username ${username} is found!`);
+            return user.uid
+			} else {
+			console.log(`No such user ${username} found!`);
+					}
+    }
+}} catch (err) {
+     console.log("An error occurred: " + err);
+}
+}
+
+export const setUserFriend = async (username: string) => {
+    try {
+    const userId = await getUserByUsername(username);
+    const currentFriendsRef = await get(ref(db, `users/${auth?.currentUser?.uid}/friends` ));
+    const currentFriends = currentFriendsRef.val();
+    if (userId && !currentFriends.hasOwnProperty(userId) && userId !== auth?.currentUser?.uid) {
+        await update(ref(db, `users/${auth?.currentUser?.uid}/friends/${userId}`), {
+          isFriend: true,
+        });
+        console.log(`Friend ${username} added successfully!`);
+} else {
+  console.log(`Friend ${username} is already in the list!`);
+}
+    } catch (err) {
+        console.log("An error occurred", err);
+        
+    }
+}

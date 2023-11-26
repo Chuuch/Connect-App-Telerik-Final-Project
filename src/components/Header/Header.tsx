@@ -6,12 +6,14 @@ import {useState, useEffect} from 'react'
 import { NavLink, useNavigate } from 'react-router-dom';
 import { get, ref } from 'firebase/database';
 import { db } from '../../config/firebase-config';
+import { setUserFriend } from '../../services/users.services';
 
 export const Header = () => {
   const [results, setResults] = useState<Array<string>>([]);
 	const [queryVal, setQueryVal] = useState<string>('');
   const navigate = useNavigate();
   const [showForm, setShowForm] = useState<boolean>(false);
+  const [userVal, setUserVal] = useState<string>('');
 
   useEffect(() => {
 		const searchFunc = async () => {
@@ -51,7 +53,7 @@ export const Header = () => {
 
 		searchFunc();
 	}, [queryVal]);
-	
+
 
 	const handleSearch = (e) => {
 		e.preventDefault();
@@ -63,6 +65,20 @@ export const Header = () => {
         e.preventDefault();
         navigate(`/search/${queryVal}`, { state: { results } });
     };
+
+const handleSearchUser = (e) => {
+  e.preventDefault();
+  setUserVal(e.target.value);
+}
+
+const handleSubmitUser = (e: { preventDefault: () => void;}) => {
+  e.preventDefault();
+  if(userVal !== '')
+  setUserFriend(userVal);
+  console.log('Yeah:', e);
+  setUserVal('')
+  
+};
     return (
       <div className="relative flex flex-row items-center justify-between border-b dark:border-gray-600 bg-gray-100 dark:bg-gray-900 h-24">
         <img src="connect2.png" alt="logo" className="w-14 h-14 ml-5" />
@@ -106,13 +122,16 @@ export const Header = () => {
                 </label>
                 <input
                   type="text"
-                  id="teamName"
-                  placeholder="Please select a team name"
+                  id="userName"
+                  placeholder="Please select username"
+                  onChange={handleSearchUser}
+                  value={userVal}
                   required
                   className="px-4 py-2 border dark:border-gray-700 rounded-md focus:outline-none dark:text-gray-300 focus:border-blue-500 dark:focus:border-purple-500 dark:bg-slate-800"
                 />
                 <button
                   type="button"
+                  onClick={handleSubmitUser}
                   className="bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 dark:hover:bg-purple-500 text-white w-28 px-4 py-2 rounded-md text-sm"
                 >
                   Submit
