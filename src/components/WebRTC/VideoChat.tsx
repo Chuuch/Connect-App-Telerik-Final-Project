@@ -8,9 +8,8 @@ import { ref, onValue, off, update } from 'firebase/database';
 import { db, auth } from '../../config/firebase-config';
 import { LuScreenShare } from "react-icons/lu";
 import { LuScreenShareOff } from "react-icons/lu";
-import { FaPhoneSlash, FaPlay } from "react-icons/fa6";
-import { IoPause, IoPersonAdd } from 'react-icons/io5';
-import { BsMic, BsMicMute } from 'react-icons/bs';
+import { IoPersonAdd } from 'react-icons/io5';
+import { BsMic, BsMicMute, BsCameraVideo, BsCameraVideoOff } from 'react-icons/bs';
 import {
 	createPeerConnection,
 	handleAnswer,
@@ -20,6 +19,7 @@ import {
   createAnswer,
 } from '../../services/webRTC.services';
 import { useNavigate } from 'react-router';
+import { FaPhoneSlash } from 'react-icons/fa6';
 
 interface VideoChatProps {
 	roomId: string;
@@ -198,7 +198,7 @@ const VideoChat: React.FC<VideoChatProps> = ({ roomId }) => {
 		return () => {
 			off(remoteParticipantRef);
 		};
-	}, [roomId, localStream]);
+	}, []);
 
   const showAddUserForm = () => {
     setShowAddUser(true);
@@ -233,7 +233,7 @@ const VideoChat: React.FC<VideoChatProps> = ({ roomId }) => {
         </div>
         <div className='rounded-full bg-gray-400 hover:bg-gray-300 flex items-center justify-center h-14 w-14 cursor-pointer'>
 				<button onClick={toggleVideo}>
-					{isVideoStopped ? <IoPause size={25}/> : <FaPlay size={25}/> }
+					{isVideoStopped ? <BsCameraVideoOff size={25}/> : <BsCameraVideo size={25}/> }
           
 				</button>
         </div>
@@ -245,7 +245,7 @@ const VideoChat: React.FC<VideoChatProps> = ({ roomId }) => {
 
         {/* Add user form */}
         {showAddUser && (
-          <div className="flex flex-col justify-center space-y-4 absolute top-64 bg-gray-200 dark:bg-gray-700 rounded-lg p-8 items-center space-x-2">
+          <div className="flex flex-col justify-center space-y-4 absolute top-24 bg-gray-200 dark:bg-gray-700 rounded-lg p-8 items-center space-x-2">
             <input
               type="text"
               placeholder="Enter username"
