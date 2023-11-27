@@ -1,4 +1,11 @@
-import { ref, onValue, set, remove, off, onChildAdded } from '@firebase/database';
+import {
+	ref,
+	onValue,
+	set,
+	remove,
+	off,
+	onChildAdded,
+} from '@firebase/database';
 import { db } from '../config/firebase-config';
 
 // type RTCOfferOptions = {
@@ -11,24 +18,25 @@ import { db } from '../config/firebase-config';
 //     offerToReceiveVideo?: boolean;
 //   };
 
-
 const createPeerConnection = (): RTCPeerConnection => {
-    const configuration: RTCConfiguration = {
-      iceServers: [{ urls: 'stun:stun.l.google.com:19302' }],
-    };
-  
-    return new RTCPeerConnection(configuration);
-  };
+	const configuration: RTCConfiguration = {
+		iceServers: [{ urls: 'stun:stun.l.google.com:19302' }],
+	};
 
-  const createAnswer = async (peerConnection: RTCPeerConnection): Promise<RTCSessionDescriptionInit> => {
-    try {
-      const answer = await peerConnection.createAnswer();
-      await peerConnection.setLocalDescription(answer);
-      return answer;
-    } catch (error) {
-      throw new Error(`Error creating answer: ${error}`);
-    }
-  };
+	return new RTCPeerConnection(configuration);
+};
+
+const createAnswer = async (
+	peerConnection: RTCPeerConnection
+): Promise<RTCSessionDescriptionInit> => {
+	try {
+		const answer = await peerConnection.createAnswer();
+		await peerConnection.setLocalDescription(answer);
+		return answer;
+	} catch (error) {
+		throw new Error(`Error creating answer: ${error}`);
+	}
+};
 
 const createOffer = async (
 	peerConnection: RTCPeerConnection
@@ -49,38 +57,54 @@ const sendOffer = async (
 	await set(offerRef, offer);
 };
 
-const sendAnswer = async (roomId: string, answer: RTCSessionDescriptionInit, targetUserId: string): Promise<void> => {
-    const answerRef = ref(db, `rooms/${roomId}/answers/${targetUserId}`);
-    await set(answerRef, answer);
-  };
+const sendAnswer = async (
+	roomId: string,
+	answer: RTCSessionDescriptionInit,
+	targetUserId: string
+): Promise<void> => {
+	const answerRef = ref(db, `rooms/${roomId}/answers/${targetUserId}`);
+	await set(answerRef, answer);
+};
 
-const sendIceCandidate = async (roomId: string, iceCandidate: RTCIceCandidate, targetUserId: string): Promise<void> => {
-    const iceCandidateRef = ref(db, `rooms/${roomId}/iceCandidates/${targetUserId}`);
-    await set(iceCandidateRef, iceCandidate);
-  };
+const sendIceCandidate = async (
+	roomId: string,
+	iceCandidate: RTCIceCandidate,
+	targetUserId: string
+): Promise<void> => {
+	const iceCandidateRef = ref(
+		db,
+		`rooms/${roomId}/iceCandidates/${targetUserId}`
+	);
+	await set(iceCandidateRef, iceCandidate);
+};
 
-  const handleOfferReceived = async (peerConnection: RTCPeerConnection, offer: RTCSessionDescriptionInit, roomId: string) => {
-    try {
-      await peerConnection.setRemoteDescription(offer);
-      
-      const answer = await createAnswer(peerConnection);
-  
-      const targetUserId = offer.sdp && typeof offer.sdp === 'string'
-        ? extractTargetUserIdFromOffer(offer.sdp)
-        : '';
-  
-      await sendAnswer(roomId, answer, targetUserId);
-  
-      console.log('Offer handled successfully.');
-    } catch (error) {
-      console.error('Error handling offer:', error);
-    }
-  };
-  
-  const extractTargetUserIdFromOffer = (offerSdp: string): string => {
-    const sdpTokens = offerSdp.split(' ');
-    return sdpTokens[3] || '';
-  };
+const handleOfferReceived = async (
+	peerConnection: RTCPeerConnection,
+	offer: RTCSessionDescriptionInit,
+	roomId: string
+) => {
+	try {
+		await peerConnection.setRemoteDescription(offer);
+
+		const answer = await createAnswer(peerConnection);
+
+		const targetUserId =
+			offer.sdp && typeof offer.sdp === 'string'
+				? extractTargetUserIdFromOffer(offer.sdp)
+				: '';
+
+		await sendAnswer(roomId, answer, targetUserId);
+
+		console.log('Offer handled successfully.');
+	} catch (error) {
+		console.error('Error handling offer:', error);
+	}
+};
+
+const extractTargetUserIdFromOffer = (offerSdp: string): string => {
+	const sdpTokens = offerSdp.split(' ');
+	return sdpTokens[3] || '';
+};
 
 const handleAnswer = async (
 	peerConnection: RTCPeerConnection,
@@ -109,57 +133,54 @@ const listenForOffer = (
 			onOfferReceived(offer);
 			remove(ref(db, `rooms/${roomId}/offers/${targetUserId}`));
 		}
-	});   
+	});
 };
 
 const listenForAnswer = (
-    roomId: string,
-    onAnswerReceived: (answer: RTCSessionDescriptionInit) => void
-  ): (() => void) => {
-    const answersRef = ref(db, `rooms/${roomId}/answers`);
-    const callback = onValue(answersRef, (snapshot) => {
-      const answers = snapshot.val();
-      if (answers) {
-        const targetUserId = Object.keys(answers)[0];
-        const answer = answers[targetUserId];
-        onAnswerReceived(answer);
-        remove(ref(db, `rooms/${roomId}/answers/${targetUserId}`));
-      }
-    });
-  
-    return () => off(answersRef, 'value', callback);
-  };
+	roomId: string,
+	onAnswerReceived: (answer: RTCSessionDescriptionInit) => void
+): (() => void) => {
+	const answersRef = ref(db, `rooms/${roomId}/answers`);
+	const callback = onValue(answersRef, (snapshot) => {
+		const answers = snapshot.val();
+		if (answers) {
+			const targetUserId = Object.keys(answers)[0];
+			const answer = answers[targetUserId];
+			onAnswerReceived(answer);
+			remove(ref(db, `rooms/${roomId}/answers/${targetUserId}`));
+		}
+	});
 
-  const listenForIceCandidate = (
-    roomId: string,
-    onIceCandidateReceived: (iceCandidate: RTCIceCandidate) => void
-  ): (() => void) => {
-    const iceCandidatesRef = ref(db, `rooms/${roomId}/iceCandidates`);
-    const callback = onChildAdded(iceCandidatesRef, (snapshot) => {
-      const iceCandidate = snapshot.val();
-      if (iceCandidate) {
-        onIceCandidateReceived(iceCandidate);    
-        remove(ref(db, `rooms/${roomId}/iceCandidates`));
-      }
-     
-    });
-  
-    
-    return () => off(iceCandidatesRef, 'child_added', callback);
-  };
+	return () => off(answersRef, 'value', callback);
+};
 
+const listenForIceCandidate = (
+	roomId: string,
+	onIceCandidateReceived: (iceCandidate: RTCIceCandidate) => void
+): (() => void) => {
+	const iceCandidatesRef = ref(db, `rooms/${roomId}/iceCandidates`);
+	const callback = onChildAdded(iceCandidatesRef, (snapshot) => {
+		const iceCandidate = snapshot.val();
+		if (iceCandidate) {
+			onIceCandidateReceived(iceCandidate);
+			remove(ref(db, `rooms/${roomId}/iceCandidates`));
+		}
+	});
+
+	return () => off(iceCandidatesRef, 'child_added', callback);
+};
 
 export {
 	createPeerConnection,
 	createOffer,
-    createAnswer,
-    handleOfferReceived,
+	createAnswer,
+	handleOfferReceived,
 	handleAnswer,
 	addIceCandidate,
 	sendOffer,
 	sendAnswer,
 	sendIceCandidate,
 	listenForOffer,
-    listenForAnswer,
-    listenForIceCandidate,
+	listenForAnswer,
+	listenForIceCandidate,
 };
