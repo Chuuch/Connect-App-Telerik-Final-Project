@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, } from 'react';
+
 import LocalVideo from '../../components/WebRTC/LocalVideo';
 import RemoteVideo from '../../components/WebRTC/RemoteVideo';
 import { ref, onValue, off, update } from 'firebase/database';
@@ -8,7 +9,7 @@ import { db, auth } from '../../config/firebase-config';
 import { LuScreenShare } from "react-icons/lu";
 import { LuScreenShareOff } from "react-icons/lu";
 import { FaPhoneSlash, FaPlay } from "react-icons/fa6";
-import { IoPause } from 'react-icons/io5';
+import { IoPause, IoPersonAdd } from 'react-icons/io5';
 import { BsMic, BsMicMute } from 'react-icons/bs';
 import {
 	createPeerConnection,
@@ -18,6 +19,7 @@ import {
   sendAnswer,
   createAnswer,
 } from '../../services/webRTC.services';
+import { useNavigate } from 'react-router';
 
 interface VideoChatProps {
 	roomId: string;
@@ -31,6 +33,9 @@ const VideoChat: React.FC<VideoChatProps> = ({ roomId }) => {
 	const [isAudioMuted, setIsAudioMuted] = useState(false);
 	const [isVideoStopped, setIsVideoStopped] = useState(false);
 	const [isScreenSharing, setIsScreenSharing] = useState(false);
+  const [showAddUser, setShowAddUser] = useState(false);
+  const [usernameToAdd, setUsernameToAdd] = useState('');
+  const navigate = useNavigate();
 
 	const peerConnection = createPeerConnection();
 
@@ -117,7 +122,12 @@ const VideoChat: React.FC<VideoChatProps> = ({ roomId }) => {
 		}
 	};
 
-	const leaveCall = () => {};
+	const leaveCall = () => {
+    if (peerConnection) {
+      peerConnection.close();
+    }
+    navigate('/calls')
+  };
 
 	useEffect(() => {
 		const setupLocalVideo = async () => {
@@ -190,33 +200,75 @@ const VideoChat: React.FC<VideoChatProps> = ({ roomId }) => {
 		};
 	}, [roomId, localStream]);
 
+  const showAddUserForm = () => {
+    setShowAddUser(true);
+  };
+
+  const hideAddUserForm = () => {
+    setShowAddUser(false);
+    setUsernameToAdd('');
+  };
+
+  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUsernameToAdd(e.target.value);
+  };
+
+  const handleAddUser = () => {
+    const usernameToAdd = '';
+    hideAddUserForm();
+  };
+
 	return (
-		<div className="bg-gray-100 dark:bg-gray-800 h-full w-[2000px]">
+		<div className="bg-gray-100 dark:bg-gray-800 h-full w-[1824px]">
 			<div className="flex flex-row items-center justify-center space-x-10 w-full">
 				<LocalVideo localVideoRef={localVideoRef} />
 				<RemoteVideo remoteVideoRef={remoteVideoRef} />
 			</div>
 
-			<div className="flex flex-row justify-center mt-4 space-x-4">
-        <div className="rounded-full bg-gray-400 hover:bg-gray-300 flex items-center justify-center h-16 w-16 cursor-pointer">
+			<div className="flex flex-row items-center justify-center mt-4 space-x-4">
+        <div className="rounded-full bg-gray-400 hover:bg-gray-300 flex items-center justify-center h-14 w-14 cursor-pointer">
 				<button onClick={toggleAudio}>
-					{isAudioMuted ? <BsMic size={28}/> : <BsMicMute size={28}/>}
+					{isAudioMuted ? <BsMic size={25}/> : <BsMicMute size={25}/>}
 				</button>
         </div>
-        <div className='rounded-full bg-gray-400 hover:bg-gray-300 flex items-center justify-center h-16 w-16 cursor-pointer'>
+        <div className='rounded-full bg-gray-400 hover:bg-gray-300 flex items-center justify-center h-14 w-14 cursor-pointer'>
 				<button onClick={toggleVideo}>
-					{isVideoStopped ? <IoPause size={28}/> : <FaPlay size={28}/>}
+					{isVideoStopped ? <IoPause size={25}/> : <FaPlay size={25}/> }
           
 				</button>
         </div>
-        <div className='rounded-full bg-gray-400 hover:bg-gray-300 flex items-center justify-center h-16 w-16 cursor-pointer'>
+        <div className="rounded-full bg-gray-400 hover:bg-gray-300 flex items-center justify-center h-14 w-14 cursor-pointer">
+          <button onClick={() => showAddUserForm()}>
+            <IoPersonAdd size={25} />
+          </button>
+        </div>
+
+        {/* Add user form */}
+        {showAddUser && (
+          <div className="flex flex-col justify-center space-y-4 absolute top-64 bg-gray-200 dark:bg-gray-700 rounded-lg p-8 items-center space-x-2">
+            <input
+              type="text"
+              placeholder="Enter username"
+              value={usernameToAdd}
+              onChange={handleUsernameChange}
+              className="outline-none focus:outline-blue-500 dark:focus:outline-purple-500 dark:bg-gray-800 dark:text-gray-300 p-2 rounded-md"
+            />
+            <button onClick={handleAddUser} className="bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 hover:dark:bg-purple-500 text-white p-2 rounded">
+              Add User
+            </button>
+            <button onClick={hideAddUserForm} className="text-gray-500 hover:text-blue-500 dark:hover:text-purple-500">
+              Cancel
+            </button>
+          </div>
+        )}
+        <div className='rounded-full bg-gray-400 hover:bg-gray-300 flex items-center justify-center h-14 w-14 cursor-pointer'>
 				<button onClick={startScreenSharing} >
-					{isScreenSharing ? <LuScreenShareOff size={28}/> : <LuScreenShare size={28}/>}
+					{isScreenSharing ? <LuScreenShareOff size={25}/> : <LuScreenShare size={25}/>}
 				</button>
         </div>
-        <div className="rounded-full bg-red-600 hover:bg-red-500 flex items-center justify-center h-16 w-16 cursor-pointer">
+        <div className="rounded-full bg-red-600 hover:bg-red-500 flex items-center justify-center h-14 w-14 cursor-pointer">
 				<button onClick={leaveCall}>
-          <FaPhoneSlash size={28} className='text-white'/>
+          <FaPhoneSlash size={25} className='text-white'/>
         </button>
         </div>
 			</div>
