@@ -38,6 +38,7 @@ const VideoChat: React.FC<VideoChatProps> = ({ roomId }) => {
         localStream.getTracks().forEach((track) => track.stop());
       }
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Run this effect only once when the component mounts
 
   useEffect(() => {
@@ -86,9 +87,11 @@ const VideoChat: React.FC<VideoChatProps> = ({ roomId }) => {
   }, [roomId, localStream]);
 
   return (
-    <div>
+    <div className='bg-gray-100 dark:bg-gray-800 h-full w-[2000px]'>
+      <div className="flex flex-row items-center justify-center space-x-10 w-full">
       <LocalVideo localVideoRef={localVideoRef} />
       <RemoteVideo remoteVideoRef={remoteVideoRef} />
+      </div>
     </div>
   );
 };
