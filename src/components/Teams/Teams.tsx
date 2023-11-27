@@ -62,6 +62,9 @@ export const Teams: React.FC = () => {
     const teamsRef = ref(db, 'teams');
     const unsubscribe = onValue(teamsRef, (snapshot) => {
       const data = snapshot.val();
+
+      console.log('teams', data)
+
       if (data) {
         setTeams(Object.values(data));
       } else {
@@ -105,11 +108,11 @@ export const Teams: React.FC = () => {
       </div>
       <div className="shadow-inner">
         <motion.ul
-        initial={{ y: -100, opacity: 0 }}
-        transition={{ duration: 1.2 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="flex flex-col pt-4 space-y-">
+          initial={{ y: -100, opacity: 0 }}
+          transition={{ duration: 1.2 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="flex flex-col pt-4 space-y-">
           {teams &&
             teams.map((team) => (
               <div
@@ -122,22 +125,22 @@ export const Teams: React.FC = () => {
                   <div className="channels-drawer">
                     {channels.map((channel) => (
                       <div>
-                      <button className="bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 dark:hover:bg-purple-500 m-3 text-white p-2 rounded-md text-sm"
-                      key={channel.id}>Channel: {channel.channelName}</button>
+                        <button className="bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 dark:hover:bg-purple-500 m-3 text-white p-2 rounded-md text-sm"
+                          key={channel.id}>Channel: {channel.channelName}</button>
                       </div>
                     ))}
                     <p></p>
                     <div className="flex justify-center">
-                    <button
-                      onClick={() => {
-                        setShowForm(false);
-                        setShowChannelForm(true);
-                      }}
-                      className="bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 dark:hover:bg-purple-500 m-3 text-white p-2 rounded-md text-sm"
-                    >
-                      New Channel
-                    </button>
-                  </div>
+                      <button
+                        onClick={() => {
+                          setShowForm(false);
+                          setShowChannelForm(true);
+                        }}
+                        className="bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 dark:hover:bg-purple-500 m-3 text-white p-2 rounded-md text-sm"
+                      >
+                        New Channel
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>
@@ -181,11 +184,11 @@ export const Teams: React.FC = () => {
           )}
         </motion.ul>
         <motion.div
-        initial={{ y: -100, opacity: 0 }}
-        transition={{ duration: 1.2 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }} 
-        className="flex items-center justify-center pt-5">
+          initial={{ y: -100, opacity: 0 }}
+          transition={{ duration: 1.2 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="flex items-center justify-center pt-5">
           <button
             onClick={() => setShowForm(true)}
             className="bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 hover:dark:bg-purple-500 text-white p-2 rounded-md text-sm"
@@ -221,12 +224,12 @@ export const Teams: React.FC = () => {
                 Submit
               </button>
               <button
-                  type="button"
-                  onClick={() => setShowForm(false)}
-                  className="bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 hover:dark:bg-purple-500 text-white w-28 px-4 py-2 rounded-md text-sm"
-                >
-                  Close
-                </button>
+                type="button"
+                onClick={() => setShowForm(false)}
+                className="bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 hover:dark:bg-purple-500 text-white w-28 px-4 py-2 rounded-md text-sm"
+              >
+                Close
+              </button>
             </form>
           </div>
         )}

@@ -7,3 +7,5 @@ export const passwordPattern: RegExp = /^[0-9]{5,15}$/;
 export const phonePattern: RegExp = /^(08[789][0-9]{7})$/;
 
 export const namePattern: RegExp = /^[a-zA-Z]{3,35}$/;
+
+export const teamChannelPattern: RegExp = /^[A-Z][a-zA-Z0-9._-\s]{3,20}$/;
