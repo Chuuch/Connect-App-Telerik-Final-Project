@@ -1,126 +1,198 @@
-import React, { useEffect, useRef } from 'react';
-import { db } from '../../config/firebase-config';
-import { onChildAdded, push, ref, update } from 'firebase/database';
-import { BsCameraVideoOff, BsMicMute } from 'react-icons/bs';
-import { FaPhoneSlash } from 'react-icons/fa6';
-import { IoPersonAdd } from 'react-icons/io5';
-import { LuScreenShare } from 'react-icons/lu';
-import { useNavigate } from 'react-router-dom';
+import { get, push, ref, set, update } from "firebase/database";
+import { useEffect, useRef } from "react";
+import { BsCameraVideoOff, BsMicMute } from "react-icons/bs";
+import { FaPhoneSlash } from "react-icons/fa6";
+import { IoPersonAdd } from "react-icons/io5";
+import { LuScreenShare } from "react-icons/lu";
+import { auth, db } from "../../config/firebase-config";
+import { useNavigate } from "react-router-dom";
 
-interface WebRTCProps {
-	roomId: string;
-}
+ const WebRTC: React.FC = () => {
+    const videoRef = useRef<HTMLVideoElement>(null);
+    const localStreamRef = useRef<MediaStream | null>(null);
+    const peerConnectionRef = useRef<RTCPeerConnection | null>(null);
+    const remoteStreamRef = useRef<MediaStream | null>(null);
+    const navigate = useNavigate();
+  
+    useEffect(() => {
+      const initiateCall = async () => {
+        try {
+          
+          localStreamRef.current = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+  
+          
+          if (videoRef.current && localStreamRef.current) {
+            videoRef.current.srcObject = localStreamRef.current;
+          }
+  
 
-const WebRTC: React.FC<WebRTCProps> = ({ roomId }) => {
-	const peerConnectionRef = useRef<RTCPeerConnection | null>(null);
-	const localVideoRef = useRef<HTMLVideoElement | null>(null);
-	const remoteVideoRef = useRef<HTMLVideoElement | null>(null);
-    const navigate = useNavigate()
+          peerConnectionRef.current = new RTCPeerConnection();
+  
 
-	useEffect(() => {
-        const initPeerConnection = async () => {
-            const configuration = {
-                iceServers: [{ urls: 'stun:stun.l.google.com:19302' }],
-            };
-            const peerConnection = new RTCPeerConnection(configuration);
-
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-                if (localVideoRef.current) {
-                    localVideoRef.current.srcObject = stream;
-                }
-
-                if (peerConnection.signalingState !== 'closed') {
-                    stream.getTracks().forEach((track) => peerConnection.addTrack(track, stream));
-                }
-            } catch (error) {
-                console.error('Error accessing media devices:', error);
-            }
-
-            peerConnection.onicecandidate = async (event) => {
-                if (event.candidate) {
-                    const offerRef = ref(db, `rooms/${roomId}/offers`);
-                    const newOffer = push(offerRef, JSON.stringify(event.candidate));
-                    const newOfferKey: string | null = newOffer.key;
-
-                    if (newOfferKey) {
-                        const updates = {
-                            [`rooms/${roomId}/offers/${newOfferKey}`]: newOfferKey,
-                        };
-
-                        await update(ref(db), updates);
-                    }
-                }
-            };
-
-            if (remoteVideoRef.current) {
-                const remoteStream = new MediaStream();
-
-                // Listen for remote tracks and add them to the remote stream
-                peerConnection.ontrack = (event) => {
-                    if (remoteVideoRef.current) {
-                        remoteStream.addTrack(event.track);
-                        remoteVideoRef.current.srcObject = remoteStream;
-                    }
-                };
-            }
-
-            const offersRef = ref(db, `rooms/${roomId}/offers`);
-            onChildAdded(offersRef, (snapshot) => {
-                const signal = JSON.parse(snapshot.val());
-                peerConnection
-                    .addIceCandidate(new RTCIceCandidate(signal))
-                    .catch((error) => {
-                        console.error('Error adding ice candidate:', error);
-                    });
+          if (localStreamRef.current) {
+            localStreamRef.current.getTracks().forEach((track) => {
+              peerConnectionRef.current?.addTrack(track, localStreamRef.current as MediaStream);
             });
+          }
+  
 
-            peerConnectionRef.current = peerConnection;
-        };
+          if (peerConnectionRef.current) {
+            peerConnectionRef.current.onicecandidate = handleICECandidate;
+            peerConnectionRef.current.ontrack = handleTrack;
+          }
+  
 
-        initPeerConnection();
+          const offer = await peerConnectionRef.current?.createOffer();
+          await peerConnectionRef.current?.setLocalDescription(offer);
+  
 
-        return () => {
-            if (peerConnectionRef.current) {
-                peerConnectionRef.current.close();
-            }
-        };
-    }, [roomId, navigate]);
+        } catch (error) {
+
+          console.error('Error initiating call:', error);
+        }
+      };
+  
+      const handleICECandidate = (event: RTCPeerConnectionIceEvent) => {
+
+        const iceCandidate = event.candidate;
+        if (iceCandidate) {
+          console.log('Sending ICE candidate to remote peer:', iceCandidate);
+        }
+      };
+  
+      const handleTrack = (event: RTCTrackEvent) => {
+
+        remoteStreamRef.current = event.streams[0];
+  
+
+        if (videoRef.current && remoteStreamRef.current) {
+          videoRef.current.srcObject = remoteStreamRef.current;
+        }
+      };
+
+      const createRoom = async () => {
+        try {
+          const roomRef = push(ref(db, 'rooms'));
+          const roomKey: string = roomRef.key || '';
+        
+          const userUid = auth?.currentUser?.uid || '';
+          const roomData = {
+            users: {
+              [userUid]: true,
+            },
+          };
+        
+          await set(ref(db, `rooms/${roomKey}`), roomData);
+        
+          return roomKey;
+        } catch (error) {
+          console.error('Error creating room:', error);
+        }
+      };
+    
+      const joinRoom = async (roomID: string) => {
+        try {
+          const userUid = auth?.currentUser?.uid || '';
+          const roomRef = ref(db, `rooms/${roomID}`);
+          const roomSnapshot = await get(roomRef);
+        
+          if (roomSnapshot.exists()) {
+            const usersRef = ref(db, `rooms/${roomID}/users`);
+            await update(usersRef, {
+              [userUid]: true,
+            });
+          } else {
+            console.error('Room does not exist');
+          }
+        } catch (error) {
+          console.error('Error joining room:', error);
+        }
+      };
+    
+      const sendOffer = async (roomID: string, offer: RTCSessionDescriptionInit) => {
+        try {
+          const userUid = auth?.currentUser?.uid || '';
+          await set(ref(db, `rooms/${roomID}/users/${userUid}/offer`), offer);
+        } catch (error) {
+          console.error('Error sending offer:', error);
+        }
+      };
+    
+      const receiveOffer = async (roomID: string, userUid: string) => {
+        try {
+          const offerSnapshot = await get(ref(db, `rooms/${roomID}/users/${userUid}/offer`));
+          const offer = offerSnapshot.val();
+    
+          if (offer) {
+            // Create an answer
+            const answer = await peerConnectionRef.current?.createAnswer();
+            await peerConnectionRef.current?.setLocalDescription(answer);
+        
+            // Store the answer in the database
+            await set(ref(db, `rooms/${roomID}/users/${userUid}/answer`), answer);
+          }
+        } catch (error) {
+          console.error('Error receiving offer:', error);
+        }
+      };
+  
+  
+      initiateCall();
+
+      
+      return () => {
+
+        if (peerConnectionRef.current) {
+          peerConnectionRef.current.close();
+        }
+        if (localStreamRef.current) {
+          localStreamRef.current.getTracks().forEach((track) => {
+            track.stop();
+          });
+        }
+        if (remoteStreamRef.current) {
+          remoteStreamRef.current.getTracks().forEach((track) => {
+            track.stop();
+          });
+        }
+      };
+    }, [navigate]);
 
     const leaveCall = () => {
-        peerConnectionRef.current?.close();
-        navigate('/calls');
+      if (peerConnectionRef.current) {
+        peerConnectionRef.current.close();
+      }
+  
+      navigate('/calls'); 
     };
+  
+    return (
+      <div className="w-[1824px] h-full bg-white dark:bg-gray-800 flex flex-col items-center justify-center">
+        <div className="">
+        <video ref={videoRef} autoPlay />
+        <div className="flex flex-row items-center justify-center mt-4 space-x-4">
+            <button className="rounded-full bg-gray-300 hover:bg-gray-200 w-16 h-16 flex items-center justify-center">
+                <BsMicMute size={28}/>
+            </button>
+            <button className="rounded-full bg-gray-300 hover:bg-gray-200 w-16 h-16 flex items-center justify-center">
+                <BsCameraVideoOff size={28}/>
+            </button>
+            <button className="rounded-full bg-gray-300 hover:bg-gray-200 w-16 h-16 flex items-center justify-center">
+                <LuScreenShare size={28}/>
+            </button>
+            <button className="rounded-full bg-gray-300 hover:bg-gray-200 w-16 h-16 flex items-center justify-center">
+                <IoPersonAdd size={28}/>
+            </button>
+            <button 
+            onClick={() => leaveCall()}
+            className="rounded-full bg-red-600 hover:bg-red-500 w-16 h-16 flex items-center justify-center">
+                <FaPhoneSlash  size={28} className='fill-white'/>
+            </button>
+        </div>
+        </div>
+        
+      </div>
+    );
+  };
 
-	return (
-		<div className='bg-gray-100 dark:bg-gray-800 w-[1824px] h-full'>
-			<div className="flex flex-row justify-center items-center">
-				<div className='flex items-center justify-center mt-32'>
-					<video ref={localVideoRef} autoPlay muted />
-				</div>
-				<div>
-					<video ref={remoteVideoRef} autoPlay />
-				</div>
-			</div>
-			<div className="flex flex-row justify-center items-center  space-x-5 mt-4">
-				<div className="flex rounded-full justify-center items-center bg-gray-300/60 h-16 w-16 hover:bg-gray-300 cursor-pointer">
-					<BsMicMute size={25} />
-				</div>
-				<div className="flex rounded-full justify-center items-center bg-gray-300/60 h-16 w-16 hover:bg-gray-300 cursor-pointer">
-					<BsCameraVideoOff size={28} />
-				</div>
-				<div className="flex rounded-full justify-center items-center bg-gray-300/60 h-16 w-16 hover:bg-gray-300 cursor-pointer">
-					<LuScreenShare size={28} />
-				</div>
-				<div className="flex rounded-full justify-center items-center bg-gray-300/60 h-16 w-16 hover:bg-gray-300 cursor-pointer">
-					<IoPersonAdd size={28} />
-				</div>
-				<div className="flex rounded-full justify-center items-center bg-red-600 h-16 w-16 hover:bg-red-500 cursor-pointer">
-					<FaPhoneSlash size={28} className='fill-gray-100' onClick={() => leaveCall()}/>
-				</div>
-			</div>
-		</div>
-	);
-};
-
-export default WebRTC;
+  export default WebRTC;
