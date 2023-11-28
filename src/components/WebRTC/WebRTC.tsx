@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { get, push, ref, set, update } from "firebase/database";
 import { useEffect, useRef } from "react";
 import { BsCameraVideoOff, BsMicMute } from "react-icons/bs";
@@ -15,45 +16,7 @@ import { useNavigate } from "react-router-dom";
     const navigate = useNavigate();
   
     useEffect(() => {
-      const initiateCall = async () => {
-        try {
-          
-          localStreamRef.current = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-  
-          
-          if (videoRef.current && localStreamRef.current) {
-            videoRef.current.srcObject = localStreamRef.current;
-          }
-  
-
-          peerConnectionRef.current = new RTCPeerConnection();
-  
-
-          if (localStreamRef.current) {
-            localStreamRef.current.getTracks().forEach((track) => {
-              peerConnectionRef.current?.addTrack(track, localStreamRef.current as MediaStream);
-            });
-          }
-  
-
-          if (peerConnectionRef.current) {
-            peerConnectionRef.current.onicecandidate = handleICECandidate;
-            peerConnectionRef.current.ontrack = handleTrack;
-          }
-          
-          const callRoomID = await createRoom();
-          console.log('Room ID:', callRoomID);
-          
-
-          const offer = await peerConnectionRef.current?.createOffer();
-          await peerConnectionRef.current?.setLocalDescription(offer);
-  
-
-        } catch (error) {
-
-          console.error('Error initiating call:', error);
-        }
-      };
+      
   
       const handleICECandidate = (event: RTCPeerConnectionIceEvent) => {
 
@@ -139,10 +102,49 @@ import { useNavigate } from "react-router-dom";
           console.error('Error receiving offer:', error);
         }
       };
+
+
+      const initiateCall = async () => {
+        try {
+          
+          localStreamRef.current = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
   
+          
+          if (videoRef.current && localStreamRef.current) {
+            videoRef.current.srcObject = localStreamRef.current;
+          }
+  
+
+          peerConnectionRef.current = new RTCPeerConnection();
+  
+
+          if (localStreamRef.current) {
+            localStreamRef.current.getTracks().forEach((track) => {
+              peerConnectionRef.current?.addTrack(track, localStreamRef.current as MediaStream);
+            });
+          }
+  
+
+          if (peerConnectionRef.current) {
+            peerConnectionRef.current.onicecandidate = handleICECandidate;
+            peerConnectionRef.current.ontrack = handleTrack;
+          }
+          
+          const callRoomID = await createRoom();
+          console.log('Room ID:', callRoomID);
+          
+
+          const offer = await peerConnectionRef.current?.createOffer();
+          await peerConnectionRef.current?.setLocalDescription(offer);
+  
+
+        } catch (error) {
+
+          console.error('Error initiating call:', error);
+        }
+      };
   
       initiateCall();
-
       
       return () => {
 
@@ -167,7 +169,7 @@ import { useNavigate } from "react-router-dom";
         peerConnectionRef.current.close();
       }
   
-      navigate('calls'); 
+      navigate('/calls'); 
     };
   
     return (
