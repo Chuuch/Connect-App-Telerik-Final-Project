@@ -40,7 +40,10 @@ import { useNavigate } from "react-router-dom";
             peerConnectionRef.current.onicecandidate = handleICECandidate;
             peerConnectionRef.current.ontrack = handleTrack;
           }
-  
+          
+          const callRoomID = await createRoom();
+          console.log('Room ID:', callRoomID);
+          
 
           const offer = await peerConnectionRef.current?.createOffer();
           await peerConnectionRef.current?.setLocalDescription(offer);
@@ -118,6 +121,7 @@ import { useNavigate } from "react-router-dom";
         }
       };
     
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const receiveOffer = async (roomID: string, userUid: string) => {
         try {
           const offerSnapshot = await get(ref(db, `rooms/${roomID}/users/${userUid}/offer`));
@@ -163,7 +167,7 @@ import { useNavigate } from "react-router-dom";
         peerConnectionRef.current.close();
       }
   
-      navigate('/calls'); 
+      navigate('calls'); 
     };
   
     return (
