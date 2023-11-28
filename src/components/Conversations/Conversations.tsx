@@ -22,16 +22,10 @@ export const Conversations: React.FC = () => {
         const conversationsRef = ref(db, `users/${auth?.currentUser?.uid}`);
         const unsubscribe = onValue(conversationsRef, async (snapshot) => {
             const data = snapshot.val();
-			//console.log(data);
 			
             if (data.friends) {
-				//Object.keys????
-				//const friendIds = Object.values(data.friends).map((friend) => friend.friendID);
 				const friendsKeys = Object.keys(data.friends);
-				//console.log('friend IDs: ', friendIds);
 				console.log('friends keys: ', friendsKeys);
-				
-				//console.log('ids: ', friendIds);
 				const friendsList = await Promise.all(
 					friendsKeys.map(async (id) => {
 					  const friend = await getUserByID(id);
