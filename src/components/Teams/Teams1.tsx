@@ -1,30 +1,64 @@
+import { onValue, ref } from 'firebase/database';
 import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { HiUsers } from 'react-icons/hi2';
+import { MdDeleteForever, MdGroupAdd } from 'react-icons/md';
 import { RiTeamFill } from 'react-icons/ri';
 import { NavLink } from 'react-router-dom';
-import { getAllTeamsByUId } from '../../services/teams.services';
+import { db } from '../../config/firebase-config';
+import UserContext from '../../context/UserContext';
+import { deleteTeam } from '../../services/teams.services';
 import { getAllUserFriendsList } from '../../services/users.services';
 import CreateTeamForm, { UserList } from './CreateTeamForm';
-import { MdDeleteForever, MdGroupAdd, MdGroupRemove } from 'react-icons/md';
 
 const Teams1 = () => {
     const form = useForm()
+    const { currentUserDB } = useContext(UserContext)
     const [teams, setTeams] = useState([])
     const [userFriends, setUserFriends] = useState<UserList[]>([])
     const [showForm, setShowForm] = useState<boolean>(false);
 
     useEffect(() => {
         const fetchTeams = async () => {
-            const teams = await getAllTeamsByUId()
+            // const teams = await getAllTeamsByUId()
             const userFriends = await getAllUserFriendsList()
-            setTeams(teams)
+            // setTeams(teams)
             setUserFriends(userFriends)
         }
-        fetchTeams()
-    }, [teams])
 
+        const teamsRef = ref(db, 'teams');
+        const unsubscribe = onValue(teamsRef, (snapshot) => {
+            if (!snapshot.exists()) {
+                return [];
+            }
+            const returnArr = [] as object[];
+            snapshot.forEach(grandchildSnapshot => {
+                const item = grandchildSnapshot.val().members.find((member: any) => member.id === currentUserDB?.uid)
+                if (item) {
+                    returnArr.push(grandchildSnapshot.val())
+                }
+            })
+            console.log(returnArr)
+            setTeams(returnArr);
+        });
+
+        return () => {
+            unsubscribe();
+        };
+
+        fetchTeams()
+    }, [currentUserDB?.uid, teams])
+
+    const handleDeleteTeam = async (teamName: string, teamId: string) => {
+        try {
+            await deleteTeam(currentUserDB?.uid, teamId)
+            toast.success(`Team ${teamName} deleted successfully!`);
+        } catch (error) {
+            toast.success(`Error deleting team ${teamName}!`);
+        }
+    }
 
     return (
         <div className="w-96">
@@ -52,7 +86,6 @@ const Teams1 = () => {
                         </div>
                     </div>
                     <div className="divide-y divide-gray-300">
-
                         {teams?.length ? teams.map((team) => (
                             <>
                                 {
@@ -61,15 +94,13 @@ const Teams1 = () => {
                                             <details open>
                                                 <summary className="flex flex-row ">
                                                     <div className=" flex flex-row space-x-2 w-80 justify-between">
-
                                                         <div className=" flex flex-row space-x-2 ">
                                                             <RiTeamFill size={20} className="fill-blue-500 dark:fill-purple-600 cursor-pointer" />
                                                             <p className="font-bold text-gray-500 dark:text-gray-300">{team.teamName} </p>
                                                         </div>
-
                                                         <div className="tooltip" data-tip="Remove Team">
                                                             <button
-                                                                onClick={() => alert('Not implemented!!!')}
+                                                                onClick={() => handleDeleteTeam(team.teamName, team.id)}
                                                                 className="bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 hover:dark:bg-purple-500 text-white p-2 rounded-md text-sm"
                                                             >
                                                                 <MdDeleteForever size={20} />

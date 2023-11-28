@@ -1,4 +1,4 @@
-import { equalTo, get, orderByChild, push, query, ref, update } from 'firebase/database';
+import { get, push, ref, update } from 'firebase/database';
 import { UserList } from '../components/Teams/CreateTeamForm';
 import { auth, db } from '../config/firebase-config';
 
@@ -39,8 +39,8 @@ export const createTeam = async (teamName: string, participants: UserList[] = []
   }
 };
 
-export const getAllTeamsByUId = () => {
-  return get(ref(db, 'teams'))
+export const getAllTeamsByUId = async () => {
+  return await get(ref(db, 'teams'))
     .then(snapshot => {
       if (!snapshot.exists()) {
         return [];
@@ -50,10 +50,17 @@ export const getAllTeamsByUId = () => {
         const item = grandchildSnapshot.val().members.find((member: any) => member.id === auth?.currentUser?.uid)
         if (item) {
           returnArr.push(grandchildSnapshot.val())
-
         }
       })
       return returnArr;
     });
 };
+
+export const deleteTeam = (uid: string, teamId: string) => {
+  return update(ref(db), {
+    // TODO: USERS TEAMS COULD BE DELETED - NOT USED
+    [`users/${uid}/teams/${teamId}`]: null,
+    [`teams/${teamId}`]: null,
+  });
+}
 
