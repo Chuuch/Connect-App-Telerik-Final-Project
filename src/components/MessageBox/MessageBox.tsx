@@ -1,12 +1,15 @@
 import { useState } from 'react';
 import { IoMdAttach, IoMdPhotos } from 'react-icons/io';
-import { createMsg } from '../../services/message.services';
+import { createChannelMsg, createMsg } from '../../services/message.services';
 import { Emoji } from '../Emoji/Emoji';
 import { HiOutlineGif } from 'react-icons/hi2';
 import GiphySearch from '../Giphy/Giphy';
 import { API_KEY, API_SEARCH } from '../../constants/constants';
+import { useLocation, useParams } from 'react-router';
 
 export const MessageBox = () => {
+	const { pathname } = useLocation();
+	const { channelId } = useParams();
 	const [msg, setMsg] = useState('');
 	const [emoji, setEmoji] = useState('');
 	const [showGif, setShowGif] = useState(false);
@@ -18,8 +21,13 @@ export const MessageBox = () => {
 			const completeMessage = `${msg} ${emoji}`.trim();
 			if (completeMessage !== '' || selectedGif) {
 				const completeMessageWithGif = `${completeMessage} ${selectedGif}`;
-				const messageId = await createMsg(completeMessageWithGif);
-				console.log('Message sent with ID:', messageId);
+				if (pathname.includes('teams') && channelId) {
+					const messageId = await createChannelMsg(completeMessageWithGif, channelId);
+					console.log('Message sent with ID:', messageId);
+				} else {
+					const messageId = await createMsg(completeMessageWithGif);
+					console.log('Message sent with ID:', messageId);
+				}
 			}
 			setMsg('');
 			setEmoji('');
@@ -54,9 +62,9 @@ export const MessageBox = () => {
 					required
 					className="text-base p-5 h-10 rounded-full w-full mr-5 bg-transparent border bg-white focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:focus:border-purple-600 dark:text-gray-300 flex-grow outline-none focus:outline-none"
 				/>
-        <div className="relative flex flex-row">
-				<Emoji onEmojiSelect={setEmoji} />
-        </div>
+				<div className="relative flex flex-row">
+					<Emoji onEmojiSelect={setEmoji} />
+				</div>
 				<HiOutlineGif
 					onClick={() => setShowGif(true)}
 					size={30}

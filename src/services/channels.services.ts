@@ -1,17 +1,17 @@
-import { ref, update, push } from 'firebase/database';
+import { push, ref, update } from 'firebase/database';
+import { UserList } from '../components/Teams/CreateTeamForm';
 import { auth, db } from '../config/firebase-config';
+import { getUserByID } from './users.services';
 
-export const createChannel = async (channelName: string, teamID: string): Promise<string> => {
-//   const ownerSnapshot = await get(ref(db, `/users/${auth?.currentUser?.uid}`));
-//   const username: string = ownerSnapshot.val()?.username || '';
-
+export const createChannel = async (channelName: string, teamID: string, participants: UserList[] = []): Promise<string> => {
+  const username = await getUserByID(auth?.currentUser?.uid)?.username || '';
   const channel = {
     id: '',
     channelName,
     // owner: username,
     userID: auth?.currentUser?.uid,
     timestamp: Date.now(),
-    members: [],  
+    members: [...participants, { id: auth?.currentUser?.uid, name: username }],
   };
 
   const newChannelRef = push(ref(db, `teams/${teamID}/channels`), channel);
@@ -20,7 +20,7 @@ export const createChannel = async (channelName: string, teamID: string): Promis
   if (newChannelKey) {
     const updates = {
       [`teams/${teamID}/channels/${newChannelKey}/id`]: newChannelKey,
-    //   [`users/${auth?.currentUser?.uid}/teams/${newChannelKey}`]: true,
+      [`users/${auth?.currentUser?.uid}/teams/${teamID}/channels/${newChannelKey}`]: channelName,
     };
 
     try {

@@ -104,7 +104,9 @@ function App() {
 					<Route path="/login" element={<Login />} />
 					<Route path="/" element={user ? <Home /> : <Login />}>
 						<Route path="notifications" element={<Authenticated><NotificationsView /></Authenticated>} />
-						<Route path="teams" element={<Authenticated><TeamsView /></Authenticated>} />
+						<Route path="teams" element={<Authenticated><TeamsView /></Authenticated>} >
+							<Route path=":teamId/:channelId" element={<Authenticated><>Teams messages</></Authenticated>} />
+						</Route>
 						<Route path="messages" element={<Authenticated><ChatWindow /></Authenticated>} />
 						<Route path="calls" element={<Authenticated><CallsView /></Authenticated>} />
 						<Route path="calendar" element={<Authenticated><CalendarView /></Authenticated>} />
