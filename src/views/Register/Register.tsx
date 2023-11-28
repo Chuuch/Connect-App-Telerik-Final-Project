@@ -8,7 +8,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from '../../services/auth.services';
 import { checkIfUserExist } from '../../services/users.services';
 import { emailPattern, namePattern, passwordPattern, phonePattern, usernamePattern } from '../../utils/regexPatterns';
-import { FaRegAddressCard } from 'react-icons/fa6'
 
 type RegisterFormData = {
 	firstName: string;

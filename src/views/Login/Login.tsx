@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { FC, useContext } from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { HiKey, HiOutlineMail } from "react-icons/hi";
@@ -23,13 +22,6 @@ export const Login: FC<Props> = () => {
 	const navigate = useNavigate();
 	const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
 	const { currentUserDB, setCurrentUserDB } = useContext(UserContext);
-
-	// useEffect(() => {
-	// 	if (user && user.emailVerified) {
-	// 		navigate('/notifications')
-	// 	}
-	// 	console.log(currentUserDB)
-	// }, [currentUserDB, navigate, user])
 
 	const onSubmit: SubmitHandler<FormData> = async ({ email, password }: { email: string; password: string }) => {
 
