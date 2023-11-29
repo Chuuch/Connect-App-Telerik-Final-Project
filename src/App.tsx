@@ -7,7 +7,6 @@ import { Alert } from './components/Alert/Alert';
 import { ChatWindow } from './components/ChatWindow/ChatWindow';
 import { Loader } from './components/Loader/Loader';
 import { Search } from './components/Search/Search';
-import { VideoCallView } from './components/VideoCall/VideoCallView';
 import { auth } from './config/firebase-config';
 import UserContext from './context/UserContext';
 import Authenticated from './hoc/Authentication';
@@ -23,6 +22,7 @@ import { NotificationsView } from './views/NotificationsView/Notifications';
 import { PrivacyView } from './views/PrivacyView/PrivacyView';
 import { Register } from './views/Register/Register';
 import { TeamsView } from './views/TeamsView/TeamsView';
+import DyteVideo from './components/DyteVideo/DyteVideo';
 
 export interface UserDB {
 	firstName: string;
@@ -115,7 +115,7 @@ function App() {
 						<Route path="user" element={<Authenticated><UserView /></Authenticated>} />
 						<Route path="privacy" element={<Authenticated><PrivacyView /></Authenticated>} />
 						<Route path="search/:query" element={<Authenticated><Search /></Authenticated>} />
-						<Route path='videocall' element={<Authenticated><VideoCallView /></Authenticated>} />
+						<Route path='videocall' element={<Authenticated><DyteVideo /></Authenticated>} />
 					</Route>
 				</Routes>
 			</UserContext.Provider >
