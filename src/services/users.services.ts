@@ -83,16 +83,23 @@ export const setUserFriend = async (username: string) => {
     try {
         const userId = await getUserByUsername(username);
         const currentFriendsRef = await get(ref(db, `users/${auth?.currentUser?.uid}/friends`));
+        const currentUserInfo = await getUserByID(auth?.currentUser?.uid);
+        const currentUsername = currentUserInfo.username;
+        console.log("info: ", currentUsername);
+        
         let currentFriends = currentFriendsRef.val();
         if (!Array.isArray(currentFriends)) {
             currentFriends = [];
         }
         if (userId && !currentFriends.includes(userId) && userId !== auth?.currentUser?.uid) {
             currentFriends.push(userId);
-            await update(ref(db, `users/${auth?.currentUser?.uid}/friends/${userId}`), {
-                isFriend: true,
-                username: username,
-            });
+            const updates = {
+                [`users/${auth?.currentUser?.uid}/friends/${userId}/isFriend`]: true,
+                [`users/${userId}/friends/${auth?.currentUser?.uid}/isFriend`]: true,
+                [`users/${auth?.currentUser?.uid}/friends/${userId}/username`]: username,
+                [`users/${userId}/friends/${auth?.currentUser?.uid}/username`]: currentUsername,
+            } 
+            await update(ref(db), updates);
             toast.success(`Friend ${username} added successfully!`);
         } else {
             console.log(`Friend ${username} is already in the list!`);
