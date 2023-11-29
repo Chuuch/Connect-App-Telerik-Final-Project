@@ -1,13 +1,16 @@
 // import { useState } from 'react'
 import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { Toaster } from 'react-hot-toast';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Alert } from './components/Alert/Alert';
 import { ChatWindow } from './components/ChatWindow/ChatWindow';
 import { Loader } from './components/Loader/Loader';
 import { Search } from './components/Search/Search';
+import { VideoCallView } from './components/VideoCall/VideoCallView';
 import { auth } from './config/firebase-config';
 import UserContext from './context/UserContext';
+import Authenticated from './hoc/Authentication';
 import './index.css';
 import { getUserByID } from './services/users.services';
 import { Status } from './utils/status';
@@ -20,8 +23,6 @@ import { NotificationsView } from './views/NotificationsView/Notifications';
 import { PrivacyView } from './views/PrivacyView/PrivacyView';
 import { Register } from './views/Register/Register';
 import { TeamsView } from './views/TeamsView/TeamsView';
-import Authenticated from './hoc/Authentication';
-import { VideoCallView } from './components/VideoCall/VideoCallView';
 
 export interface UserDB {
 	firstName: string;
@@ -91,6 +92,7 @@ function App() {
 	return (
 		<BrowserRouter>
 			<UserContext.Provider value={{ currentUserDB, setCurrentUserDB }} >
+				<Toaster />
 				<Routes>
 					{/* <Route path="/" element={<Home />} />
 				<Route path="notifications" element={<Authenticated><NotificationsView /></Authenticated>} />
