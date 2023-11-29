@@ -182,3 +182,16 @@ export const createChannelMsg = async (content: string, channelId: string): Prom
     return '';
   }
 };
+
+export const setMsgByChatId = async (chatId: string, msg: object) : Promise<string> => {
+  const chat = await get(ref(db, `chats/${chatId}`));
+  if (chat) {
+    const updates = {
+      [`chats/${chatId}/`]: msg,
+    };
+  try {
+    await update(ref(db), updates);
+  } catch (error) {console.log(error.message);
+  }
+} return chatId;
+};
