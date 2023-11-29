@@ -12,6 +12,8 @@ import UserContext from '../../context/UserContext';
 import { deleteTeam } from '../../services/teams.services';
 import { getAllUserFriendsList } from '../../services/users.services';
 import CreateTeamForm, { UserList } from './CreateTeamForm';
+import AddMembersForm from './AddMembersForm';
+import { IoPersonAdd } from 'react-icons/io5';
 
 const Teams1 = () => {
     const form = useForm()
@@ -19,6 +21,8 @@ const Teams1 = () => {
     const [teams, setTeams] = useState([])
     const [userFriends, setUserFriends] = useState<UserList[]>([])
     const [showForm, setShowForm] = useState<boolean>(false);
+    const [showMembersForm, setShowMembersForm] = useState<boolean>(false);
+    const [selectedTeam, setSelectedTeam] = useState<string | null>(null)
 
     useEffect(() => {
         const fetchTeams = async () => {
@@ -27,6 +31,7 @@ const Teams1 = () => {
             // setTeams(teams)
             setUserFriends(userFriends)
         }
+        fetchTeams()
 
         const teamsRef = ref(db, 'teams');
         const unsubscribe = onValue(teamsRef, (snapshot) => {
@@ -48,7 +53,6 @@ const Teams1 = () => {
             unsubscribe();
         };
 
-        fetchTeams()
     }, [currentUserDB?.uid, teams])
 
     const handleDeleteTeam = async (teamName: string, teamId: string) => {
@@ -58,6 +62,17 @@ const Teams1 = () => {
         } catch (error) {
             toast.success(`Error deleting team ${teamName}!`);
         }
+    }
+
+    const handleAddMembers = (teamId: string) => {
+        setShowForm(false)
+        setShowMembersForm(true)
+        setSelectedTeam(teamId)
+    }
+
+    const handleAddTeam = () => {
+        setShowMembersForm(false)
+        setShowForm(true)
     }
 
     return (
@@ -77,7 +92,7 @@ const Teams1 = () => {
                     <div className="flex flex-row  w-80 justify-center">
                         <div className="tooltip" data-tip="Add Team">
                             <button
-                                onClick={() => setShowForm(true)}
+                                onClick={() => handleAddTeam()}
                                 className="flex flex-row   bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 hover:dark:bg-purple-500 text-white p-2 rounded-md text-sm"
                             >
                                 <MdGroupAdd size={20} />
@@ -93,19 +108,30 @@ const Teams1 = () => {
                                         <li key={id + channelName} className="menu w-96 space-x-2 flex-row rounded-box ">
                                             <details open>
                                                 <summary className="flex flex-row ">
-                                                    <div className=" flex flex-row space-x-2 w-80 justify-between">
+                                                    <div className=" flex flex-row w-80 justify-between">
                                                         <div className=" flex flex-row space-x-2 ">
                                                             <RiTeamFill size={20} className="fill-blue-500 dark:fill-purple-600 cursor-pointer" />
                                                             <p className="font-bold text-gray-500 dark:text-gray-300">{team.teamName} </p>
                                                         </div>
-                                                        <div className="tooltip" data-tip="Remove Team">
-                                                            <button
-                                                                onClick={() => handleDeleteTeam(team.teamName, team.id)}
-                                                                className="bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 hover:dark:bg-purple-500 text-white p-2 rounded-md text-sm"
-                                                            >
-                                                                <MdDeleteForever size={20} />
-                                                            </button>
+                                                        <div className="space-x-2">
+                                                            <div className="tooltip" data-tip="Add Team Member">
+                                                                <button
+                                                                    onClick={() => handleAddMembers()}
+                                                                    className="bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 hover:dark:bg-purple-500 text-white p-2 rounded-md text-sm"
+                                                                >
+                                                                    <IoPersonAdd size={20} />
+                                                                </button>
+                                                            </div>
+                                                            <div className="tooltip" data-tip="Remove Team">
+                                                                <button
+                                                                    onClick={() => handleDeleteTeam(team.teamName, team.id)}
+                                                                    className="bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 hover:dark:bg-purple-500 text-white p-2 rounded-md text-sm"
+                                                                >
+                                                                    <MdDeleteForever size={20} />
+                                                                </button>
+                                                            </div>
                                                         </div>
+
                                                     </div>
                                                 </summary>
                                                 <ul>
@@ -125,6 +151,7 @@ const Teams1 = () => {
                     </div>
                 </motion.ul >
                 {showForm && <CreateTeamForm form={form} setShowForm={setShowForm} list={userFriends} />}
+                {showMembersForm && <AddMembersForm setShowMembersForm={setShowMembersForm} list={userFriends} teamId={selectedTeam} />}
             </div >
         </div >
     )
