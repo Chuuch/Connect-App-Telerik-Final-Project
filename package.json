@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@dytesdk/react-ui-kit": "^1.59.0",
+    "@dytesdk/react-web-core": "^1.35.5",
     "@emoji-mart/data": "^1.1.2",
     "@emoji-mart/react": "^1.1.1",
     "@types/axios": "^0.14.0",
@@ -19,7 +21,6 @@
     "@types/simple-peer": "^9.11.8",
     "@types/twilio-video": "^2.11.0",
     "@types/uuid": "^9.0.7",
-    "@types/webrtc": "^0.0.41",
     "axios": "^1.6.2",
     "emoji-mart": "^5.5.2",
     "firebase": "^10.6.0",
@@ -36,7 +37,6 @@
     "simple-peer": "^9.11.1",
     "twilio-video": "^2.28.1",
     "uuid": "^9.0.1",
-    "webrtc": "^1.14.1",
     "webrtc-adapter": "^8.2.3"
   },
   "devDependencies": {
