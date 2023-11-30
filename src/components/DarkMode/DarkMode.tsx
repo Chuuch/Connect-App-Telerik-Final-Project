@@ -16,7 +16,7 @@ export const DarkMode = () => {
   
   return (
     <div  className={`app ${darkMode ? 'dark' : ''}`}>
-      <button onClick={toggleDarkMode} className="p-2">
+      <button onClick={toggleDarkMode}>
         {darkMode ? <IoSunny size={30} className='dark:fill-purple-600'/> : <IoMoon size={30} className='fill-blue-500'/>}
       </button>
     </div>
