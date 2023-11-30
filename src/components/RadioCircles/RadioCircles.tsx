@@ -15,7 +15,7 @@ export const RadioCircles: React.FC<RadioCirclesProps> = () => {
         className='relative flex justify-center items-center'>
 
         <div className='absolute border border-blue-500 dark:border-purple-500 rounded-full h-10 w-10 opacity-0 hover:opacity-100 hover:animate-ping'/>
-        <div className='rounded-full border dark:border-gray-500 dark:bg-gray-800 h-12 w-12 absolute hover:animate-pulse'>
+        <div className='rounded-full border bg-blue-500 text-gray-300 dark:text-purple-500 dark:border-purple-500 dark:bg-gray-800 h-12 w-12 absolute hover:animate-pulse'>
             <div className='visible flex items-center justify-center opacity-100 mt-3'>
             <LuRadioTower size={25} />
             </div>
