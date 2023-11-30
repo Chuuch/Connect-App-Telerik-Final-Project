@@ -4,6 +4,7 @@ import { IoCall, IoCalendar, IoNotifications } from 'react-icons/io5';
 import { DarkMode } from '../DarkMode/DarkMode';
 import { NavLink } from 'react-router-dom';
 import { logoutUser } from '../../services/auth.services';
+import  Assistant from '../Assistant/Assistant';
 
 // type Props = {}
 
@@ -43,10 +44,15 @@ export const Navbar = () => {
 								</NavLink>
 							</li>
 							<li>
+								<Assistant />
+							</li>
+							<li>
 								<a>
 									<DarkMode />
 								</a>
 							</li>
+						
+							
 						</ul>
 						<label
 							htmlFor="my-drawer-3"
