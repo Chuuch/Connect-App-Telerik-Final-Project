@@ -36,15 +36,19 @@ export const createChatId = async (): Promise<string> => {
 //   const userData = await getUserByID(friendId);
   const chatData = await getAllChats();
   const objVal=Object.values(chatData)
-  console.log(objVal);
+  console.log("objVal: ", objVal);
   const existingChat = objVal.find((chat) => {
     const participantsArr = Object.values(chat.participants);
+    console.log("participantsArr: ", participantsArr);
+    
     return (
       participantsArr &&
       participantsArr.includes(auth?.currentUser?.uid) &&
       participantsArr.includes(friendId)
     );
   });
+  console.log("existingChat: ", existingChat);
+  
   if (existingChat) {
     console.log("Chat already in use");
   } else {
@@ -85,12 +89,18 @@ export const createChatId = async (): Promise<string> => {
     timestamp: string;
 }
 
-  export const getAllChats = () => {
-    return get(ref(db, 'chats'))
-        .then(snapshot => {
-            if (!snapshot.exists()) {
-                return [];
-            }
-            return Object.values(snapshot.val()) as ChatType[];
-        });
+  export const getAllChats = async () => {
+    const snapshot = await get(ref(db, 'chats'));
+    if (!snapshot.exists()) {
+      return [];
+    }
+    return Object.values(snapshot.val()) as ChatType[];
 };
+
+  export const getChatById = async (id: string) => {
+    const snapshot = await get(ref(db, `chats/${id}`));
+    if (!snapshot.exists()) {
+      return [];
+    }
+    return Object.values(snapshot.val()) as ChatType[];
+  };

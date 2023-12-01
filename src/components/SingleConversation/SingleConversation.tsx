@@ -2,16 +2,36 @@ import { BsChatTextFill } from 'react-icons/bs';
 import { IoCall, IoMic, IoVideocam } from 'react-icons/io5';
 import { PiUserCircleFill } from 'react-icons/pi';
 import { motion } from 'framer-motion';
+import { createChatWithId, getChatById } from '../../services/chat.services';
+import { useState, useEffect } from 'react';
 
-interface Conversation {
-    id: string;
-    teamId: string;
+interface Friend {
+	uid: string;
+    teams: object;
     messages: object;
     timeStamp: number;
-    username: string;
+	firsName: string;
+	username: string;
+	email: string;
+	friends: object;
 }
 
-export const SingleConversation: React.FC<{ conversation: Conversation}> = ({ conversation }) => {
+export const SingleConversation: React.FC<{ friend: Friend}> = ({ friend }) => {
+	const [results, setResults] = useState<Array<string>>([]);
+
+	const fetchChat = async () => {
+		const chatId = await createChatWithId(friend.uid);
+		console.log("Created chat with: ", chatId);
+		const chat = await getChatById(chatId);
+		console.log("Fetched chat: ", chat);
+	};
+	
+	const handleClick = async () => {
+		const chatId = await createChatWithId(friend.uid);
+		console.log("Created chat with: ", chatId);
+		await fetchChat();
+	};
+
 	return (
 		<div>
 			<div className="w-96">
@@ -26,7 +46,7 @@ export const SingleConversation: React.FC<{ conversation: Conversation}> = ({ co
 							size={50}
 							className="fill-blue-500 dark:fill-purple-600 cursor-pointer"
 						/>
-						<p className="text-gray-500 dark:text-gray-300">{conversation.username}</p>
+						<p className="text-gray-500 dark:text-gray-300">{friend.username}</p>
 						<div className="flex flex-row pl-5 space-x-4">
 							<IoCall
 								className="fill-gray-500 hover:fill-blue-500 active:fill-blue-500 dark:hover:fill-purple-600"
@@ -43,6 +63,7 @@ export const SingleConversation: React.FC<{ conversation: Conversation}> = ({ co
 							<BsChatTextFill
 								className="fill-gray-500 hover:fill-blue-500 active:fill-blue-500 dark:hover:fill-purple-600"
 								size={20}
+								onClick={handleClick}
 							/>
 						</div>
 					</li>

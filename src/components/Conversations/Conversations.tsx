@@ -5,17 +5,19 @@ import { auth, db } from "../../config/firebase-config";
 import { SingleConversation } from "../SingleConversation/SingleConversation";
 import { getUserByID } from "../../services/users.services";
 
-interface Conversation {
-	id: string;
-    teamId: string;
+interface Friend {
+	uid: string;
+    teams: object;
     messages: object;
     timeStamp: number;
-	conversation: string;
+	firsName: string;
 	username: string;
+	email: string
+	friends: object;
 }
 
 export const Conversations: React.FC = () => {
-	const [conversations, setConversations] = useState<Conversation[]>([]);
+	const [friends, setFriends] = useState<Friend[]>([]);
 
 
     useEffect(() => {
@@ -33,9 +35,9 @@ export const Conversations: React.FC = () => {
 					})
 				  );
 		  
-				  setConversations(friendsList.filter(Boolean)); 
+				  setFriends(friendsList.filter(Boolean)); 
 				} else {
-				  setConversations([]);
+				  setFriends([]);
 				}
 			  });
 		  
@@ -52,9 +54,9 @@ export const Conversations: React.FC = () => {
 					Chats
 				</h2>
 			</div>
-			{conversations && conversations.map((conversation) => (
-				<div className="flex flex-col w-96" key={conversation.id}>
-				<SingleConversation conversation={conversation}/>
+			{friends && friends.map((friend) => (
+				<div className="flex flex-col w-96" key={friend.uid}>
+				<SingleConversation friend={friend}/>
 			</div>
 			))}
 	

@@ -1,4 +1,4 @@
-import { get, ref, update } from 'firebase/database';
+import { get, push, ref, update } from 'firebase/database';
 import toast from 'react-hot-toast';
 import { auth, db } from '../config/firebase-config';
 import { UserType } from './auth.services';
@@ -91,6 +91,17 @@ export const setUserFriend = async (username: string) => {
         if (!Array.isArray(currentFriends)) {
             currentFriends = [];
         }
+
+        const chat = {
+            id: '',
+            participants: [auth?.currentUser?.uid, userId],
+            timestamp: Date.now(),
+            messages: [],
+          };
+
+        const newChatRef = push(ref(db, 'chats'), chat);
+        const newChatKey: string | null = newChatRef.key;
+
         if (userId && !currentFriends.includes(userId) && userId !== auth?.currentUser?.uid) {
             currentFriends.push(userId);
             const updates = {
@@ -98,6 +109,53 @@ export const setUserFriend = async (username: string) => {
                 [`users/${userId}/friends/${auth?.currentUser?.uid}/isFriend`]: true,
                 [`users/${auth?.currentUser?.uid}/friends/${userId}/username`]: username,
                 [`users/${userId}/friends/${auth?.currentUser?.uid}/username`]: currentUsername,
+                [`chats/${newChatKey}/id`]: newChatKey,
+                [`users/${auth?.currentUser?.uid}/chats/${newChatKey}`]: true,
+                [`users/${userId}/chats/${newChatKey}`]: true
+            } 
+            await update(ref(db), updates);
+            toast.success(`Friend ${username} added successfully!`);
+        } else {
+            console.log(`Friend ${username} is already in the list!`);
+        }
+    } catch (err) {
+        console.log("An error occurred", err);
+    }
+}
+
+export const setUserFriendChat = async (username: string) => {
+    try {
+        const userId = await getUserByUsername(username);
+        const currentFriendsRef = await get(ref(db, `users/${auth?.currentUser?.uid}/friends`));
+        const currentUserInfo = await getUserByID(auth?.currentUser?.uid);
+        const currentUsername = currentUserInfo.username;
+        console.log("info: ", currentUsername);
+        
+        let currentFriends = currentFriendsRef.val();
+        if (!Array.isArray(currentFriends)) {
+            currentFriends = [];
+        }
+
+        const chat = {
+            id: '',
+            participants: [auth?.currentUser?.uid, userId],
+            timestamp: Date.now(),
+            messages: [],
+          };
+
+        // const newChatRef = push(ref(db, 'chats'), chat);
+        // const newChatKey: string | null = newChatRef.key;
+          const chatId = auth?.currentUser?.uid + userId;
+        if (userId && !currentFriends.includes(userId) && userId !== auth?.currentUser?.uid) {
+            currentFriends.push(userId);
+            const updates = {
+                [`users/${auth?.currentUser?.uid}/friends/${userId}/isFriend`]: true,
+                [`users/${userId}/friends/${auth?.currentUser?.uid}/isFriend`]: true,
+                [`users/${auth?.currentUser?.uid}/friends/${userId}/username`]: username,
+                [`users/${userId}/friends/${auth?.currentUser?.uid}/username`]: currentUsername,
+                [`chats/${chatId}/id`]: chatId,
+                [`users/${auth?.currentUser?.uid}/chats/${chatId}`]: true,
+                [`users/${userId}/chats/${chatId}`]: true
             } 
             await update(ref(db), updates);
             toast.success(`Friend ${username} added successfully!`);

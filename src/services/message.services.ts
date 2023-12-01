@@ -47,7 +47,7 @@ interface Notification {
   author: string;
 }
 
-export const createMsg = async (content: string): Promise<string> => {
+export const createMsg = async (content: string, chatId: string): Promise<string> => {
   const userSnapshot = await get(
     ref(db, `/users/${auth?.currentUser?.uid}`)
   );
@@ -76,7 +76,7 @@ export const createMsg = async (content: string): Promise<string> => {
   if (newMsgKey) {
     const updates = {
       [`messages/${newMsgKey}/id`]: newMsgKey,
-      [`chats/chatID1/messages/${newMsgKey}`]: true,
+      [`chats/${chatId}/messages/${newMsgKey}`]: true,
     };
 
     try {
@@ -94,7 +94,7 @@ export const createMsg = async (content: string): Promise<string> => {
       if (newNotiKey) {
         const updates = {
           [`notifications/${newNotiKey}/id`]: newNotiKey,
-          [`chats/chatID1/notifications/${newNotiKey}`]: true,
+          [`chats/${chatId}/notifications/${newNotiKey}`]: true,
         };
 
         try {
@@ -183,6 +183,75 @@ export const createChannelMsg = async (content: string, channelId: string): Prom
   }
 };
 
+export const createChatMsg = async (content: string, chatId: string): Promise<string> => {
+  const userSnapshot = await get(
+    ref(db, `/users/${auth?.currentUser?.uid}`)
+  );
+  const username: string = userSnapshot.val()?.username || '';
+
+
+  const gifUrlRegex = /(https?:\/\/\S+\.(?:png|jpe?g|gif|svg))/i;
+  const gifUrlMatch = content.match(gifUrlRegex);
+  const hasGif = gifUrlMatch !== null;
+
+
+  const msgContent = hasGif ? gifUrlMatch[0] : content;
+
+  const msg = {
+    content: msgContent,
+    id: '',
+    author: username,
+    userID: auth?.currentUser?.uid,
+    timestamp: Date.now(),
+    hasGif,
+  };
+
+  const newMsgRef = push(ref(db, `chats/${chatId}/messages`), msg);
+  const newMsgKey: string | null = newMsgRef.key;
+
+  if (newMsgKey) {
+    const updates = {
+      // [`messages/${chatId}/${newMsgKey}/id`]: newMsgKey,
+      [`chats/${chatId}/messages/${newMsgKey}`]: msg,
+      //[`chats/${chatId}/messages/${newMsgKey}/id`]: newMsgKey
+    };
+
+    try {
+      await update(ref(db), updates);
+
+      const notification: Notification = {
+        id: newMsgKey,
+        type: 'message',
+        author: username,
+      }
+
+      const newNotiRef = push(ref(db, 'notifications'), notification);
+      const newNotiKey: string | null = newNotiRef.key;
+
+      if (newNotiKey) {
+        const updates = {
+          [`notifications/${newNotiKey}/id`]: newNotiKey,
+          [`chats/${chatId}/notifications/${newNotiKey}`]: true,
+        };
+
+        try {
+          await update(ref(db), updates);
+        } catch (error) {
+          console.error('Error updating data');
+        }
+      }
+
+      return newMsgKey;
+    } catch (error) {
+      console.error('Error updating data:', error);
+      return '';
+    }
+  } else {
+    console.error('Error generating message key');
+    return '';
+  }
+};
+
 export const setMsgByChatId = async (chatId: string, msg: object) : Promise<string> => {
   const chat = await get(ref(db, `chats/${chatId}`));
   if (chat) {
@@ -195,3 +264,13 @@ export const setMsgByChatId = async (chatId: string, msg: object) : Promise<stri
   }
 } return chatId;
 };
+
+export const getMsgByChatId = async (chatId: string) : Promise<string> => {
+  const chat = await get(ref(db, `chats/${chatId}`));
+  if (chat) {
+    const messages = chat.messages;
+    return messages;
+  } else {
+    return ''
+  }
+}
