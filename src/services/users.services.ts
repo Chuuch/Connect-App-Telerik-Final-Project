@@ -92,15 +92,15 @@ export const setUserFriend = async (username: string) => {
             currentFriends = [];
         }
 
-        const chat = {
-            id: '',
-            participants: [auth?.currentUser?.uid, userId],
-            timestamp: Date.now(),
-            messages: [],
-          };
+        // const chat = {
+        //     id: '',
+        //     participants: [auth?.currentUser?.uid, userId],
+        //     timestamp: Date.now(),
+        //     messages: [],
+        //   };
 
-        const newChatRef = push(ref(db, 'chats'), chat);
-        const newChatKey: string | null = newChatRef.key;
+        // const newChatRef = push(ref(db, 'chats'), chat);
+        // const newChatKey: string | null = newChatRef.key;
 
         if (userId && !currentFriends.includes(userId) && userId !== auth?.currentUser?.uid) {
             currentFriends.push(userId);
@@ -109,9 +109,9 @@ export const setUserFriend = async (username: string) => {
                 [`users/${userId}/friends/${auth?.currentUser?.uid}/isFriend`]: true,
                 [`users/${auth?.currentUser?.uid}/friends/${userId}/username`]: username,
                 [`users/${userId}/friends/${auth?.currentUser?.uid}/username`]: currentUsername,
-                [`chats/${newChatKey}/id`]: newChatKey,
-                [`users/${auth?.currentUser?.uid}/chats/${newChatKey}`]: true,
-                [`users/${userId}/chats/${newChatKey}`]: true
+                // [`chats/${newChatKey}/id`]: newChatKey,
+                // [`users/${auth?.currentUser?.uid}/chats/${newChatKey}`]: true,
+                // [`users/${userId}/chats/${newChatKey}`]: true
             } 
             await update(ref(db), updates);
             toast.success(`Friend ${username} added successfully!`);

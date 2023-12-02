@@ -7,7 +7,11 @@ import GiphySearch from '../Giphy/Giphy';
 import { API_KEY, API_SEARCH } from '../../constants/constants';
 import { useLocation, useParams } from 'react-router';
 
-export const MessageBox = () => {
+interface MessageBoxProps {
+	chatId: string; 
+  }
+
+  export const MessageBox: React.FC<MessageBoxProps> = ({ chatId }) => {
 	const { pathname } = useLocation();
 	const { channelId } = useParams();
 	const [msg, setMsg] = useState('');
@@ -25,7 +29,7 @@ export const MessageBox = () => {
 					const messageId = await createChannelMsg(completeMessageWithGif, channelId);
 					console.log('Message sent with ID:', messageId);
 				} else {
-					const messageId = await createMsg(completeMessageWithGif);
+					const messageId = await createMsg(completeMessageWithGif, chatId);
 					console.log('Message sent with ID:', messageId);
 				}
 			}

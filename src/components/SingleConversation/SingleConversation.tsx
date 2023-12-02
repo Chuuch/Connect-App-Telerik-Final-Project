@@ -2,9 +2,10 @@ import { BsChatTextFill } from 'react-icons/bs';
 import { IoCall, IoMic, IoVideocam } from 'react-icons/io5';
 import { PiUserCircleFill } from 'react-icons/pi';
 import { motion } from 'framer-motion';
-import { createChatWithId, getChatById } from '../../services/chat.services';
-import { useState } from 'react';
+import { createChatWithId, } from '../../services/chat.services';
+//import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 interface Friend {
 	uid: string;
@@ -17,20 +18,19 @@ interface Friend {
 	friends: object;
 }
 
-export const SingleConversation: React.FC<{ friend: Friend}> = ({ friend }) => {
-	const [results, setResults] = useState<Array<string>>([]);
-
-	const fetchChat = async () => {
-		const chatId = await createChatWithId(friend.uid);
-		console.log("Created chat with: ", chatId);
-		const chat = await getChatById(chatId);
-		console.log("Fetched chat: ", chat);
-	};
-	
+export const SingleConversation: React.FC<{ friend: Friend }> = ({ friend }) => {
+	const navigate = useNavigate();
+  
 	const handleClick = async () => {
-		const chatId = await createChatWithId(friend.uid);
+	console.log("friend uid: ", friend.uid);
+  
+	const chatId = await createChatWithId(friend.uid);
+	if (chatId) {
 		console.log("Created chat with: ", chatId);
-		await fetchChat();
+		navigate(`/chat/${chatId}`, { state: { friendId: friend.uid } }); 
+	} else {
+		console.log("Chat is already being used!");
+	}
 	};
 
 	return (
