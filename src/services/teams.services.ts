@@ -1,6 +1,7 @@
-import { get, push, ref, update } from 'firebase/database';
+import { get, push, ref, remove, set, update } from 'firebase/database';
 import { UserList } from '../components/Teams/CreateTeamForm';
 import { auth, db } from '../config/firebase-config';
+import toast from 'react-hot-toast';
 
 export const createTeam = async (teamName: string, participants: UserList[] = []): Promise<string> => {
   const ownerSnapshot = await get(ref(db, `/users/${auth?.currentUser?.uid}`));
@@ -22,7 +23,6 @@ export const createTeam = async (teamName: string, participants: UserList[] = []
   if (newTeamKey) {
     const updates = {
       [`teams/${newTeamKey}/id`]: newTeamKey,
-      [`users/${auth?.currentUser?.uid}/teams/${newTeamKey}`]: team,
     };
 
     try {
@@ -58,9 +58,27 @@ export const getAllTeamsByUId = async () => {
 
 export const deleteTeam = (uid: string, teamId: string) => {
   return update(ref(db), {
-    // TODO: USERS TEAMS COULD BE DELETED - NOT USED
-    [`users/${uid}/teams/${teamId}`]: null,
     [`teams/${teamId}`]: null,
   });
 }
 
+export const addMemberToTeam = async (members: UserList[], teamId: string) => {
+  const membersrSnapshot = await get(ref(db, `teams/${teamId}/members`));
+  const existingMembers: UserList[] = membersrSnapshot.val() || [];
+
+  const filteredMembers = members.filter(m => !existingMembers.map(m => m.name).includes(m?.name))
+
+  if (!filteredMembers.length) {
+    toast.error(`${members.map(m => m.name).join(',')} has already exist in this team`)
+  } else {
+    try {
+      const newMembers = [...existingMembers, ...filteredMembers]
+      await remove(ref(db, `teams/${teamId}/members`))
+      await set(ref(db, `teams/${teamId}/members`), [...newMembers]);
+      return filteredMembers;
+    } catch (error) {
+      console.error('Error updating data');
+      return '';
+    }
+  }
+}

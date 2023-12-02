@@ -75,7 +75,7 @@ function App() {
 		return () => {
 			unsubscribe();
 		};
-	}, []);
+	}, [currentUserDB]);
 
 	if (loading) {
 		return (

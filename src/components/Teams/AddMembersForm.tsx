@@ -3,6 +3,7 @@ import { HiUserAdd } from 'react-icons/hi';
 import UserContext from '../../context/UserContext';
 import Multiselect from '../MultiSelect/MultiSelect';
 import toast from 'react-hot-toast';
+import { addMemberToTeam } from '../../services/teams.services';
 
 export interface UserList {
     id: string;
@@ -21,11 +22,11 @@ const AddMembersForm: FC<AddMembersForm> = ({ setShowMembersForm, list, teamId }
 
     const onSubmit = async (e: BaseSyntheticEvent) => {
         e.preventDefault()
-        alert('Not implemented yet')
-        teamId && handleAddTeamMembers(selectedUsers, teamId)
+
+        teamId && await handleAddTeamMembers(selectedUsers, teamId)
+
         setShowMembersForm(false)
         setSelectedUsers([])
-
     }
 
     const handleCloseForm = () => {
@@ -35,13 +36,11 @@ const AddMembersForm: FC<AddMembersForm> = ({ setShowMembersForm, list, teamId }
 
     const handleAddTeamMembers = async (members: UserList[], teamId: string) => {
         try {
-            // await addTeamMembers(members, teamId)
-            toast.success(`Team members: ${members.join(',')} added successfully!`);
+            await addMemberToTeam(members, teamId)
         } catch (error) {
             toast.success(`Error adding team member/s!`);
         }
     }
-
 
     return (
         <div className="flex justify-center items-center border bg-gray-100 dark:bg-gray-900 border-blue-500 dark:border-purple-500 rounded-md p-4">
