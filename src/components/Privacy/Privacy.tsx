@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { BlockedUsersList } from '../ BlockedUsers/BlockedUsers';
+import { blockUser, checkIfUserExist } from '../../services/users.services';
 import toast from 'react-hot-toast';
-import { blockUser } from '../../services/users.services';
 
 interface PrivacyProps {
   // You can define any props for Privacy if needed
@@ -21,13 +21,16 @@ export const Privacy: React.FC<PrivacyProps> = () => {
   const [isBlocked, setIsBlocked] = useState<boolean>(false);
 
   const handleBlockUser = async () => {
+    const userExists = await checkIfUserExist(blockedUser)
     if (blockedUser.trim() !== '') {
       try {
-        await blockUser(blockedUser);
-        setIsBlocked(true);
-        setBlockedUser('');
-        setBlockedUsers([...blockedUsers, blockedUser]);
-        toast.success(`${blockedUser} was blocked successfully!`);
+        if (userExists) {
+          await blockUser(blockedUser);
+          setIsBlocked(true);
+          setBlockedUser('');
+          setBlockedUsers([...blockedUsers, blockedUser]);
+          toast.success(`${blockedUser} was successfully blocked!`);
+        }
       } catch (error) {
         toast.error('Error blocking user. Please try again.');
         console.log(error);

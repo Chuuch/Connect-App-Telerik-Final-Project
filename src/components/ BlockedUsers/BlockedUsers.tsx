@@ -1,6 +1,6 @@
 import { off, onValue, ref } from "firebase/database";
 import { Dispatch, SetStateAction, useEffect } from "react";
-import {  db } from "../../config/firebase-config";
+import {  auth, db } from "../../config/firebase-config";
 import { unblockUser } from "../../services/users.services";
 import toast from "react-hot-toast";
 interface BlockedUsersProps {
@@ -16,9 +16,8 @@ interface BlockedUsersProps {
   export const BlockedUsersList: React.FC<BlockedUsersProps> = ({ blockedUsers, setBlockedUsers }) => {
     useEffect(() => {
 
-      const blockedUsersRef = ref(db, 'blockedUsers');
+      const blockedUsersRef = ref(db, `users/${auth.currentUser?.uid}/blockedUsers`);
   
-      // Attach the event listener
       const unsubscribe = onValue(blockedUsersRef, (snapshot) => {
         const data = snapshot.val();
         if (data) {

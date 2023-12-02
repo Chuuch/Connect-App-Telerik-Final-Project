@@ -181,10 +181,16 @@ export const getAllUserFriendsList = () => {
         });
 };
 
-export const blockUser = (username: string) => {
-    return set(ref(db, `users/${auth?.currentUser?.uid}/blockedUsers/${username}`), true);
-}
-
-export const unblockUser = (username: string) => {
-    return remove(ref(db, `users/${auth?.currentUser?.uid}/blockedUsers/${username}`));
-}
+export const blockUser = async (username: string) => {
+       const checkUser =  await checkIfUserExist(username);
+       if (!checkUser) {
+        console.log('User not found');
+    }   else {
+        set(ref(db, `users/${auth?.currentUser?.uid}/blockedUsers/${username}`), true);
+    }
+       }
+       
+  
+  export const unblockUser = async (username: string) => {
+     await remove(ref(db, `users/${auth?.currentUser?.uid}/blockedUsers/${username}`));
+  };
