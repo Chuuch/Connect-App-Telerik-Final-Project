@@ -1,4 +1,4 @@
-import { ref, update, push, get } from 'firebase/database';
+import { ref, update, push, get, onValue, off } from 'firebase/database';
 import { auth, db } from '../config/firebase-config';
 
 export const createChatId = async (): Promise<string> => {
@@ -36,21 +36,27 @@ export const createChatId = async (): Promise<string> => {
 //   const userData = await getUserByID(friendId);
   const chatData = await getAllChats();
   const objVal=Object.values(chatData)
-  console.log("objVal: ", objVal);
+  //console.log("objVal: ", objVal);
   const existingChat = objVal.find((chat) => {
-    const participantsArr = Object.values(chat.participants);
-    console.log("participantsArr: ", participantsArr);
+    if(chat.participants)
+    {
+      const participantsArr = Object.values(chat.participants);
+    
+    //console.log("participantsArr: ", participantsArr);
     
     return (
       participantsArr &&
       participantsArr.includes(auth?.currentUser?.uid) &&
-      participantsArr.includes(friendId)
+      participantsArr.includes(friendId) &&
+      participantsArr.length === 2
     );
+  }
   });
   console.log("existingChat: ", existingChat);
   
   if (existingChat) {
-    console.log("Chat already in use");
+    console.log("Chat already in use: ", existingChat.id);
+    return existingChat.id;
   } else {
         const chat = {
                   id: '',
@@ -97,10 +103,17 @@ export const createChatId = async (): Promise<string> => {
     return Object.values(snapshot.val()) as ChatType[];
 };
 
-  export const getChatById = async (id: string) => {
-    const snapshot = await get(ref(db, `chats/${id}`));
-    if (!snapshot.exists()) {
-      return [];
+export const getChatById = (id: string, callback: (data) => void): (() => void) => {
+  const chatRef = ref(db, `chats/${id}`);
+  const valueCallback = (snapshot) => {
+    if (snapshot.exists()) {
+      const chatData = snapshot.val();
+      callback(chatData);
+    } else {
+      callback(null);
     }
-    return Object.values(snapshot.val()) as ChatType[];
   };
+
+  onValue(chatRef, valueCallback);
+  return () => off(chatRef, valueCallback);
+};

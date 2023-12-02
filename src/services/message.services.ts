@@ -70,13 +70,13 @@ export const createMsg = async (content: string, chatId: string): Promise<string
     hasGif,
   };
 
-  const newMsgRef = push(ref(db, 'messages'), msg);
+  const newMsgRef = push(ref(db, `chats/${chatId}/messages`), msg);
   const newMsgKey: string | null = newMsgRef.key;
 
   if (newMsgKey) {
     const updates = {
       [`messages/${newMsgKey}/id`]: newMsgKey,
-      [`chats/${chatId}/messages/${newMsgKey}`]: true,
+      [`chats/${chatId}/messages/${newMsgKey}/id`]: newMsgKey,
     };
 
     try {

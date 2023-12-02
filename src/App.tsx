@@ -23,6 +23,7 @@ import { PrivacyView } from './views/PrivacyView/PrivacyView';
 import { Register } from './views/Register/Register';
 import { TeamsView } from './views/TeamsView/TeamsView';
 import DyteVideo from './components/DyteVideo/DyteVideo';
+import { Chat } from './components/ChatWithFriend/ChatWithFriend';
 
 export interface UserDB {
 	firstName: string;
@@ -116,6 +117,7 @@ function App() {
 						<Route path="privacy" element={<Authenticated><PrivacyView /></Authenticated>} />
 						<Route path="search/:query" element={<Authenticated><Search /></Authenticated>} />
 						<Route path='videocall' element={<Authenticated><DyteVideo /></Authenticated>} />
+						<Route path='chat/:chatId' element={<Authenticated><Chat /></Authenticated>} />
 					</Route>
 				</Routes>
 			</UserContext.Provider >
