@@ -47,25 +47,26 @@ const Teams1 = () => {
     }, [currentUserDB, currentUserDB?.uid])
 
     useEffect(() => {
-        const fetchData = async () => {
-            const friendsRef = ref(db, `users/${currentUserDB?.uid}/friends`);
-            const unsubscribe = onValue(friendsRef, (snapshot) => {
-                if (!snapshot.exists()) {
-                    return [];
-                }
+        const friendsRef = ref(db, `users/${currentUserDB?.uid}/friends`);
+        const unsubscribe = onValue(friendsRef, (snapshot) => {
+            if (!snapshot.exists()) {
+                return [];
+            }
 
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                const friends = Object.entries(snapshot.val())
-                    .filter(([key, value]) => {
-                        return value?.isFriend
-                    })
-                    .map(([key, value]) => ({ id: key, name: value?.username }));
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const friends = Object.entries(snapshot.val())
+                .filter(([key, value]) => {
+                    return value?.isFriend
+                })
+                .map(([key, value]) => ({ id: key, name: value?.username }));
 
-                setUserFriends(friends);
-            });
-        }
+            setUserFriends(friends);
+        });
 
-        fetchData()
+        return () => {
+            unsubscribe();
+        };
+
     }, [currentUserDB?.uid])
 
     const handleDeleteTeam = async (teamName: string, teamId: string) => {
