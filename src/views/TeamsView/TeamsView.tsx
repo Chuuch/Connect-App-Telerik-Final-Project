@@ -1,13 +1,13 @@
 import { useParams } from 'react-router';
-import { MessageBox } from "../../components/MessageBox/MessageBox"
-import { Messages } from "../../components/Messages/Messages"
+import { MessageBox } from "../../components/MessageBox/MessageBox";
+import { Messages } from "../../components/Messages/Messages";
 // import { Teams } from "../../components/Teams/Teams"
-import Teams1 from '../../components/Teams/Teams1'
-import { useEffect, useState } from 'react';
 import { onValue, ref } from 'firebase/database';
-import { db } from '../../config/firebase-config';
+import { useEffect, useState } from 'react';
 import { Notifications } from '../../components/Notifications/Notifications';
-import { Teams } from '../../components/Teams/Teams';
+import Teams1 from '../../components/Teams/Teams1';
+import { db } from '../../config/firebase-config';
+import TeamUsersList from '../../components/TeamUsersList/TeamUsersList';
 
 export const TeamsView = () => {
   const { teamId, channelId } = useParams();
@@ -39,19 +39,19 @@ export const TeamsView = () => {
   }, [channelId]);
 
   return (
-    <div className="bg-white dark:bg-black flex flex-grow items-start justify-start">
-      <div className="flex-col shadow-x bg-gray-100 dark:bg-gray-900">
-        <div className="shadow-x bg-gray-100 dark:bg-gray-900">
+    <div className="h-full bg-white dark:bg-black flex flex-grow items-start justify-start">
+      <div className="h-full flex-col shadow-x bg-gray-100 dark:bg-gray-900">
+        <div className=" shadow-x bg-gray-100 dark:bg-gray-900">
           <Teams1 />
         </div>
         <div className=" shadow-xl bg-gray-100 dark:bg-gray-900">
-          <Notifications
+          {/* <Notifications
             notification={notification}
             userID={''}
             onNotificationsCleared={function (): void {
               throw new Error('Function not implemented.');
             }}
-          />
+          /> */}
         </div>
       </div>
       <div className="flex-grow flex-col w-[1440px]">
@@ -61,6 +61,9 @@ export const TeamsView = () => {
         <div className=" dark:border-gray-600 flex-grow">
           <MessageBox />
         </div>
+      </div>
+      <div className="h-full shadow-x bg-gray-100 dark:bg-gray-900">
+        <TeamUsersList teamId={teamId} />
       </div>
     </div>
   )

@@ -1,4 +1,4 @@
-import { get, push, ref, update } from 'firebase/database';
+import { get, push, ref, remove, set, update } from 'firebase/database';
 import toast from 'react-hot-toast';
 import { auth, db } from '../config/firebase-config';
 import { UserType } from './auth.services';
@@ -180,3 +180,17 @@ export const getAllUserFriendsList = () => {
             }).map(([key, value]) => ({ id: key, name: value?.username }));
         });
 };
+
+export const blockUser = async (username: string) => {
+       const checkUser =  await checkIfUserExist(username);
+       if (!checkUser) {
+        console.log('User not found');
+    }   else {
+        set(ref(db, `users/${auth?.currentUser?.uid}/blockedUsers/${username}`), true);
+    }
+       }
+       
+  
+  export const unblockUser = async (username: string) => {
+     await remove(ref(db, `users/${auth?.currentUser?.uid}/blockedUsers/${username}`));
+  };
