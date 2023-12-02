@@ -4,16 +4,15 @@ import { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { HiUsers } from 'react-icons/hi2';
+import { IoPersonAdd } from 'react-icons/io5';
 import { MdDeleteForever, MdGroupAdd } from 'react-icons/md';
 import { RiTeamFill } from 'react-icons/ri';
 import { NavLink } from 'react-router-dom';
 import { db } from '../../config/firebase-config';
 import UserContext from '../../context/UserContext';
 import { deleteTeam } from '../../services/teams.services';
-import { getAllUserFriendsList } from '../../services/users.services';
-import CreateTeamForm, { UserList } from './CreateTeamForm';
 import AddMembersForm from './AddMembersForm';
-import { IoPersonAdd } from 'react-icons/io5';
+import CreateTeamForm, { UserList } from './CreateTeamForm';
 
 const Teams1 = () => {
     const form = useForm()
@@ -25,27 +24,19 @@ const Teams1 = () => {
     const [selectedTeam, setSelectedTeam] = useState<string | null>(null)
 
     useEffect(() => {
-        const fetchTeams = async () => {
-            // const teams = await getAllTeamsByUId()
-            const userFriends = await getAllUserFriendsList()
-            // setTeams(teams)
-            setUserFriends(userFriends)
-        }
-        fetchTeams()
-
         const teamsRef = ref(db, 'teams');
+
         const unsubscribe = onValue(teamsRef, (snapshot) => {
             if (!snapshot.exists()) {
                 return [];
             }
             const returnArr = [] as object[];
             snapshot.forEach(grandchildSnapshot => {
-                const item = grandchildSnapshot.val().members.find((member: any) => member.id === currentUserDB?.uid)
+                const item = grandchildSnapshot.val()?.members?.find((member: any) => member.id === currentUserDB?.uid)
                 if (item) {
                     returnArr.push(grandchildSnapshot.val())
                 }
             })
-            console.log(returnArr)
             setTeams(returnArr);
         });
 
@@ -53,7 +44,29 @@ const Teams1 = () => {
             unsubscribe();
         };
 
-    }, [currentUserDB?.uid, teams])
+    }, [currentUserDB, currentUserDB?.uid])
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const friendsRef = ref(db, `users/${currentUserDB?.uid}/friends`);
+            const unsubscribe = onValue(friendsRef, (snapshot) => {
+                if (!snapshot.exists()) {
+                    return [];
+                }
+
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                const friends = Object.entries(snapshot.val())
+                    .filter(([key, value]) => {
+                        return value?.isFriend
+                    })
+                    .map(([key, value]) => ({ id: key, name: value?.username }));
+
+                setUserFriends(friends);
+            });
+        }
+
+        fetchData()
+    }, [currentUserDB?.uid])
 
     const handleDeleteTeam = async (teamName: string, teamId: string) => {
         try {
@@ -116,7 +129,7 @@ const Teams1 = () => {
                                                         <div className="space-x-2">
                                                             <div className="tooltip" data-tip="Add Team Member">
                                                                 <button
-                                                                    onClick={() => handleAddMembers()}
+                                                                    onClick={() => handleAddMembers(team.id)}
                                                                     className="bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 hover:dark:bg-purple-500 text-white p-2 rounded-md text-sm"
                                                                 >
                                                                     <IoPersonAdd size={20} />
