@@ -3,7 +3,8 @@ import { IoCall, IoMic, IoVideocam } from 'react-icons/io5';
 import { PiUserCircleFill } from 'react-icons/pi';
 import { motion } from 'framer-motion';
 import { createChatWithId, getChatById } from '../../services/chat.services';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
 interface Friend {
 	uid: string;
@@ -52,10 +53,12 @@ export const SingleConversation: React.FC<{ friend: Friend}> = ({ friend }) => {
 								className="fill-gray-500 hover:fill-blue-500 active:fill-blue-500 dark:hover:fill-purple-600"
 								size={20}
 							/>
+							<NavLink to='/messages/videocall'>
 							<IoVideocam
 								className="fill-gray-500 hover:fill-blue-500 active:fill-blue-500 dark:hover:fill-purple-600"
 								size={20}
 							/>
+							</NavLink>
 							<IoMic
 								className="text-gray-500 fill-gray-500 hover:fill-blue-500 active:fill-blue-500 dark:hover:fill-purple-600"
 								size={20}

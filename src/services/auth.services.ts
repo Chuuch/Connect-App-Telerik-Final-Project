@@ -30,7 +30,7 @@ export const registerUser = async (firstName: string, lastName: string, username
         const user = userCredential.user;
         // Register user in database
         set(ref(db, `users/${user?.uid}`), {
-            uid: user?.uid, firstName, lastName, username, email, phone, isLogged: false, status: Status.OFFLINE, avatar: '',
+            uid: user?.uid, firstName, lastName, username, email, phone, isLogged: false, status: Status.OFFLINE, avatar: '', isBlockedBy: '',
             createdOn: Date.now(),
         } as UserType & { createdOn: number });
         await verifyUser(user)
