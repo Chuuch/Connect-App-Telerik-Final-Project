@@ -2,6 +2,7 @@ import { get, ref, remove, set, update } from 'firebase/database';
 import toast from 'react-hot-toast';
 import { auth, db } from '../config/firebase-config';
 import { Status } from '../utils/status';
+import { UserList } from '../components/Teams/CreateTeamForm';
 
 export interface User {
     avatar: string
@@ -18,6 +19,11 @@ export interface User {
     uid: string
     username: string
     videoStreamId: string
+}
+
+export interface Friends {
+    isFriend: boolean
+    username: string
 }
 
 export const getUserByID = async (uid: string): Promise<User> => {
@@ -53,25 +59,25 @@ export const checkIfUserExist = async (username: string) => {
     return false
 }
 
-export const updateUserStatus = async (uid: string, status: string) => {
+export const updateUserStatus = async (uid: Pick<User, 'uid'>, status: Pick<User, 'status'>) => {
     return update(ref(db), {
         [`users/${uid}/status`]: status,
     });
 };
 
-export const updateUserIsLogged = async (uid: string, isLogged: boolean) => {
+export const updateUserIsLogged = async (uid: Pick<User, 'uid'>, isLogged: Pick<User, 'isLogged'>) => {
     return update(ref(db), {
         [`users/${uid}/isLogged`]: isLogged,
     });
 };
 
-export const updateUserAvatar = async (uid: string, avatar: string) => {
+export const updateUserAvatar = async (uid: Pick<User, 'uid'>, avatar: Pick<User, 'avatar'>) => {
     return update(ref(db), {
         [`users/${uid}/avatar`]: avatar,
     });
 }
 
-export const updateUserPhone = async (uid: string, phone: string) => {
+export const updateUserPhone = async (uid: Pick<User, 'uid'>, phone: Pick<User, 'phone'>) => {
     return update(ref(db), {
         [`users/${uid}/phone`]: phone,
     });
@@ -186,15 +192,15 @@ export const setUserFriendChat = async (username: string) => {
     }
 }
 
-export const getAllUserFriendsList = async (): Promise<{ id: string, name: string }[]> => {
+export const getAllUserFriendsList = async (): Promise<UserList[]> => {
     return get(ref(db, `users/${auth?.currentUser?.uid}/friends`))
         .then(snapshot => {
             if (!snapshot.exists()) {
                 return [];
             }
 
-            return Object.entries(snapshot.val() as { [key: string]: { isFriend: boolean, username: string } })
-                .filter(([, value]: [key: string, value: { isFriend: boolean, username: string }]) => {
+            return Object.entries(snapshot.val() as { [key: string]: Friends })
+                .filter(([, value]: [key: string, value: Friends]) => {
                     return value?.isFriend
                 })
                 .map(([key, value]) => ({ id: key, name: value?.username }));
@@ -211,6 +217,6 @@ export const blockUser = async (username: string) => {
 }
 
 
-export const unblockUser = async (username: string) => {
+export const unblockUser = async (username: Pick<User, 'username'>) => {
     await remove(ref(db, `users/${auth?.currentUser?.uid}/blockedUsers/${username}`));
 };

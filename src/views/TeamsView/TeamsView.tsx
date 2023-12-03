@@ -58,7 +58,7 @@ export const TeamsView = () => {
           <Messages msg={msg} />
         </div>
         <div className=" dark:border-gray-600 flex-grow">
-          <MessageBox />
+          {channelId && <MessageBox />}
         </div>
       </div>
       <div className="h-full shadow-x bg-gray-100 dark:bg-gray-900">
