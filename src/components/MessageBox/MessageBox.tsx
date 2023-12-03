@@ -53,7 +53,7 @@ interface MessageBoxProps {
 	return (
 		<div className="relative flex flex-grow h-24 border-t border-l bg-gray-100 text-gray-700 dark:bg-gray-900 dark:border-gray-600 items-center space-x-2 w-full">
 			<div className="flex flex-grow items-center w-full ml-5 mr-2 space-x-2">
-				<input
+				<input spellCheck="true"
 					type="text"
 					placeholder="Type something..."
 					value={msg}
