@@ -6,13 +6,6 @@ import { Status } from '../utils/status';
 import { db } from './../config/firebase-config';
 import { updateUserIsLogged, updateUserStatus } from './users.services';
 
-export interface UserType {
-    uid: string;
-    username: string;
-    email: string;
-    phone: string;
-    createdOn: number;
-}
 
 export const verifyUser = async (user: User) => {
     try {
@@ -32,7 +25,7 @@ export const registerUser = async (firstName: string, lastName: string, username
         set(ref(db, `users/${user?.uid}`), {
             uid: user?.uid, firstName, lastName, username, email, phone, isLogged: false, status: Status.OFFLINE, avatar: '', isBlockedBy: '',
             createdOn: Date.now(),
-        } as UserType & { createdOn: number });
+        });
         await verifyUser(user)
         return { user: user?.uid }
     } catch (error) {

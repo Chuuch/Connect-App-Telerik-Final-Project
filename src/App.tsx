@@ -95,20 +95,12 @@ function App() {
 			<UserContext.Provider value={{ currentUserDB, setCurrentUserDB }} >
 				<Toaster />
 				<Routes>
-					{/* <Route path="/" element={<Home />} />
-				<Route path="notifications" element={<Authenticated><NotificationsView /></Authenticated>} />
-				<Route path="teams" element={<Authenticated><TeamsView /></Authenticated>} />
-				<Route path="messages" element={<Authenticated><ChatWindow /></Authenticated>} />
-				<Route path="calls" element={<Authenticated><CallsView /></Authenticated>} />
-				<Route path="calendar" element={<Authenticated><CalendarView /></Authenticated>} />
-				<Route path="login" element={<Login />} />
-				<Route path='register' element={<Register />} /> */}
 					<Route path="/register" element={<Register />} />
 					<Route path="/login" element={<Login />} />
 					<Route path="/" element={user ? <Home /> : <Login />}>
 						<Route path="notifications" element={<Authenticated><NotificationsView /></Authenticated>} />
 						<Route path="teams" element={<Authenticated><TeamsView /></Authenticated>} >
-							<Route path=":teamId/:channelId" element={<Authenticated><>Teams messages</></Authenticated>} />
+							<Route path=":teamId/:channelId" element={<Authenticated><></></Authenticated>} />
 						</Route>
 						<Route path="messages" element={<Authenticated><ChatWindow /></Authenticated>} />
 						<Route path="calls" element={<Authenticated><CallsView /></Authenticated>} />

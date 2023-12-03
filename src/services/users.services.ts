@@ -1,46 +1,65 @@
-import { get, push, ref, remove, set, update } from 'firebase/database';
+import { get, ref, remove, set, update } from 'firebase/database';
 import toast from 'react-hot-toast';
 import { auth, db } from '../config/firebase-config';
-import { UserType } from './auth.services';
+import { Status } from '../utils/status';
 
-export const getUserByID = (uid: string) => {
-    return get(ref(db, `users/${uid}`)).then((snapshot) => {
-        if (!snapshot.exists()) {
-            return null
-        }
-        return snapshot.val();
-    })
+export interface User {
+    avatar: string
+    chats: object
+    createdOn: number
+    email: string
+    firstName: string
+    friends: object
+    isLogged: boolean
+    lastName: string
+    phone: string
+    status: `${Status}`
+    teams: object
+    uid: string
+    username: string
+    videoStreamId: string
+}
+
+export const getUserByID = async (uid: string): Promise<User> => {
+    return get(ref(db, `users/${uid}`))
+        .then((snapshot) => {
+            if (!snapshot.exists()) {
+                return null
+            }
+
+            return snapshot.val();
+        })
         .catch((error) => {
             toast.error(error.message);
         });
 }
 
-export const getAllUsers = () => {
+export const getAllUsers = async (): Promise<User[]> => {
     return get(ref(db, 'users'))
         .then(snapshot => {
             if (!snapshot.exists()) {
                 return [];
             }
-            return Object.values(snapshot.val()) as UserType[];
+            return Object.values(snapshot.val());
         });
 };
 
 export const checkIfUserExist = async (username: string) => {
-    const users: UserType[] = await getAllUsers();
-    const existingUser = users.find((user: UserType) => user.username === username);
+    const users: User[] = await getAllUsers();
+    const existingUser = users.find((user: User) => user.username === username);
     if (existingUser) {
         return true
     }
     return false
 }
 
-export const updateUserStatus = (uid: string, status: string) => {
+export const updateUserStatus = async (uid: string, status: string) => {
     return update(ref(db), {
         [`users/${uid}/status`]: status,
     });
 };
 
-export const updateUserIsLogged = (uid: string, isLogged: boolean) => {
+export const updateUserIsLogged = async (uid: string, isLogged: boolean) => {
     return update(ref(db), {
         [`users/${uid}/isLogged`]: isLogged,
     });
@@ -52,7 +71,7 @@ export const updateUserAvatar = async (uid: string, avatar: string) => {
     });
 }
 
-export const updateUserPhone = (uid: string, phone: string) => {
+export const updateUserPhone = async (uid: string, phone: string) => {
     return update(ref(db), {
         [`users/${uid}/phone`]: phone,
     });
@@ -63,9 +82,9 @@ export const getUserByUsername = async (username: string) => {
         const allUsers = await get(ref(db, `users`));
         if (allUsers.exists()) {
             const userData = allUsers.val();
-            const dataArray = Object.values(userData);
+            const dataArray: User[] = Object.values(userData);
             for (const user of dataArray) {
-                console.log("User data: ", user.username)
+                // console.log("User data: ", user.username)
                 if (user.username && user.username === username) {
                     console.log(`User with username ${username} is found!`);
                     return user.uid
@@ -86,7 +105,7 @@ export const setUserFriend = async (username: string) => {
         const currentUserInfo = await getUserByID(auth?.currentUser?.uid);
         const currentUsername = currentUserInfo.username;
         console.log("info: ", currentUsername);
-        
+
         let currentFriends = currentFriendsRef.val();
         if (!Array.isArray(currentFriends)) {
             currentFriends = [];
@@ -112,7 +131,7 @@ export const setUserFriend = async (username: string) => {
                 // [`chats/${newChatKey}/id`]: newChatKey,
                 // [`users/${auth?.currentUser?.uid}/chats/${newChatKey}`]: true,
                 // [`users/${userId}/chats/${newChatKey}`]: true
-            } 
+            }
             await update(ref(db), updates);
             toast.success(`Friend ${username} added successfully!`);
         } else {
@@ -130,7 +149,7 @@ export const setUserFriendChat = async (username: string) => {
         const currentUserInfo = await getUserByID(auth?.currentUser?.uid);
         const currentUsername = currentUserInfo.username;
         console.log("info: ", currentUsername);
-        
+
         let currentFriends = currentFriendsRef.val();
         if (!Array.isArray(currentFriends)) {
             currentFriends = [];
@@ -141,11 +160,11 @@ export const setUserFriendChat = async (username: string) => {
             participants: [auth?.currentUser?.uid, userId],
             timestamp: Date.now(),
             messages: [],
-          };
+        };
 
         // const newChatRef = push(ref(db, 'chats'), chat);
         // const newChatKey: string | null = newChatRef.key;
-          const chatId = auth?.currentUser?.uid + userId;
+        const chatId = auth?.currentUser?.uid + userId;
         if (userId && !currentFriends.includes(userId) && userId !== auth?.currentUser?.uid) {
             currentFriends.push(userId);
             const updates = {
@@ -156,7 +175,7 @@ export const setUserFriendChat = async (username: string) => {
                 [`chats/${chatId}/id`]: chatId,
                 [`users/${auth?.currentUser?.uid}/chats/${chatId}`]: true,
                 [`users/${userId}/chats/${chatId}`]: true
-            } 
+            }
             await update(ref(db), updates);
             toast.success(`Friend ${username} added successfully!`);
         } else {
@@ -167,30 +186,31 @@ export const setUserFriendChat = async (username: string) => {
     }
 }
 
-export const getAllUserFriendsList = () => {
+export const getAllUserFriendsList = async (): Promise<{ id: string, name: string }[]> => {
     return get(ref(db, `users/${auth?.currentUser?.uid}/friends`))
         .then(snapshot => {
             if (!snapshot.exists()) {
                 return [];
             }
 
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            return Object.entries(snapshot.val()).filter(([key, value]) => {
-                return value?.isFriend
-            }).map(([key, value]) => ({ id: key, name: value?.username }));
+            return Object.entries(snapshot.val() as { [key: string]: { isFriend: boolean, username: string } })
+                .filter(([, value]: [key: string, value: { isFriend: boolean, username: string }]) => {
+                    return value?.isFriend
+                })
+                .map(([key, value]) => ({ id: key, name: value?.username }));
         });
 };
 
 export const blockUser = async (username: string) => {
-       const checkUser =  await checkIfUserExist(username);
-       if (!checkUser) {
+    const checkUser = await checkIfUserExist(username);
+    if (!checkUser) {
         toast.error(`User ${username} not found!`)
-    }   else {
+    } else {
         set(ref(db, `users/${auth?.currentUser?.uid}/blockedUsers/${username}`), true);
     }
-       }
-       
-  
-  export const unblockUser = async (username: string) => {
-     await remove(ref(db, `users/${auth?.currentUser?.uid}/blockedUsers/${username}`));
-  };
+}
+
+
+export const unblockUser = async (username: string) => {
+    await remove(ref(db, `users/${auth?.currentUser?.uid}/blockedUsers/${username}`));
+};

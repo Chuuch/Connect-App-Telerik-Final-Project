@@ -71,8 +71,7 @@ const Teams1 = () => {
 
     const handleDeleteTeam = async (teamName: string, teamId: string) => {
         try {
-            await deleteTeam(currentUserDB?.uid, teamId)
-            toast.success(`Team ${teamName} deleted successfully!`);
+            await deleteTeam(currentUserDB?.uid, teamId, teamName)
         } catch (error) {
             toast.success(`Error deleting team ${teamName}!`);
         }

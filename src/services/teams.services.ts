@@ -56,10 +56,17 @@ export const getAllTeamsByUId = async () => {
     });
 };
 
-export const deleteTeam = (uid: string, teamId: string) => {
-  return update(ref(db), {
+export const deleteTeam = async(uid: string, teamId: string, teamName:string) => {
+  const ownerTeamSnapshot = await get(ref(db, `teams/${teamId}/userID`))
+  const ownerTeam = ownerTeamSnapshot.val()
+  if (ownerTeam !== uid) {
+    toast.error(`Sorry, only owner can delete a team`)
+    return
+  }
+  await update(ref(db), {
     [`teams/${teamId}`]: null,
   });
+  toast.success(`Team ${teamName} deleted successfully!`);
 }
 
 export const addMemberToTeam = async (members: UserList[], teamId: string) => {

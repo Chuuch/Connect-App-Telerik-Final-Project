@@ -7,7 +7,7 @@ interface TeamUserProps {
 }
 
 const TeamUser: FC<TeamUserProps> = ({ userID }) => {
-    const [userData, setUserData] = useState()
+    const [userData, setUserData] = useState<UserData>()
 
     useEffect(() => {
         if (userID) {
@@ -27,7 +27,7 @@ const TeamUser: FC<TeamUserProps> = ({ userID }) => {
                     <Avatar userID={userID} />
                     <div className=" flex flex-col space-x-2 ">
                         <p className="font-bold text-gray-500 dark:text-gray-300">{userData?.firstName + ' ' + userData?.lastName} </p>
-                        <p className="font text-gray-400 dark:text-gray-300">{userData?.email} </p>
+                        <p className="font text-gray-400 dark:text-gray-300">{userData?.username} </p>
                     </div>
                 </div>
                 <div className="space-x-2">
