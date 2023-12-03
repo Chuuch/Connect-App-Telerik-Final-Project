@@ -184,7 +184,7 @@ export const getAllUserFriendsList = () => {
 export const blockUser = async (username: string) => {
        const checkUser =  await checkIfUserExist(username);
        if (!checkUser) {
-        console.log('User not found');
+        toast.error(`User ${username} not found!`)
     }   else {
         set(ref(db, `users/${auth?.currentUser?.uid}/blockedUsers/${username}`), true);
     }
