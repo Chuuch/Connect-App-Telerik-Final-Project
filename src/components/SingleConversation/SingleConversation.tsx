@@ -6,19 +6,9 @@ import { createChatWithId, } from '../../services/chat.services';
 //import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { User } from '../../services/users.services';
 
-interface Friend {
-	uid: string;
-    teams: object;
-    messages: object;
-    timeStamp: number;
-	firsName: string;
-	username: string;
-	email: string;
-	friends: object;
-}
-
-export const SingleConversation: React.FC<{ friend: Friend }> = ({ friend }) => {
+export const SingleConversation: React.FC<{ friend: User }> = ({ friend }) => {
 	const navigate = useNavigate();
   
 	const handleClick = async () => {
@@ -26,7 +16,7 @@ export const SingleConversation: React.FC<{ friend: Friend }> = ({ friend }) => 
   
 	const chatId = await createChatWithId(friend.uid);
 	if (chatId) {
-		console.log("Created chat with: ", chatId);
+		//console.log("Created chat with: ", chatId);
 		navigate(`/chat/${chatId}`, { state: { friendId: friend.uid } }); 
 	} else {
 		console.log("Chat is already being used!");

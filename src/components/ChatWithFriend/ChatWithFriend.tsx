@@ -43,7 +43,7 @@ export const Chat = () => {
       
               if (chatData && chatData.messages) {
                 const dataArray = Object.values(chatData.messages);
-                console.log('dataArray: ', dataArray);
+                //console.log('dataArray: ', dataArray);
       
                 if (Array.isArray(dataArray)) {
                   const matches = dataArray.filter((msg) => msg && msg.content);
