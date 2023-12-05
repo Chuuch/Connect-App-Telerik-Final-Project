@@ -63,7 +63,7 @@ export const NotificationsView = () => {
 					}}
 				/>
 			</div>
-			<div className="flex flex-col w-full">
+			<div className="flex flex-col w-full h-[830px]">
 				<div className="flex-grow border-l dark:border-gray-600 shadow-inner overflow-auto scrollbar-thin scrollbar-track-gray-200 scrollbar-thumb-blue-500 dark:scrollbar-thumb-purple-600 dark:scrollbar-track-gray-600">
 					<Messages msg={msg} />
 				</div>
