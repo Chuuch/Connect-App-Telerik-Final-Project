@@ -6,12 +6,20 @@ import { Messages } from "../Messages/Messages";
 import { MessageBox } from "../MessageBox/MessageBox";
 import { createChatWithId, getChatById } from "../../services/chat.services";
 
+interface Message {
+  content:string,
+  id:string,
+  author:string,
+  userID:string,
+  timestamp: number,
+  hasGif: boolean,
+}
 
 export const Chat = () => {
     const msgRefContainer = useRef<HTMLDivElement | null>(null); 
     const location = useLocation();
     const friendId = location.state?.friendId  || '';
-    const [results, setResults] = useState<Array<object>>([]);
+    const [results, setResults] = useState<Message[]>([]);
     const [chatId, setChatId] = useState<string>('');
 
     useEffect(() => {
