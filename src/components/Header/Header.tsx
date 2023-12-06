@@ -6,8 +6,6 @@ import { db } from '../../config/firebase-config';
 import UserContext from '../../context/UserContext';
 import { setUserFriend } from '../../services/users.services';
 import Avatar from '../Avatar/Avatar';
-import VideoChat from '../WebRTC/VideoChat';
-import { uuidv4 } from '@firebase/util';
 
 export const Header = () => {
 	const [results, setResults] = useState<Array<string>>([]);
