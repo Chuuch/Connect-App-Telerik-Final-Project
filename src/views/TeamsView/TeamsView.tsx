@@ -39,7 +39,7 @@ export const TeamsView = () => {
 
   return (
     <div className="h-full bg-white dark:bg-black flex flex-grow items-start justify-start">
-      <div className="h-full flex-col shadow-x bg-gray-100 dark:bg-gray-900">
+      <div className="h-[800px] flex-col shadow-x bg-gray-100 dark:bg-gray-900">
         <div className=" shadow-x bg-gray-100 dark:bg-gray-900">
           <Teams1 />
         </div>
@@ -61,7 +61,7 @@ export const TeamsView = () => {
           {channelId && <MessageBox />}
         </div>
       </div>
-      <div className="h-full shadow-x bg-gray-100 dark:bg-gray-900">
+      <div className="h-[800px] shadow-x bg-gray-100 dark:bg-gray-900">
         <TeamUsersList teamId={teamId} />
       </div>
     </div>
