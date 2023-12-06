@@ -3,21 +3,12 @@ import { onValue, ref } from "firebase/database";
 import { useEffect, useState } from "react";
 import { auth, db } from "../../config/firebase-config";
 import { SingleConversation } from "../SingleConversation/SingleConversation";
-import { getUserByID } from "../../services/users.services";
+import { User, getUserByID } from "../../services/users.services";
 
-interface Friend {
-	uid: string;
-    teams: object;
-    messages: object;
-    timeStamp: number;
-	firsName: string;
-	username: string;
-	email: string
-	friends: object;
-}
+
 
 export const Conversations: React.FC = () => {
-	const [friends, setFriends] = useState<Friend[]>([]);
+	const [friends, setFriends] = useState<User[]>([]);
 
 
     useEffect(() => {
@@ -27,7 +18,7 @@ export const Conversations: React.FC = () => {
 			
             if (data.friends) {
 				const friendsKeys = Object.keys(data.friends);
-				console.log('friends keys: ', friendsKeys);
+				//console.log('friends keys: ', friendsKeys);
 				const friendsList = await Promise.all(
 					friendsKeys.map(async (id) => {
 					  const friend = await getUserByID(id);

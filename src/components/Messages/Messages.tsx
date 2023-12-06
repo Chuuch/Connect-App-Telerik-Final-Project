@@ -3,14 +3,14 @@ import { auth } from "../../config/firebase-config";
 import Avatar from '../Avatar/Avatar';
 //import {ref, onValue} from "firebase/database";
 
-// interface Message {
-//   content:string,
-//   id:string,
-//   author:string,
-//   userID:string,
-//   timestamp: number,
-
-// }
+interface Message {
+  id: Key | null | undefined;
+  timestamp: number;
+  author: string;
+  content: string;
+  userID: string;
+  hasGif: boolean;
+}
 interface MessagesProps {
   msg: Message[];
 }

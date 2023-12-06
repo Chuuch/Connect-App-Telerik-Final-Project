@@ -5,7 +5,7 @@ import { Emoji } from '../Emoji/Emoji';
 import { HiOutlineGif } from 'react-icons/hi2';
 import GiphySearch from '../Giphy/Giphy';
 import { API_KEY, API_SEARCH } from '../../constants/constants';
-import { useLocation, useParams } from 'react-router';
+import { useLocation, useParams } from 'react-router-dom';
 
 interface MessageBoxProps {
 	chatId: string; 
