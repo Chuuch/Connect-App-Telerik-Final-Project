@@ -21,7 +21,7 @@ const Assistant: AssistantProps = () => {
 			return response.reply;
 		} catch (error) {
 			console.error('Error asking Hercai:', error);
-			setHercResponse('Sorry, an error occurred.'); // Handle errors gracefully
+			setHercResponse('Sorry, an error occurred.');
 		}
 	};
 
@@ -48,7 +48,7 @@ const Assistant: AssistantProps = () => {
 						</label>
 					</div>
 					<div className="flex flex-col items-start justify-start w-[600px]">
-						{/* Add any additional content or menu items here */}
+						
 					</div>
 				</div>
 			</div>
@@ -60,7 +60,7 @@ const Assistant: AssistantProps = () => {
 					className="drawer-overlay hidden"
 				></label>
 
-				<ul className="menu flex flex-col space-y-2 p-4 min-h-full bg-gray-100 dark:bg-gray-900 text-blue-500 dark:text-purple-600 dark:focus:text-purple-600">
+				<ul className="menu inline space-y-2 p-4 min-h-full bg-gray-100 dark:bg-gray-900 text-blue-500 dark:text-purple-600 dark:focus:text-purple-600">
 					{/* Sidebar content here */}
 					<div className="flex flex-row items-center space-x-4">
 						<h1 className="text-3xl ml-3 mb-4 text-blue-500 dark:text-purple-600">
@@ -68,12 +68,15 @@ const Assistant: AssistantProps = () => {
 						</h1>
 						<BsRobot size={35} className="flex mb-5" />
 					</div>
-					<div className="flex flex-col items-start h-[80px] w-[350px] top-1 overflow-y-auto">
-						{hercResponse && <p className='pl-3'>{hercResponse}</p>}
+					<div className="inline-block items-start top-1">
+						<div className='max-w-32 h-[550px] overflow-y-auto scrollbar-thin scrollbar-track-slate-600 dark:scrollbar-thumb-purple-600'>
+						{hercResponse && <p className='pl-3 text-base break-all whitespace-pre-line overflow-y-auto scrollbar-thin scrollbar-track-slate-600 dark:scrollbar-thumb-purple-600'>{hercResponse}</p>}
+						</div>
+						
 					</div>
 
 					<div className="flex flex-row justify-start items-start space-x-6">
-						<div className="flex flex-row items-center justify-center mt-[600px] space-x-5">
+						<div className="flex flex-row items-center justify-center mt-[80px] space-x-5 pl-3">
 							<input
 								onKeyDown={(e) => {
 									if (e.key === 'Enter') {
@@ -89,7 +92,7 @@ const Assistant: AssistantProps = () => {
 							/>
 						</div>
 						<div>
-							<div className="ml-3 mt-[630px]">
+							<div className="ml-3 mt-[105px]">
 								<button
 									onClick={askHercai}
 									className="rounded-full items-center justify-center z-40"
