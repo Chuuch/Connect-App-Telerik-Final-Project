@@ -39,7 +39,7 @@ export const Messages: React.FC<MessagesProps> = ({ msg }) => {
     msgRefContainer.current?.scrollIntoView({ behavior: 'smooth' });
   }, [msg]);
   return (
-    <div className="pt-5 h-[766px]">
+    <div className="pt-5 h-[735px]">
       {msg && msg.map((m: { id: Key | null | undefined; timestamp: number; author: string; content: string; userID: string; hasGif: boolean }) => (
         <div>
           {m.userID === auth?.currentUser?.uid ?
