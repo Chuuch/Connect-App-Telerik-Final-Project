@@ -26,7 +26,7 @@ const Assistant: AssistantProps = () => {
 	};
 
 	return (
-		<div className="drawer flex flex-col items-center justify-center z-20">
+		<div className="drawer flex flex-col items-center justify-center z-10">
 			<input
 				id="assistant-drawer-3"
 				type="checkbox"
@@ -53,7 +53,7 @@ const Assistant: AssistantProps = () => {
 				</div>
 			</div>
 			{/* Sidebar */}
-			<div className="drawer-side fixed top-20 left-[80px] h-[1000px] w-[400px]">
+			<div className="drawer-side fixed top-20 left-[80px] h-[1000px] w-[400px] z-10">
 				<label
 					htmlFor="assistant-drawer-3"
 					aria-label="close sidebar"
@@ -63,20 +63,20 @@ const Assistant: AssistantProps = () => {
 				<ul className="menu inline space-y-2 p-4 min-h-full bg-gray-100 dark:bg-gray-900 text-blue-500 dark:text-purple-600 dark:focus:text-purple-600">
 					{/* Sidebar content here */}
 					<div className="flex flex-row items-center space-x-4">
-						<h1 className="text-3xl ml-3 mb-4 text-blue-500 dark:text-purple-600">
+						<h1 className="text-3xl mb-4 text-blue-500 dark:text-purple-600">
 							Buddy Assistant
 						</h1>
 						<BsRobot size={35} className="flex mb-5" />
 					</div>
 					<div className="inline-block items-start top-1">
 						<div className='max-w-32 h-[550px] overflow-y-auto scrollbar-thin scrollbar-track-slate-600 dark:scrollbar-thumb-purple-600'>
-						{hercResponse && <p className='pl-3 text-base break-all whitespace-pre-line overflow-y-auto scrollbar-thin scrollbar-track-slate-600 dark:scrollbar-thumb-purple-600'>{hercResponse}</p>}
+						{hercResponse && <p className=' text-base break-all whitespace-pre-line overflow-y-auto scrollbar-thin scrollbar-track-slate-600 dark:scrollbar-thumb-purple-600'>{hercResponse}</p>}
 						</div>
 						
 					</div>
 
 					<div className="flex flex-row justify-start items-start space-x-6">
-						<div className="flex flex-row items-center justify-center mt-[80px] space-x-5 pl-3">
+						<div className="flex flex-row items-center justify-center mt-[80px] space-x-5">
 							<input
 								onKeyDown={(e) => {
 									if (e.key === 'Enter') {
@@ -92,10 +92,10 @@ const Assistant: AssistantProps = () => {
 							/>
 						</div>
 						<div>
-							<div className="ml-3 mt-[105px]">
+							<div className="ml-3 mt-[105px] z-10">
 								<button
 									onClick={askHercai}
-									className="rounded-full items-center justify-center z-40"
+									className="rounded-full items-center justify-center z-10"
 								>
 									<RadioCircles />
 								</button>
