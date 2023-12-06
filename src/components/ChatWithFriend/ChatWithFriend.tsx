@@ -66,8 +66,10 @@ export const Chat = () => {
 
     if (results.length===0) {
       return <div className="flex flex-col w-full">
-      <div className="h-[710px] border-l dark:border-gray-600 shadow-inner overflow-auto">
-        No messages found
+      <div className="h-[735px] flex  items-start justify-center pt-32 border-l dark:bg-gray-800 dark:border-gray-600  shadow-inner overflow-auto">
+        <p className="dark:text-purple-500 text-center text-2xl font-bold">
+          Send a message to start a conversation
+        </p>
       </div>
       <div>
         <MessageBox chatId={chatId} />
