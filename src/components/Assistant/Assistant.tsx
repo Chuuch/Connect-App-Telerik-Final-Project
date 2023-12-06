@@ -16,7 +16,7 @@ const Assistant: AssistantProps = () => {
 
 	const askHercai = async () => {
 		try {
-			const response = await herc.question({ model: 'v2', content: userInput });
+			const response = await herc.question({ model: 'v3-beta', content: userInput });
 			setHercResponse(response.reply);
 			return response.reply;
 		} catch (error) {
