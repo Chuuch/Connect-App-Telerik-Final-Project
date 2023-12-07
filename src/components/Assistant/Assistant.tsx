@@ -53,14 +53,14 @@ const Assistant: AssistantProps = () => {
 				</div>
 			</div>
 			{/* Sidebar */}
-			<div className="drawer-side fixed top-20 left-[80px] h-[1000px] w-[400px] z-10">
+			<div className="drawer-side fixed top-20 left-[80px] h-[1000px] w-[450px] z-10">
 				<label
 					htmlFor="assistant-drawer-3"
 					aria-label="close sidebar"
 					className="drawer-overlay hidden"
 				></label>
 
-				<ul className="menu inline space-y-2 p-4 min-h-full bg-gray-100 dark:bg-gray-900 text-blue-500 dark:text-purple-600 dark:focus:text-purple-600">
+				<ul className="menu inline space-y-2 p-4 min-h-full w-[380px] bg-gray-100 dark:bg-gray-900 text-blue-500 dark:text-purple-600 dark:focus:text-purple-600">
 					{/* Sidebar content here */}
 					<div className="flex flex-row items-center space-x-4">
 						<h1 className="text-3xl mb-4 text-blue-500 dark:text-purple-600">
@@ -69,7 +69,7 @@ const Assistant: AssistantProps = () => {
 						<BsRobot size={35} className="flex mb-5" />
 					</div>
 					<div className="inline-block items-start top-1">
-						<div className='max-w-32 h-[550px] overflow-y-auto scrollbar-thin scrollbar-track-slate-600 dark:scrollbar-thumb-purple-600'>
+						<div className='max-w-32 h-[550px] overflow-y-auto scrollbar-thin scrollbar-track-gray-400 dark:scrollbar-track-slate-600 scrollbar-thumb-blue-500 dark:scrollbar-thumb-purple-600'>
 						{hercResponse && <p className=' text-base break-all whitespace-pre-line overflow-y-auto scrollbar-thin scrollbar-track-slate-600 dark:scrollbar-thumb-purple-600'>{hercResponse}</p>}
 						</div>
 						
