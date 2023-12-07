@@ -76,7 +76,7 @@ export const Messages: React.FC<MessagesProps> = ({ msg }) => {
                   <div>
                     {m.hasGif ? (
                       <img src={m.content}></img>
-                    ) : m?.content?.slice(0, 4) === 'http' ? (
+                    ) : m?.content?.slice(0, 39) === 'https://firebasestorage.googleapis.com/' ? (
                       <div className="chat-bubble bg-blue-500 dark:bg-purple-600 text-white">
                         <a
                           href={m.content}
@@ -121,7 +121,7 @@ export const Messages: React.FC<MessagesProps> = ({ msg }) => {
                   <div>
                   {m.hasGif ? (
                       <img src={m.content}></img>
-                    ) : m?.content?.slice(0, 4) === 'http' ? (
+                    ) : m?.content?.slice(0, 39) === 'https://firebasestorage.googleapis.com/' ? (
                       <div className="chat-bubble bg-blue-500 dark:bg-purple-600 text-white">
                         <a
                           href={m.content}
