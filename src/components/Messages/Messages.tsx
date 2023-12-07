@@ -76,7 +76,14 @@ export const Messages: React.FC<MessagesProps> = ({ msg }) => {
                   <div>
                     {m.hasGif ? (
                       <img src={m.content}></img>
-                    ) : m?.content?.slice(0, 39) === 'https://firebasestorage.googleapis.com/' ? (
+                    ) : 
+                    m?.content?.slice(0, 88) === 'https://firebasestorage.googleapis.com/v0/b/betterteams-13608.appspot.com/o/files%2Fjpeg' 
+                    ? (
+
+                        <img src={m.content}></img>
+
+                    )
+                    : m?.content?.slice(0, 39) === 'https://firebasestorage.googleapis.com/' ? (
                       <div className="chat-bubble bg-blue-500 dark:bg-purple-600 text-white">
                         <a
                           href={m.content}

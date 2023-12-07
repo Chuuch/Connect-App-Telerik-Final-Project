@@ -21,14 +21,16 @@ export const MessageBox: React.FC<MessageBoxProps> = ({ chatId }) => {
   const [showGif, setShowGif] = useState(false);
   const [selectedGif, setSelectedGif] = useState('');
   const [file, setFile] = useState(null);
+  //const [img, setImg] = useState(null);
 
   const handleFileChange = (e) => {
     if (e.target.files[0]) {
       setFile(e.target.files[0]);
     }
   };
+  
 
-  const handleUpload = async () => {
+  const handleUploadFile = async () => {
     if (file) {
       const timestamp = Date.now();
       const fileName = timestamp + auth?.currentUser?.uid;
@@ -36,6 +38,25 @@ export const MessageBox: React.FC<MessageBoxProps> = ({ chatId }) => {
         const storageRef = ref(storage, `files/${fileName}`);
         await uploadBytes(storageRef, file);
         console.log('Uploaded file!');
+        const downloadURL = await getDownloadURL(storageRef);
+        //console.log('Download URL:', downloadURL);
+        setMsg(downloadURL);
+      } catch (err) {
+        console.log('Failed to upload: ' + err);
+      }
+    } else {
+      console.error('No file selected');
+    }
+  };
+
+  const handleUploadImg = async () => {
+    if (file) {
+      const timestamp = Date.now();
+      const imgName = 'jpeg' + timestamp + auth?.currentUser?.uid;
+      try {
+        const storageRef = ref(storage, `files/${imgName}`);
+        await uploadBytes(storageRef, file);
+        console.log('Uploaded image!');
         const downloadURL = await getDownloadURL(storageRef);
         //console.log('Download URL:', downloadURL);
         setMsg(downloadURL);
@@ -118,11 +139,20 @@ export const MessageBox: React.FC<MessageBoxProps> = ({ chatId }) => {
           onChange={handleFileChange}
           style={{ display: 'none' }}
         />
-        <button onClick={handleUpload}>Upload</button>
+        <button onClick={handleUploadFile}>FIle</button>
+        <label htmlFor="file-input" className="cursor-pointer">
         <IoMdPhotos
           size={30}
           className="cursor-pointer fill-blue-500 hover:fill-blue-500/90 dark:fill-purple-600/90 hover:dark:fill-purple-600"
         />
+        </label>
+        <input
+          type="image"
+          id="image-input"
+          onChange={handleFileChange}
+          style={{ display: 'none' }}
+        />
+        <button onClick={handleUploadImg}>Image</button>
       </div>
       <div className="flex flex-row pr-5">
         <button
