@@ -1,6 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 import { getUserByID } from '../../services/users.services'
 import Avatar from '../Avatar/Avatar'
+import { UserData } from './TeamUsersList'
 
 interface TeamUserProps {
     userID: string
