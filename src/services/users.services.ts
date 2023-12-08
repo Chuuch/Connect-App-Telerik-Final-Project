@@ -19,6 +19,7 @@ export interface User {
     uid: string
     username: string
     videoStreamId: string
+    blockedUsers: object[]
 }
 
 export interface Friends {
@@ -209,14 +210,29 @@ export const getAllUserFriendsList = async (): Promise<UserList[]> => {
 
 export const blockUser = async (username: string) => {
     const checkUser = await checkIfUserExist(username);
+    const currentUserInfo = await getUserByID(auth?.currentUser?.uid);
+    const currentUsername = currentUserInfo.username;
+
     if (!checkUser) {
         toast.error(`User ${username} not found!`)
+        return false;
+    } else if (username === currentUsername) {
+        toast.error(`Consider not blocking this user!`)
+        return false;
     } else {
-        set(ref(db, `users/${auth?.currentUser?.uid}/blockedUsers/${username}`), true);
+        try {
+            set(ref(db, `users/${auth?.currentUser?.uid}/blockedUsers/${username}`), true);
+            toast.success(`${username} was successfully blocked!`);
+            return true;
+        } catch (err) {
+            toast.error('Error blocking user. Please try again.');
+            console.log("An error occurred", err);
+            return false;
+        }
     }
 }
 
 
-export const unblockUser = async (username: Pick<User, 'username'>) => {
+export const unblockUser = async (username: string) => {
     await remove(ref(db, `users/${auth?.currentUser?.uid}/blockedUsers/${username}`));
 };

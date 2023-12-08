@@ -2,7 +2,7 @@
 // import { auth, database } from '../config/firebase-config';
 // import moment from 'moment-timezone';
 // import { toast } from 'react-hot-toast';
-import { ref, get, update, push } from 'firebase/database';
+import { get, push, ref, update } from 'firebase/database';
 import { auth, db } from '../config/firebase-config';
 
 // export const createMsg = async (content: string): Promise<string> => {
@@ -61,6 +61,21 @@ export const createMsg = async (content: string, chatId: string): Promise<string
 
   const msgContent = hasGif ? gifUrlMatch[0] : content;
 
+  const participantsSnapshot = await get(
+    ref(db, `chats/${chatId}/participants`)
+  );
+
+  const myFriendId = Object.values(participantsSnapshot.val()).find(p => auth?.currentUser?.uid !== p);
+  // console.log('myFriendId', myFriendId)
+
+  const myFriendSnapshot = await get(
+    ref(db, `users/${myFriendId}`)
+  );
+
+  const myFriendBlockedUsers = myFriendSnapshot.val()?.blockedUsers || [];
+
+  const iAmBlocked = Object.entries(myFriendBlockedUsers).find(([key, value]) => key === username && value === true);
+  // console.log('iAmBlocked', iAmBlocked)
   const msg = {
     content: msgContent,
     id: '',
@@ -68,6 +83,7 @@ export const createMsg = async (content: string, chatId: string): Promise<string
     userID: auth?.currentUser?.uid,
     timestamp: Date.now(),
     hasGif,
+    seenFromFriend: iAmBlocked?.[0] ? false : true,
   };
 
   const newMsgRef = push(ref(db, `chats/${chatId}/messages`), msg);
@@ -113,7 +129,7 @@ export const createMsg = async (content: string, chatId: string): Promise<string
     console.error('Error generating message key');
     return '';
   }
-};
+}
 
 export const createChannelMsg = async (content: string, channelId: string): Promise<string> => {
   const userSnapshot = await get(
@@ -252,20 +268,21 @@ export const createChatMsg = async (content: string, chatId: string): Promise<st
   }
 };
 
-export const setMsgByChatId = async (chatId: string, msg: object) : Promise<string> => {
+export const setMsgByChatId = async (chatId: string, msg: object): Promise<string> => {
   const chat = await get(ref(db, `chats/${chatId}`));
   if (chat) {
     const updates = {
       [`chats/${chatId}/`]: msg,
     };
-  try {
-    await update(ref(db), updates);
-  } catch (error) {console.log(error.message);
-  }
-} return chatId;
+    try {
+      await update(ref(db), updates);
+    } catch (error) {
+      console.log(error.message);
+    }
+  } return chatId;
 };
 
-export const getMsgByChatId = async (chatId: string) : Promise<string> => {
+export const getMsgByChatId = async (chatId: string): Promise<string> => {
   const chat = await get(ref(db, `chats/${chatId}`));
   if (chat) {
     const messages = chat.messages;
