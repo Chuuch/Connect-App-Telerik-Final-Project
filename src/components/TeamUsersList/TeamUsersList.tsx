@@ -7,7 +7,7 @@ import TeamUser from './TeamUser';
 interface TeamUsersListProps {
     teamId: string
 }
-interface UserData {
+export interface UserData {
     uid: string
     avatar: string
     firstName: string
