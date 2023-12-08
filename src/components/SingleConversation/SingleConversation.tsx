@@ -1,16 +1,16 @@
 import { BsChatTextFill } from 'react-icons/bs';
 import { IoCall, IoMic, IoVideocam } from 'react-icons/io5';
-import { PiUserCircleFill } from 'react-icons/pi';
 import { motion } from 'framer-motion';
 import { createChatWithId, } from '../../services/chat.services';
 //import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { User } from '../../services/users.services';
+import Avatar from '../Avatar/Avatar';
+
 
 export const SingleConversation: React.FC<{ friend: User }> = ({ friend }) => {
 	const navigate = useNavigate();
-  
 	const handleClick = async () => {
 	console.log("friend uid: ", friend.uid);
   
@@ -33,10 +33,7 @@ export const SingleConversation: React.FC<{ friend: User }> = ({ friend }) => {
 				viewport={{ once: true }}
 				className="flex flex-col pt-4">
 					<li className="flex flex-row space-x-1 items-center text-md hover:bg-gray-200 dark:hover:bg-gray-800 cursor-pointer h-full w-full pl-2">
-						<PiUserCircleFill
-							size={50}
-							className="fill-blue-500 dark:fill-purple-600 cursor-pointer"
-						/>
+					<Avatar userID={friend.uid} />
 						<p className="text-gray-500 dark:text-gray-300">{friend.username}</p>
 						<div className="flex flex-row pl-5 space-x-4">
 							<IoCall
