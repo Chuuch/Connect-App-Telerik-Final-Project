@@ -1,4 +1,8 @@
-import { EmailAuthProvider, reauthenticateWithCredential, updatePassword } from '@firebase/auth';
+import {
+	EmailAuthProvider,
+	reauthenticateWithCredential,
+	updatePassword,
+} from '@firebase/auth';
 import { ref } from '@firebase/storage';
 import { getDownloadURL, uploadBytes } from 'firebase/storage';
 import { motion } from 'framer-motion';
@@ -10,12 +14,16 @@ import {
 	HiKey,
 	HiOutlineMail,
 	HiOutlinePhone,
-	HiOutlineUser
+	HiOutlineUser,
 } from 'react-icons/hi';
 import { auth, storage } from '../../config/firebase-config';
 import UserContext from '../../context/UserContext';
-import { updateUserAvatar, updateUserPhone } from '../../services/users.services';
+import {
+	updateUserAvatar,
+	updateUserPhone,
+} from '../../services/users.services';
 import { passwordPattern, phonePattern } from '../../utils/regexPatterns';
+import { FaCloudUploadAlt } from 'react-icons/fa';
 
 interface UserProfileFormData {
 	phone: string;
@@ -30,8 +38,16 @@ interface PasswordFormData {
 export const UserProfile = () => {
 	const { currentUserDB, setCurrentUserDB } = useContext(UserContext);
 	const [user] = useAuthState(auth);
-	const { register: register1, handleSubmit: handleSubmit1, formState: { errors: errors1 } } = useForm<UserProfileFormData>();
-	const { register: register2, handleSubmit: handleSubmit2, formState: { errors: errors2 } } = useForm<PasswordFormData>();
+	const {
+		register: register1,
+		handleSubmit: handleSubmit1,
+		formState: { errors: errors1 },
+	} = useForm<UserProfileFormData>();
+	const {
+		register: register2,
+		handleSubmit: handleSubmit2,
+		formState: { errors: errors2 },
+	} = useForm<PasswordFormData>();
 	const [uploadImage, setUploadImage] = useState(null);
 	const [previewImage, setPreviewImage] = useState(null);
 	const [avatar, setAvatar] = useState('');
@@ -51,46 +67,56 @@ export const UserProfile = () => {
 	}, [user]);
 
 	const handlePassword = async (newPassword: string) => {
-		if (!user) return
+		if (!user) return;
 		try {
 			await updatePassword(user, newPassword);
 			toast.success('Password updated successfully!');
 		} catch (error) {
-			toast.error('Error updating password. Please check the console for details.');
+			toast.error(
+				'Error updating password. Please check the console for details.'
+			);
 		}
 	};
 
-	const onChangePassword = async ({ currentPassword, newPassword, confirmNewPassword }: PasswordFormData) => {
-		if (!user) return
+	const onChangePassword = async ({
+		currentPassword,
+		newPassword,
+		confirmNewPassword,
+	}: PasswordFormData) => {
+		if (!user) return;
 		if (newPassword === confirmNewPassword) {
-			const credential = EmailAuthProvider.credential(user?.email, currentPassword);
+			const credential = EmailAuthProvider.credential(
+				user?.email,
+				currentPassword
+			);
 			try {
 				await reauthenticateWithCredential(user, credential);
 				await handlePassword(newPassword);
-				alert('Password changed successfully!')
+				alert('Password changed successfully!');
 			} catch (error) {
-				toast.error('Error reauthenticating. Please check the console for details.');
+				toast.error(
+					'Error reauthenticating. Please check the console for details.'
+				);
 			}
 		} else {
 			toast.error('Passwords do not match.');
 		}
-
 	};
 
 	const onChangeProfile = async ({ phone }: UserProfileFormData) => {
-		console.log(phone)
+		console.log(phone);
 		if (user?.uid) {
 			try {
 				await updateUserPhone(user?.uid, phone);
-				alert('Phone changed successfully!')
+				alert('Phone changed successfully!');
 			} catch (error) {
 				toast.error('Error changing profile!');
 			}
 		}
-	}
+	};
 
 	const uploadFile = () => {
-		if (uploadImage === null) return
+		if (uploadImage === null) return;
 
 		if (uploadImage?.size > 1024 * 1024 * 5) {
 			toast.error('File size should be less than 5MB');
@@ -125,7 +151,10 @@ export const UserProfile = () => {
 		if (selectedFile) {
 			setUploadImage(selectedFile);
 			setPreviewImage(URL?.createObjectURL(selectedFile));
-			setCurrentUserDB?.((prev) => ({ ...prev, avatar: URL?.createObjectURL(selectedFile) }));
+			setCurrentUserDB?.((prev) => ({
+				...prev,
+				avatar: URL?.createObjectURL(selectedFile),
+			}));
 			// setErrorMessage(null);
 		} else {
 			setUploadImage(null);
@@ -133,15 +162,15 @@ export const UserProfile = () => {
 			// setErrorMessage('Please select an image to upload');
 			return;
 		}
-	}
+	};
 
 	const handleSaveAvatar = async () => {
-		uploadFile()
+		uploadFile();
 		if (user?.uid && avatar) {
-			await updateUserAvatar(user?.uid, avatar)
+			await updateUserAvatar(user?.uid, avatar);
 		}
-		alert('Avatar saved successfully!')
-	}
+		alert('Avatar saved successfully!');
+	};
 
 	return (
 		<motion.div
@@ -151,23 +180,29 @@ export const UserProfile = () => {
 			viewport={{ once: true }}
 			className="flex flex-col justify-center items-center bg-white dark:bg-gray-800 rounded-lg"
 		>
-			<div className="flex flex-col justify-center items-start rounded-lg dark:rounded-lg bg-gray-100 dark:bg-gray-900 shadow-lg space-y-4 p-10 w-full h-full cursor-pointer overflow-hidden">
+			<div className="flex flex-col justify-center items-start rounded-lg dark:rounded-lg bg-gray-100 dark:bg-gray-900 shadow-lg space-y-4 p-10 w-full h-full md:w-[600px] cursor-pointer overflow-hidden">
 				<div className="flex flex-col items-start ml-10">
 					<div className="flex flex-col justify-start items-start ">
-						{previewImage || avatar ? <img
-							src={previewImage ?? avatar}
-							alt="User Avatar"
-							className="w-32 h-32 rounded-full text-blue-500 dark:text-purple-500"
-						/> : <HiOutlineUser className="w-32 h-32 rounded-full text-blue-500 dark:text-purple-500" />}
-
+						{previewImage || avatar ? (
+							<img
+								src={previewImage ?? avatar}
+								alt="User Avatar"
+								className="w-32 h-32 rounded-full text-blue-500 dark:text-purple-500"
+							/>
+						) : (
+							<HiOutlineUser className="w-32 h-32 md:h-16 md:w-16 rounded-full text-blue-500 dark:text-purple-500" />
+						)}
+						<label htmlFor='avatar-upload'>
+							<FaCloudUploadAlt className='md:w-10 md:h-10 fill-blue-500 dark:fill-purple-500 ml-3'/>
+						</label>
 						<input
 							type="file"
 							accept="image/*"
 							id="avatar-upload"
-							className="flex  text-blue-500 dark:text-purple-500 mt-4"
+							className="flex  text-blue-500 dark:text-purple-500 mt-4 md:h-10 md:w-10"
 							onChange={onChangeAvatar}
+							style={{ display: 'none' }}
 						/>
-						{/* <HiUserCircle className="w-32 h-32 rounded-full fill-gray-400" /> */}
 					</div>
 
 					{/* <div className="flex justify-center">
@@ -179,15 +214,16 @@ export const UserProfile = () => {
 				</div> */}
 					<button
 						onClick={() => handleSaveAvatar()}
-						className="bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 dark:hover:bg-purple-500 text-white w-52 py-2 mt-4 rounded-md">
+						className="md:w-32 md:h-10 bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 dark:hover:bg-purple-500 text-white w-52 py-2 mt-4 rounded-md"
+					>
 						Save Avatar
 					</button>
 				</div>
 				<div className="flex flex-row space-x-10">
-					<form onSubmit={handleSubmit1(onChangeProfile)} >
+					<form onSubmit={handleSubmit1(onChangeProfile)}>
 						<div className="flex flex-col space-y-4">
 							<div className="flex flex-col">
-								<label htmlFor="username" className="text-gray-500 pt-4" >
+								<label htmlFor="username" className="text-gray-500 pt-4">
 									Username
 								</label>
 								<div className="flex items-center">
@@ -239,17 +275,19 @@ export const UserProfile = () => {
 										})}
 									/>
 								</div>
-								{errors1.phone && <span className="text-red-500">{errors1.phone?.message}</span>}
+								{errors1.phone && (
+									<span className="text-red-500">{errors1.phone?.message}</span>
+								)}
 							</div>
 							<div className="flex justify-center my-2">
-								<button className="bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 dark:hover:bg-purple-500 text-white w-72 py-2 rounded-md">
+								<button className="md:w-32 md:h-10 bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 dark:hover:bg-purple-500 text-white w-72 py-2 rounded-md">
 									Save Profile
 								</button>
 							</div>
 						</div>
 					</form>
 
-					<form onSubmit={handleSubmit2(onChangePassword)} >
+					<form onSubmit={handleSubmit2(onChangePassword)}>
 						<div className="space-y-4">
 							<div className="flex flex-col">
 								<label htmlFor="currentPassword" className="text-gray-500 pt-4">
@@ -271,7 +309,11 @@ export const UserProfile = () => {
 										})}
 									/>
 								</div>
-								{errors2.currentPassword && <span className="text-red-500">{errors2.currentPassword?.message}</span>}
+								{errors2.currentPassword && (
+									<span className="text-red-500">
+										{errors2.currentPassword?.message}
+									</span>
+								)}
 							</div>
 							<div className="flex flex-col">
 								<label htmlFor="password" className="text-gray-500">
@@ -293,7 +335,11 @@ export const UserProfile = () => {
 										})}
 									/>
 								</div>
-								{errors2.newPassword && <span className="text-red-500">{errors2.newPassword?.message}</span>}
+								{errors2.newPassword && (
+									<span className="text-red-500">
+										{errors2.newPassword?.message}
+									</span>
+								)}
 							</div>
 							<div className="flex flex-col pb-2">
 								<label htmlFor="password" className="text-gray-500">
@@ -315,18 +361,21 @@ export const UserProfile = () => {
 										})}
 									/>
 								</div>
-								{errors2.confirmNewPassword && <span className="text-red-500">{errors2.confirmNewPassword?.message}</span>}
+								{errors2.confirmNewPassword && (
+									<span className="text-red-500">
+										{errors2.confirmNewPassword?.message}
+									</span>
+								)}
 							</div>
 						</div>
 						<div className="flex justify-center my-2">
-							<button
-								className="bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 dark:hover:bg-purple-500 text-white w-72 py-2 rounded-md" >
+							<button className="md:w-32 md:h-10 bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 dark:hover:bg-purple-500 text-white w-72 py-2 rounded-md">
 								Save New Password
 							</button>
 						</div>
 					</form>
 				</div>
 			</div>
-		</motion.div >
+		</motion.div>
 	);
 };
