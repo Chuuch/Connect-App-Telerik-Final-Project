@@ -47,7 +47,7 @@ export const BlockedUsersList: React.FC<BlockedUsersProps> = ({ blockedUsers, se
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-[744px] rounded-lg bg-gray-100 dark:bg-gray-900 shadow-md p-10 cursor-pointer mt-6">
+    <div className="flex flex-col items-center justify-center w-[744px] md:w-[500px] lg:w-[650px] rounded-lg bg-gray-100 dark:bg-gray-900 shadow-md p-10 cursor-pointer mt-6">
       <h2 className="text-xl font-semibold mb-4">Blocked Users</h2>
       {blockedUsers.length > 0 ? (
         <ul className="list-disc text-gray-500 space-x-4">
