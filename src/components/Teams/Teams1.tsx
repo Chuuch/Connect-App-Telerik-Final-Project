@@ -132,7 +132,7 @@ const Teams1 = () => {
     }
 
     return (
-        <div className="w-96">
+        <div className="w-96 md:w-[276px] md:h-[682px]">
             <div className="flex flex-row justify-center items-center border-b dark:border-gray-500 p-2">
                 <div className="flex items-center justify-center">
                     <h2 className="text-blue-500 dark:text-purple-500 text-2xl font-bold p-2">Teams</h2>
@@ -144,8 +144,8 @@ const Teams1 = () => {
                     transition={{ duration: 1.2 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="flex flex-col pt-4 space-y-  w-24">
-                    <div className="flex flex-row  w-80 justify-center">
+                    className="flex flex-col pt-4 space-y-  w-24 md:w-[276px] md:h-[682px]">
+                    <div className="flex flex-row md:flex-col  w-80 justify-center ">
                         <div className="tooltip" data-tip="Add Team">
                             <button
                                 onClick={() => handleAddTeam()}

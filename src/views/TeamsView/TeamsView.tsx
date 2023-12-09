@@ -25,8 +25,8 @@ export const TeamsView = () => {
 
   return (
     <div className="h-full bg-white dark:bg-black flex flex-grow items-start justify-start">
-      <div className="h-[800px] flex-col shadow-x bg-gray-100 dark:bg-gray-900">
-        <div className=" shadow-x bg-gray-100 dark:bg-gray-900">
+      <div className="h-[800px] md:w-[276px] md:h-[682px] flex-col shadow-x bg-gray-100 dark:bg-gray-900">
+        <div className="md:w-[276px] md:h-[682px] shadow-x bg-gray-100 dark:bg-gray-900">
           <Teams1 />
         </div>
         <div className=" shadow-xl bg-gray-100 dark:bg-gray-900">
