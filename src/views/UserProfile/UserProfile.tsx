@@ -178,9 +178,9 @@ export const UserProfile = () => {
 			transition={{ duration: 1.2 }}
 			whileInView={{ opacity: 1, y: 0 }}
 			viewport={{ once: true }}
-			className="flex flex-col justify-center items-center bg-white dark:bg-gray-800 rounded-lg"
+			className="flex flex-col justify-center items-center bg-white dark:bg-gray-800 h-full w-full rounded-lg"
 		>
-			<div className="flex flex-col justify-center items-start rounded-lg dark:rounded-lg bg-gray-100 dark:bg-gray-900 shadow-lg space-y-4 p-10 w-full h-full md:w-[600px] cursor-pointer overflow-hidden">
+			<div className="flex flex-col justify-center items-start rounded-lg dark:rounded-lg bg-gray-100 dark:bg-gray-900 shadow-lg space-y-4 p-10 w-full h-full md:w-[600px] lg:h-[600px] lg:w-[600px] cursor-pointer overflow-hidden">
 				<div className="flex flex-col items-start ml-10">
 					<div className="flex flex-col justify-start items-start ">
 						{previewImage || avatar ? (
@@ -193,7 +193,7 @@ export const UserProfile = () => {
 							<HiOutlineUser className="w-32 h-32 md:h-16 md:w-16 rounded-full text-blue-500 dark:text-purple-500" />
 						)}
 						<label htmlFor='avatar-upload'>
-							<FaCloudUploadAlt className='md:w-10 md:h-10 fill-blue-500 dark:fill-purple-500 ml-3'/>
+							<FaCloudUploadAlt className='md:w-10 md:h-10 fill-blue-500 dark:fill-purple-500 ml-3 cursor-pointer'/>
 						</label>
 						<input
 							type="file"
@@ -214,7 +214,7 @@ export const UserProfile = () => {
 				</div> */}
 					<button
 						onClick={() => handleSaveAvatar()}
-						className="md:w-32 md:h-10 bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 dark:hover:bg-purple-500 text-white w-52 py-2 mt-4 rounded-md"
+						className="md:w-32 md:h-10 lg:w-[150px] bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 dark:hover:bg-purple-500 text-white w-52 py-2 mt-4 rounded-md"
 					>
 						Save Avatar
 					</button>
@@ -280,7 +280,7 @@ export const UserProfile = () => {
 								)}
 							</div>
 							<div className="flex justify-center my-2">
-								<button className="md:w-32 md:h-10 bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 dark:hover:bg-purple-500 text-white w-72 py-2 rounded-md">
+								<button className="md:w-32 md:h-10 lg:w-[180px] bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 dark:hover:bg-purple-500 text-white w-72 py-2 rounded-md">
 									Save Profile
 								</button>
 							</div>
@@ -369,7 +369,7 @@ export const UserProfile = () => {
 							</div>
 						</div>
 						<div className="flex justify-center my-2">
-							<button className="md:w-32 md:h-10 bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 dark:hover:bg-purple-500 text-white w-72 py-2 rounded-md">
+							<button className="md:w-32 md:h-10 lg:w-[180px] bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 dark:hover:bg-purple-500 text-white w-72 py-2 rounded-md">
 								Save New Password
 							</button>
 						</div>
