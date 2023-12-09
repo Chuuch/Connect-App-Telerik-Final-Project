@@ -124,13 +124,12 @@ export const MessageBox: React.FC<MessageBoxProps> = ({ chatId }) => {
         </div>
         <HiOutlineGif
           onClick={() => setShowGif(true)}
-          size={30}
-          className="cursor-pointer stroke-blue-500 hover:stroke-blue-500/90 dark:stroke-purple-600/90 hover:dark:stroke-purple-600"
+          className="md:h-10 md:w-14 lg:w-8 cursor-pointer stroke-blue-500 hover:stroke-blue-500/90 dark:stroke-purple-600/90 hover:dark:stroke-purple-600"
         />
         <label htmlFor="file-input" className="cursor-pointer">
           <IoMdAttach
-            size={30}
-            className="fill-blue-500 hover:fill-blue-500/90 dark:fill-purple-600/90 hover:dark:fill-purple-600"
+            className="md:h-6 md:w-6 fill-blue-500 hover:fill-blue-500/90 dark:fill-purple-600/90 hover:dark:fill-purple-600"
+            onChange={() => handleFileChange}
           />
         </label>
         <input
@@ -138,12 +137,13 @@ export const MessageBox: React.FC<MessageBoxProps> = ({ chatId }) => {
           id="file-input"
           onChange={handleFileChange}
           style={{ display: 'none' }}
+
         />
-        <button onClick={handleUploadFile}>FIle</button>
+        <button onClick={handleUploadFile} className='md:hidden'>FIle</button>
         <label htmlFor="file-input" className="cursor-pointer">
         <IoMdPhotos
-          size={30}
-          className="cursor-pointer fill-blue-500 hover:fill-blue-500/90 dark:fill-purple-600/90 hover:dark:fill-purple-600"
+          className="md:h-8 md:w-6 lg:w-7 cursor-pointer fill-blue-500 hover:fill-blue-500/90 dark:fill-purple-600/90 hover:dark:fill-purple-600"
+          onChange={() => handleUploadImg}
         />
         </label>
         <input
@@ -152,11 +152,11 @@ export const MessageBox: React.FC<MessageBoxProps> = ({ chatId }) => {
           onChange={handleFileChange}
           style={{ display: 'none' }}
         />
-        <button onClick={handleUploadImg}>Image</button>
+        <button onClick={handleUploadImg} className='md:hidden'>Image</button>
       </div>
       <div className="flex flex-row pr-5">
         <button
-          className="p-1 w-20 h-10 text-sm rounded-md bg-blue-600 hover:bg-blue-500 dark:bg-purple-600/90 dark:hover:bg-purple-600 text-white"
+          className="p-1 lg:w-20 lg:h-10 md:w-14 md:h-8 text-sm rounded-md bg-blue-600 hover:bg-blue-500 dark:bg-purple-600/90 dark:hover:bg-purple-600 text-white"
           onClick={handleSubmit}
         >
           Send

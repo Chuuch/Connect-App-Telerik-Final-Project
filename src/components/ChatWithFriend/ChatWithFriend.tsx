@@ -77,7 +77,7 @@ export const Chat = () => {
 
   return (
     <div className="flex flex-col w-full bg-white dark:bg-gray-800">
-      <div className="h-[734px] border-l dark:border-gray-600 shadow-inner overflow-auto">
+      <div className="h-[734px] lg:h-[750px] border-l dark:border-gray-600 shadow-inner overflow-auto">
         <Messages msg={results} />
       </div>
       <div>
