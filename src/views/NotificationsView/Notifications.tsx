@@ -1,11 +1,8 @@
-// type Props = {}?
-
 import { onValue, ref } from 'firebase/database';
-import { MessageBox } from '../../components/MessageBox/MessageBox';
-import { Messages } from '../../components/Messages/Messages';
 import { Notifications } from '../../components/Notifications/Notifications';
 import { useState, useEffect } from 'react';
 import { db } from '../../config/firebase-config';
+import { Typewriter } from '../../components/Typewriter/Typewriter';
 interface Message {
 	content: string;
 	id: string;
@@ -25,8 +22,8 @@ interface AppNotification {
 }
 
 export const NotificationsView = () => {
-	const [msg, setMsg] = useState<Message[]>([]);
 	const [notification, setNotification] = useState<AppNotification[]>([]);
+	
 
 	useEffect(() => {
 		const notificationsRef = ref(db, 'notifications');
@@ -40,21 +37,9 @@ export const NotificationsView = () => {
 		};
 	}, [notification, setNotification]);
 
-	useEffect(() => {
-		const msgRef = ref(db, 'messages');
-		const unsubscribe = onValue(msgRef, (snapshot) => {
-			const data = snapshot.val();
-			setMsg(data ? Object.values(data) : []);
-		});
-
-		return () => {
-			unsubscribe();
-		};
-	}, []);
-
 	return (
-		<div className="bg-white dark:bg-black flex flex-grow items-start justify-start">
-			<div className="h-full shadow-xl bg-gray-100 dark:bg-gray-900">
+		<div className="bg-white dark:bg-gray-800 flex flex-row items-start justify-start lg:w-[1824px]">
+			<div className="lg:h-full lg:w-[350px] md:w-[276px] md:h-[682px] shadow-xl bg-gray-100 dark:bg-gray-900">
 				<Notifications
 					notification={notification}
 					userID={''}
@@ -63,13 +48,14 @@ export const NotificationsView = () => {
 					}}
 				/>
 			</div>
-			<div className="flex flex-col w-full h-[830px]">
-				<div className="flex-grow border-l dark:border-gray-600 shadow-inner overflow-auto scrollbar-thin scrollbar-track-gray-200 scrollbar-thumb-blue-500 dark:scrollbar-thumb-purple-600 dark:scrollbar-track-gray-600">
-					<Messages msg={msg} />
-				</div>
-				<div>
-					<MessageBox />
-				</div>
+			<div className="flex flex-col items-center justify-center lg:ml-[600px] lg:mt-[200px] space-y-4">
+				<img src="connect2.png" alt="logo" className="lg:w-32 lg:h-32" />
+				<h1 className="flex flex-row items-center justify-center text-6xl tracking-[5px] text-blue-500 dark:text-purple-500">
+					Notifications
+				</h1>
+				<p className="uppercase text-slate-400 tracking-[20px] ml-4">
+					Buddy Connect
+				</p>
 			</div>
 		</div>
 	);
