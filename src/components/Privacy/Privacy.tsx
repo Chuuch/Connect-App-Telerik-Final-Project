@@ -46,9 +46,9 @@ export const Privacy: React.FC<PrivacyProps> = () => {
         transition={{ duration: 1.2 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="flex flex-col items-start justify-center bg-white dark:bg-black"
+        className="flex flex-col items-start justify-center bg-white dark:bg-gray-800 w-full h-full "
       >
-        <form className="flex flex-col items-center rounded-lg bg-gray-100 dark:bg-gray-900 shadow-md p-10 cursor-pointer overflow-hidden">
+        <form className="md:w-[500px] lg:w-[650px] flex flex-col items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-900 shadow-md p-10 cursor-pointer overflow-hidden">
           <div className="flex flex-col space-y-4">
             <div className="flex flex-col">
               <label htmlFor="blockedUser" className="text-gray-500">
@@ -72,7 +72,7 @@ export const Privacy: React.FC<PrivacyProps> = () => {
             </button>
           </div>
           <div className="mt-4 text-gray-500">
-            <p>
+            <p className='md:text-sm'>
               By blocking a user, you prevent them from interacting with you and seeing your content.
             </p>
           </div>
