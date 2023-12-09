@@ -1,6 +1,6 @@
 import { RiTeamFill } from 'react-icons/ri';
 import { BsChatTextFill } from 'react-icons/bs';
-import { IoCall, IoCalendar, IoNotifications } from 'react-icons/io5';
+import { IoCalendar, IoNotifications } from 'react-icons/io5';
 import { DarkMode } from '../DarkMode/DarkMode';
 import { NavLink } from 'react-router-dom';
 import { logoutUser } from '../../services/auth.services';
@@ -12,15 +12,15 @@ export const Navbar = () => {
 	return (
 		<div className="drawer  w-24">
 			<input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
-			<div className="drawer-content flex flex-col">
+			<div className="drawer-content flex flex-col z-20">
 				{/* Navbar */}
-				<div className="w-24 h-full navbar bg-gray-100 dark:bg-gray-900 border-r dark:border-gray-600 flex flex-col justify-start shadow-md">
+				<div className="w-16 md:w-[75px] md:h-[682px] lg:h-full lg:w-24 h-full navbar bg-gray-100 dark:bg-gray-900 border-r dark:border-gray-600 flex flex-col justify-start shadow-md z-20">
 					<div className="flex flex-col">
 						<ul className="menu menu-vertical justify-center items-center">
 							{/* Navbar menu content here */}
 							<li>
 								<NavLink to='/notifications'>
-									<IoNotifications className="fill-blue-500 dark:fill-purple-600" size={28} />
+									<IoNotifications className="fill-blue-500 dark:fill-purple-600" size={28}/>
 								</NavLink>
 							</li>
 							<li>
@@ -31,11 +31,6 @@ export const Navbar = () => {
 							<li>
 								<NavLink to='/messages'>
 									<BsChatTextFill className="fill-blue-500 dark:fill-purple-600" size={28} />
-								</NavLink>
-							</li>
-							<li>
-								<NavLink to='/calls'>
-									<IoCall className="fill-blue-500 dark:fill-purple-600" size={28} />
 								</NavLink>
 							</li>
 							<li>
@@ -74,20 +69,17 @@ export const Navbar = () => {
 							</svg>
 						</label>
 					</div>
-					<div className="flex flex-col items-start justify-start">
-						{/* Add any additional content or menu items here */}
-					</div>
 				</div>
 			</div>
 			{/* Sidebar */}
-			<div className="drawer-side absolute top-0 left-24 h-full w-96 z-20">
+			<div className="drawer-side absolute top-0 left-24 h-full  md:h-[780] md:w-[280px] md:left-[75px] lg:w-[350px] w-96 z-20">
 				<label
 					htmlFor="my-drawer-3"
 					aria-label="close sidebar"
-					className="drawer-overlay"
+					className="drawer-overlay hidden"
 				></label>
 
-				<ul className="menu p-4 w-96 min-h-full bg-gray-100 dark:bg-gray-900 text-blue-500 dark:text-purple-600 dark:focus:text-purple-600">
+				<ul className="menu p-4 w-96 md:h-[780px] md:w-[276px] lg:w-[350px] lg:h-full bg-gray-100 dark:bg-gray-900 text-blue-500 dark:text-purple-600 dark:focus:text-purple-600">
 					{/* Sidebar content here */}
 					<h1 className="text-3xl ml-3 mb-4 text-blue-500 dark:text-purple-600">Personal Profile</h1>
 					<li className='dark:hover:bg-gray-800 rounded-md '>

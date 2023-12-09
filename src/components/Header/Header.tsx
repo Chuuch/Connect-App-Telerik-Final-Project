@@ -76,38 +76,46 @@ export const Header = () => {
 		setUserVal('');
 	};
 	return (
-		<div className="relative flex flex-row items-center justify-between border-b dark:border-gray-600 bg-gray-100 dark:bg-gray-900 h-20">
-			<img src="connect2.png" alt="logo" className="w-14 h-14 ml-5" />
+		<div className="
+		relative flex flex-row items-center justify-between border-b
+	  dark:border-gray-600 bg-gray-100 dark:bg-gray-900 md:h-16 md:w-[768px]
+	  	lg:w-[1920px]">
+			<img
+				src="connect2.png"
+				alt="logo"
+				className="w-14 h-14 ml-5 md:h-10 md:w-10 lg:h-14 lg:w-14"
+			/>
 			<div className="flex flex-row items-center space-x-1">
 				<input
 					type="text"
 					placeholder="Search in chat"
 					onChange={handleSearch}
 					value={queryVal}
-					className="rounded-full w-96 h-8 p-4 bg-white dark:bg-gray-800 text-gray-700 focus:border-blue-500 dark:text-gray-300 border dark:border-gray-700 dark:focus:border-purple-600 outline-none focus:outline-none bg-transparent"
+					className="
+					rounded-full lg:w-96 md:w-64 lg:h-8 md:h-4 md:p-3 lg:p-4
+				  bg-white dark:bg-gray-800 text-gray-700 focus:border-blue-500
+				  dark:text-gray-300 border dark:border-gray-700 dark:focus:border-purple-600
+				    outline-none focus:outline-none bg-transparent"
 				/>
 				<NavLink to="/search">
 					<IoSearch
-						size={25}
 						onClick={handleSubmit}
-						className="mr-2 fill-blue-600 hover:fill:blue-500 dark:fill-purple-600 dark:hover:fill-purple-500 cursor-pointer"
+						className="mr-2 md:h-5 md:w-5 lg:h-8 lg:w-6 fill-blue-600 hover:fill:blue-500 dark:fill-purple-600 dark:hover:fill-purple-500 cursor-pointer"
 					/>
 				</NavLink>
 			</div>
 			<div className="flex flex-row items-center space-x-4 mr-10">
 				<IoCall
-					size={25}
 					onClick={handleSubmit}
-					className="mr-2 fill-blue-600 hover:fill-blue-500 dark:fill-purple-600 dark:hover:fill-purple-500 cursor-pointer"
+					className="md:h-5 md:w-5 lg:h-8 lg:w-6 fill-blue-600 hover:fill-blue-500 dark:fill-purple-600 dark:hover:fill-purple-500 cursor-pointer"
 				/>
-				<NavLink to='/videocall'>
-					<IoVideocam size={25} className='fill-blue-600 hover:fill-blue-500 dark:fill-purple-600 dark:hover:fill-purple-500 '/>
+				<NavLink to="/videocall">
+					<IoVideocam className="md:h-5 md:w-5 lg:h-8 lg:w-6 fill-blue-600 hover:fill-blue-500 dark:fill-purple-600 dark:hover:fill-purple-500 " />
 				</NavLink>
 
 				<IoPersonAdd
-					size={25}
 					onClick={() => setShowForm(true)}
-					className="fill-blue-600 hover:fill-blue-500 dark:fill-purple-600 hover:dark:fill-purple-500 cursor-pointer"
+					className="md:h-5 md:w-5 lg:h-8 lg:w-6 fill-blue-600 hover:fill-blue-500 dark:fill-purple-600 hover:dark:fill-purple-500 cursor-pointer"
 				/>
 				<Avatar userID={currentUserDB?.uid} />
 			</div>
