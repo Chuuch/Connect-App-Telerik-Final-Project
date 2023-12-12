@@ -21,15 +21,36 @@ export const Header = () => {
 	const [userVal, setUserVal] = useState<string>('');
 	const { currentUserDB } = useContext(UserContext);
 	const { chatId } = useParams<string>();
+	const { channelId } = useParams<string>();
 
 	useEffect(() => {
 		const searchFunc = async () => {
 			try {
 				if (queryVal.trim() !== '') {
-					const msgQuery = await get(ref(db, `chats/${chatId}/messages`));
+					const msgQueryChat = await get(ref(db, `chats/${chatId}/messages`));
+					const msgQueryChannel = await get(ref(db, `channelMessages/${channelId}`));
 					console.log('Query Value: ', queryVal);
-					if (msgQuery.exists()) {
-						const msgData = msgQuery.val();
+					if (msgQueryChat.exists()) {
+						const msgData = msgQueryChat?.val();
+						const dataArray: Message[] = Object.values(msgData);
+						const matches: Message[] = [];
+						for (const msg of dataArray) {
+							console.log('data: ', msg.content);
+							if (
+								msg.content &&
+								msg.content.toLowerCase().includes(queryVal.toLowerCase())
+							) {
+								console.log(msg);
+								matches.push(msg);
+							}
+						}
+						setResults(matches);
+					} else {
+						console.log('No results found');
+						setResults([]);
+					}
+					if (msgQueryChannel.exists()) {
+						const msgData = msgQueryChannel?.val();
 						const dataArray: Message[] = Object.values(msgData);
 						const matches: Message[] = [];
 						for (const msg of dataArray) {
@@ -64,7 +85,11 @@ export const Header = () => {
 
 	const handleSubmit = (e: { preventDefault: () => void }) => {
 		e.preventDefault();
-		navigate(`/search/${queryVal}`, { state: { results } });
+		if(chatId){
+		navigate(`/search/${chatId}/${queryVal}`, { state: { results } });
+		} else {
+		navigate(`/search/${channelId}/${queryVal}`, { state: { results } });
+		}
 		setQueryVal('');
 	};
 
@@ -95,7 +120,7 @@ export const Header = () => {
 				alt="logo"
 				className="w-14 h-14 ml-5 md:h-10 md:w-10 lg:h-14 lg:w-14"
 			/>
-			<div className="flex flex-row items-center space-x-1">
+			{(chatId || channelId) && <div className="flex flex-row items-center space-x-1">
 				<input
 					type="text"
 					placeholder="Search in chat"
@@ -118,7 +143,7 @@ export const Header = () => {
 						className="mr-2 md:h-5 md:w-5 lg:h-8 lg:w-6 fill-blue-600 hover:fill:blue-500 dark:fill-purple-600 dark:hover:fill-purple-500 cursor-pointer"
 					/>
 				</NavLink>
-			</div>
+			</div>}
 			<div className="flex flex-row items-center space-x-4 mr-10">
 				<IoCall
 					onClick={handleSubmit}
