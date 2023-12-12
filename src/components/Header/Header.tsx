@@ -4,7 +4,8 @@ import { IoCall, IoPersonAdd, IoSearch, IoVideocam } from 'react-icons/io5';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { db } from '../../config/firebase-config';
 import UserContext from '../../context/UserContext';
-import { setUserFriend } from '../../services/users.services';
+import { setUserFriend, updateUserStatus } from '../../services/users.services';
+import { Status } from '../../utils/status';
 import Avatar from '../Avatar/Avatar';
 
 interface Message {
@@ -16,6 +17,7 @@ export const Header = () => {
 	const [queryVal, setQueryVal] = useState<string>('');
 	const navigate = useNavigate();
 	const [showForm, setShowForm] = useState<boolean>(false);
+	const [showStatusMenu, setShowStatusMenu] = useState<boolean>(false);
 	const [userVal, setUserVal] = useState<string>('');
 	const { currentUserDB } = useContext(UserContext);
 	const { chatId } = useParams<string>();
@@ -76,6 +78,13 @@ export const Header = () => {
 		if (userVal !== '') setUserFriend(userVal);
 		setUserVal('');
 	};
+
+	const handleStatus = (e: { preventDefault: () => void }, status: `${Status}`) => {
+		e.preventDefault();
+		updateUserStatus(currentUserDB?.uid, status);
+		setShowStatusMenu(false);
+	}
+
 	return (
 		<div className="
 		relative flex flex-row items-center justify-between border-b
@@ -94,7 +103,7 @@ export const Header = () => {
 					value={queryVal}
 					onKeyDown={(e) => {
 						if (e.key === 'Enter') {
-						handleSubmit(e);
+							handleSubmit(e);
 						}
 					}}
 					className="
@@ -123,8 +132,16 @@ export const Header = () => {
 					onClick={() => setShowForm(true)}
 					className="md:h-5 md:w-5 lg:h-8 lg:w-6 fill-blue-600 hover:fill-blue-500 dark:fill-purple-600 hover:dark:fill-purple-500 cursor-pointer"
 				/>
-				<Avatar userID={currentUserDB?.uid} />
+				<button onClick={() => setShowStatusMenu(true)}>
+					<Avatar userID={currentUserDB?.uid} />
+				</button>
 			</div>
+			{showStatusMenu && currentUserDB?.uid && (<ul className="menu bg-base-200 w-56 rounded-box absolute top-[100%] right-[0%]">
+				<li><button onClick={(e) => handleStatus(e, Status.BUSY)}>{Status.BUSY.toUpperCase()}</button>         			</li>
+				<li><button onClick={(e) => handleStatus(e, Status.DO_NOT_DISTURB)}>{Status.DO_NOT_DISTURB.toUpperCase().replaceAll('-', ' ')}</button></li>
+				<li><button onClick={(e) => handleStatus(e, Status.OFFLINE)}>{Status.OFFLINE.toUpperCase()}</button></li>
+				<li><button onClick={(e) => handleStatus(e, Status.ONLINE)}>{Status.ONLINE.toUpperCase()}</button></li>
+			</ul>)}
 			{showForm && (
 				<div className="absolute top-[50%] left-[50%] transform -translate-x-1/2  translate-y-4">
 					<div className="mt-4">
