@@ -1,8 +1,8 @@
-import { onValue, ref } from 'firebase/database';
 import { useEffect, useState } from 'react';
 import { UserDB } from '../../App';
-import { auth, db } from '../../config/firebase-config';
+import { getUserByID } from '../../services/users.services';
 import Badge from '../Badge/Badge';
+import { onValue, ref } from 'firebase/database';
 
 const Avatar = ({ userID }: { userID?: string }) => {
 
@@ -10,21 +10,29 @@ const Avatar = ({ userID }: { userID?: string }) => {
 
     useEffect(() => {
         if (!userID) return;
-        const userRef = ref(db, `users/${userID}`);
-        const unsubscribe = onValue(userRef, (snapshot) => {
-            const data = snapshot.val();
-
-            if (data) {
-                setUserData(data);
-            } else {
-                setUserData(null);
+        const fetchUser = async () => {
+            try {
+                const userByID = await getUserByID(userID);
+                setUserData(userByID);
+                console.log("userID: ", userByID);
+                console.log("data: ", userByID);
+            } catch (error) {
+                console.log("An error occurred: " + error);
             }
-        });
+        }
+        fetchUser()
+        // const unsubscribe = onValue(ref(db, `users/${userID}/status`), (snapshot) => {
+        //     const data = snapshot.val();
+        //     console.log(data)
+        //     if (data) {
+        //         setUserData(data);
+        //     }
+        // });
 
-        return () => {
-            unsubscribe();
-        };
-    }, [userData?.status, userID])
+        // return () => {
+        //     unsubscribe();
+        // };
+    }, [userID])
 
     return (
         <>
