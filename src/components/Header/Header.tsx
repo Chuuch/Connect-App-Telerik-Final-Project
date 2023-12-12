@@ -27,34 +27,21 @@ export const Header = () => {
 		const searchFunc = async () => {
 			try {
 				if (queryVal.trim() !== '') {
-					const msgQueryChat = await get(ref(db, `chats/${chatId}/messages`));
-					const msgQueryChannel = await get(ref(db, `channelMessages/${channelId}`));
-					console.log('Query Value: ', queryVal);
-					if (msgQueryChat.exists()) {
-						const msgData = msgQueryChat?.val();
+					let msgQueryRef;
+                    if (chatId) {
+                    msgQueryRef = ref(db, `chats/${chatId}/messages`);
+                    } else if (channelId) {
+                    msgQueryRef = ref(db, `channelMessages/${channelId}`);
+                    }
+					if (msgQueryRef) {
+						const msgQuery = await get(msgQueryRef);
+						//console.log('Data:', msgQuery.val());
+					if (msgQuery.exists()) {
+						const msgData = msgQuery.val();
 						const dataArray: Message[] = Object.values(msgData);
 						const matches: Message[] = [];
 						for (const msg of dataArray) {
-							console.log('data: ', msg.content);
-							if (
-								msg.content &&
-								msg.content.toLowerCase().includes(queryVal.toLowerCase())
-							) {
-								console.log(msg);
-								matches.push(msg);
-							}
-						}
-						setResults(matches);
-					} else {
-						console.log('No results found');
-						setResults([]);
-					}
-					if (msgQueryChannel.exists()) {
-						const msgData = msgQueryChannel?.val();
-						const dataArray: Message[] = Object.values(msgData);
-						const matches: Message[] = [];
-						for (const msg of dataArray) {
-							console.log('data: ', msg.content);
+							//console.log('data: ', msg.content);
 							if (
 								msg.content &&
 								msg.content.toLowerCase().includes(queryVal.toLowerCase())
@@ -69,13 +56,14 @@ export const Header = () => {
 						setResults([]);
 					}
 				}
-			} catch (error) {
+			}
+		} catch (error) {
 				console.log('An error occurred: ' + error);
 			}
 		};
 
 		searchFunc();
-	}, [queryVal]);
+	}, [queryVal, channelId, chatId]);
 
 	const handleSearch = (e: { preventDefault: () => void; target: { value: SetStateAction<string>; }; }) => {
 		e.preventDefault();
