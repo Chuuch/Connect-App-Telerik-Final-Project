@@ -1,34 +1,35 @@
 import { get, ref } from 'firebase/database';
-import { useContext, useEffect, useState } from 'react';
+import { SetStateAction, useContext, useEffect, useState } from 'react';
 import { IoCall, IoPersonAdd, IoSearch, IoVideocam } from 'react-icons/io5';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { db } from '../../config/firebase-config';
 import UserContext from '../../context/UserContext';
 import { setUserFriend } from '../../services/users.services';
 import Avatar from '../Avatar/Avatar';
 
+interface Message {
+	content: string
+}
+
 export const Header = () => {
-	const [results, setResults] = useState<Array<string>>([]);
+	const [results, setResults] = useState<Array<Message>>([]);
 	const [queryVal, setQueryVal] = useState<string>('');
 	const navigate = useNavigate();
 	const [showForm, setShowForm] = useState<boolean>(false);
 	const [userVal, setUserVal] = useState<string>('');
 	const { currentUserDB } = useContext(UserContext);
+	const { chatId } = useParams<string>();
 
 	useEffect(() => {
 		const searchFunc = async () => {
 			try {
 				if (queryVal.trim() !== '') {
-					const msgQuery = await get(ref(db, 'messages'));
-
-					//const postsSnapshot = await get(msgQuery);
+					const msgQuery = await get(ref(db, `chats/${chatId}/messages`));
 					console.log('Query Value: ', queryVal);
-					//console.log("postsSnapshot.exists(): ", postsSnapshot.exists());
-					//console.log("postsSnapshot.val(): ", postsSnapshot.val());
 					if (msgQuery.exists()) {
 						const msgData = msgQuery.val();
-						const dataArray = Object.values(msgData);
-						const matches: Array<string> = [];
+						const dataArray: Message[] = Object.values(msgData);
+						const matches: Message[] = [];
 						for (const msg of dataArray) {
 							console.log('data: ', msg.content);
 							if (
@@ -53,7 +54,7 @@ export const Header = () => {
 		searchFunc();
 	}, [queryVal]);
 
-	const handleSearch = (e) => {
+	const handleSearch = (e: { preventDefault: () => void; target: { value: SetStateAction<string>; }; }) => {
 		e.preventDefault();
 		setQueryVal(e.target.value);
 		console.log('Search:', e.target.value);
@@ -62,9 +63,10 @@ export const Header = () => {
 	const handleSubmit = (e: { preventDefault: () => void }) => {
 		e.preventDefault();
 		navigate(`/search/${queryVal}`, { state: { results } });
+		setQueryVal('');
 	};
 
-	const handleSearchUser = (e) => {
+	const handleSearchUser = (e: { preventDefault: () => void; target: { value: SetStateAction<string>; }; }) => {
 		e.preventDefault();
 		setUserVal(e.target.value);
 	};
@@ -72,7 +74,6 @@ export const Header = () => {
 	const handleSubmitUser = (e: { preventDefault: () => void }) => {
 		e.preventDefault();
 		if (userVal !== '') setUserFriend(userVal);
-		console.log('Yeah:', e);
 		setUserVal('');
 	};
 	return (
@@ -91,6 +92,11 @@ export const Header = () => {
 					placeholder="Search in chat"
 					onChange={handleSearch}
 					value={queryVal}
+					onKeyDown={(e) => {
+						if (e.key === 'Enter') {
+						handleSubmit(e);
+						}
+					}}
 					className="
 					rounded-full lg:w-96 md:w-64 lg:h-8 md:h-4 md:p-3 lg:p-4
 				  bg-white dark:bg-gray-800 text-gray-700 focus:border-blue-500
