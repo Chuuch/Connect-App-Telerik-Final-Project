@@ -1,6 +1,7 @@
+import { onValue, ref } from 'firebase/database';
 import { useEffect, useState } from 'react';
 import { UserDB } from '../../App';
-import { getUserByID } from '../../services/users.services';
+import { auth, db } from '../../config/firebase-config';
 import Badge from '../Badge/Badge';
 
 const Avatar = ({ userID }: { userID?: string }) => {
@@ -9,18 +10,20 @@ const Avatar = ({ userID }: { userID?: string }) => {
 
     useEffect(() => {
         if (!userID) return;
-        const fetchUser = async () => {
-            try {
-                const userByID = await getUserByID(userID);
-                setUserData(userByID);
-                console.log("userID: ", userByID);
-                console.log("data: ", userByID);
-            } catch (error) {
-                console.log("An error occurred: " + error);
-            }
-        }
-        fetchUser()
+        const userRef = ref(db, `users/${userID}`);
+        const unsubscribe = onValue(userRef, (snapshot) => {
+            const data = snapshot.val();
 
+            if (data) {
+                setUserData(data);
+            } else {
+                setUserData(null);
+            }
+        });
+
+        return () => {
+            unsubscribe();
+        };
     }, [userData?.status, userID])
 
     return (
