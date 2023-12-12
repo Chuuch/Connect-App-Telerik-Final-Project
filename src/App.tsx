@@ -107,7 +107,7 @@ function App() {
 						<Route path="calendar" element={<Authenticated><CalendarView /></Authenticated>} />
 						<Route path="user" element={<Authenticated><UserView /></Authenticated>} />
 						<Route path="privacy" element={<Authenticated><PrivacyView /></Authenticated>} />
-						<Route path="search/:query" element={<Authenticated><Search /></Authenticated>} />
+						<Route path="search/:chatId/:query" element={<Authenticated><Search /></Authenticated>} />
 						<Route path='videocall' element={<Authenticated><DyteVideo /></Authenticated>} />
 						<Route path='messages/videocall' element={<Authenticated><DyteVideo /></Authenticated>} />
 						<Route path='chat/:chatId' element={<Authenticated><Chat /></Authenticated>} />
