@@ -131,13 +131,8 @@ export const Header = () => {
 						className="mr-2 md:h-5 md:w-5 lg:h-8 lg:w-6 fill-blue-600 hover:fill:blue-500 dark:fill-purple-600 dark:hover:fill-purple-500 cursor-pointer"
 					/>
 				</NavLink>
-<<<<<<< HEAD
-			</div>
-			<div className="flex flex-row items-center space-x-2 lg:space-x-4 mr-10">
-=======
 			</div>}
 			<div className="flex flex-row items-center space-x-4 mr-10">
->>>>>>> c76fbf15695b758c50fd0ada1612156fb58ce1b4
 				<IoCall
 					onClick={handleSubmit}
 					className="md:h-5 md:w-5 lg:h-8 lg:w-6 fill-blue-600 hover:fill-blue-500 dark:fill-purple-600 dark:hover:fill-purple-500 cursor-pointer"
