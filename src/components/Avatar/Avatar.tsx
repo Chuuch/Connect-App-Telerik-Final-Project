@@ -1,42 +1,68 @@
+import { onValue, ref } from 'firebase/database';
 import { useEffect, useState } from 'react';
-import { UserDB } from '../../App';
-import { getUserByID } from '../../services/users.services';
+import { db } from '../../config/firebase-config';
+import { Status } from '../../utils/status';
 import Badge from '../Badge/Badge';
 
 const Avatar = ({ userID }: { userID?: string }) => {
 
-    const [userData, setUserData] = useState<UserDB | null>(null);
+    const [status, setStatus] = useState<`${Status}` | undefined>(undefined);
+    const [firstName, setFirstName] = useState<string>('');
+    const [lastName, setLastName] = useState<string>('');
+    const [avatar, setAvatar] = useState<string>('');
 
     useEffect(() => {
         if (!userID) return;
-        const fetchUser = async () => {
-            try {
-                const userByID = await getUserByID(userID);
-                setUserData(userByID);
-                console.log("userID: ", userByID);
-                console.log("data: ", userByID);
-            } catch (error) {
-                console.log("An error occurred: " + error);
+    
+        const unsubscribeStatus = onValue(ref(db, `users/${userID}/status`), (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                setStatus(data);
             }
-        }
-        fetchUser()
+        });
 
-    }, [userData?.status, userID])
+        const unsubscribeFirstName = onValue(ref(db, `users/${userID}/firstName`), (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                setFirstName(data);
+            }
+        });
+
+        const unsubscribeLastName = onValue(ref(db, `users/${userID}/lastName`), (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                setLastName(data);
+            }
+        });
+        const unsubscribeAvatar = onValue(ref(db, `users/${userID}/avatar`), (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                setAvatar(data);
+            }
+        });
+
+        return () => {
+            unsubscribeStatus();
+            unsubscribeFirstName();
+            unsubscribeLastName();
+            unsubscribeAvatar();
+        };
+    }, [userID])
 
     return (
         <>
-            {userData?.avatar?.length ? (
+            {avatar?.length ? (
                 <div className="chat-image avatar">
-                    <div className="w-6 lg:w-10 rounded-full">
-                        <img className="w-2 h-2 lg:w-10 lg:h-10 rounded-full" src={userData?.avatar} alt="avatar" />
-                        <Badge status={userData?.status} />
+                    <div className="w-10 rounded-full">
+                        <img className="w-10 h-10 rounded-full" src={avatar} alt="avatar" />
+                        <Badge status={status} />
                     </div>
                 </div >
             ) : (
                 <div className="chat-image ">
-                    < div className="relative inline-flex items-center justify-center w-6 h-6  bg-gray-300 rounded-full dark:bg-gray-600 ">
-                        <span className="font-medium text-gray-500 dark:text-gray-300 ">{userData?.firstName?.charAt(0).toUpperCase() + userData?.lastName?.charAt(0).toUpperCase()}</span>
-                        <Badge status={userData?.status} />
+                    < div className="relative inline-flex items-center justify-center w-10 h-10  bg-gray-300 rounded-full dark:bg-gray-600 ">
+                        <span className="font-medium text-gray-500 dark:text-gray-300 ">{firstName?.charAt(0).toUpperCase() + lastName?.charAt(0).toUpperCase()}</span>
+                        <Badge status={status} />
                     </div >
                 </div>
             )

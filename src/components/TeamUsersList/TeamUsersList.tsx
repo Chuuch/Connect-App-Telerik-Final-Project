@@ -31,7 +31,6 @@ const TeamUsersList: FC<TeamUsersListProps> = ({ teamId }) => {
                 snapshot.forEach(grandchildSnapshot => {
                     const item = grandchildSnapshot.val()
                     if (item) {
-                        console.log('item', item)
                         returnArr.push(item)
                     }
                 })
