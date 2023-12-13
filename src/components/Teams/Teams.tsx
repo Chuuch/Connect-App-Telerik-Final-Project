@@ -100,9 +100,9 @@ export const Teams: React.FC = () => {
   };
 
   return (
-    <div className="w-96">
-      <div className="flex flex-row justify-center items-center border-b dark:border-gray-500 p-2">
-        <div className="flex items-center justify-center">
+    <div className="">
+      <div className=" flex flex-row justify-center items-center lg:w-[400px]  p-2">
+        <div className="flex items-center justify-center lg:w-[350px]">
           <h2 className="text-blue-500 dark:text-purple-500 text-2xl font-bold p-2">Teams</h2>
         </div>
       </div>
@@ -112,7 +112,7 @@ export const Teams: React.FC = () => {
           transition={{ duration: 1.2 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="flex flex-col pt-4 space-y-">
+          className="flex flex-col pt-4 space-y- lg:w-full">
           {teams &&
             teams.map((team) => (
               <div

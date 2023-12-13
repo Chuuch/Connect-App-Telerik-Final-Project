@@ -42,7 +42,7 @@ const Assistant: AssistantProps = () => {
 							className="btn btn-square btn-ghost flex flex-col"
 						>
 							<BsRobot
-								size={30}
+								size={20}
 								className="text-blue-500 dark:text-purple-500"
 							/>
 						</label>

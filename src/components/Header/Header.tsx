@@ -83,16 +83,16 @@ export const Header = () => {
 			<img
 				src="connect2.png"
 				alt="logo"
-				className="w-14 h-14 ml-5 md:h-10 md:w-10 lg:h-14 lg:w-14"
+				className="w-8 h-8 ml-1 lg:ml-5 md:h-10 md:w-10 lg:h-14 lg:w-14"
 			/>
-			<div className="flex flex-row items-center space-x-1">
+			<div className="flex flex-row items-center space-x-2 ml-5">
 				<input
 					type="text"
 					placeholder="Search in chat"
 					onChange={handleSearch}
 					value={queryVal}
 					className="
-					rounded-full lg:w-96 md:w-64 lg:h-8 md:h-4 md:p-3 lg:p-4
+					rounded-full text-sm pl-2 w-32 lg:w-96 md:w-64 lg:h-8 md:h-4 md:p-3 lg:p-4
 				  bg-white dark:bg-gray-800 text-gray-700 focus:border-blue-500
 				  dark:text-gray-300 border dark:border-gray-700 dark:focus:border-purple-600
 				    outline-none focus:outline-none bg-transparent"
@@ -104,7 +104,7 @@ export const Header = () => {
 					/>
 				</NavLink>
 			</div>
-			<div className="flex flex-row items-center space-x-4 mr-10">
+			<div className="flex flex-row items-center space-x-2 lg:space-x-4 mr-10">
 				<IoCall
 					onClick={handleSubmit}
 					className="md:h-5 md:w-5 lg:h-8 lg:w-6 fill-blue-600 hover:fill-blue-500 dark:fill-purple-600 dark:hover:fill-purple-500 cursor-pointer"

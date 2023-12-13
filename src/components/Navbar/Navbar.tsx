@@ -10,32 +10,32 @@ import  Assistant from '../Assistant/Assistant';
 
 export const Navbar = () => {
 	return (
-		<div className="drawer  w-24">
+		<div className="drawer w-8 lg:w-24 ">
 			<input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
 			<div className="drawer-content flex flex-col z-20">
 				{/* Navbar */}
-				<div className="w-16 md:w-[75px] md:h-[682px] lg:h-full lg:w-24 h-full navbar bg-gray-100 dark:bg-gray-900 border-r dark:border-gray-600 flex flex-col justify-start shadow-md z-20">
+				<div className="w-10 md:w-[75px] md:h-[682px] lg:h-full lg:w-24 h-full navbar bg-gray-100 dark:bg-gray-900 border-r dark:border-gray-600 flex flex-col justify-start shadow-md z-20">
 					<div className="flex flex-col">
 						<ul className="menu menu-vertical justify-center items-center">
 							{/* Navbar menu content here */}
 							<li>
 								<NavLink to='/notifications'>
-									<IoNotifications className="fill-blue-500 dark:fill-purple-600" size={28}/>
+									<IoNotifications className="fill-blue-500 dark:fill-purple-600 bg-transparent" size={20}/>
 								</NavLink>
 							</li>
 							<li>
 								<NavLink to='/teams'>
-									<RiTeamFill className="fill-blue-500 dark:fill-purple-600" size={28} />
+									<RiTeamFill className="fill-blue-500 dark:fill-purple-600" size={20}/>
 								</NavLink>
 							</li>
 							<li>
 								<NavLink to='/messages'>
-									<BsChatTextFill className="fill-blue-500 dark:fill-purple-600" size={28} />
+									<BsChatTextFill className="fill-blue-500 dark:fill-purple-600 h-8" size={20}/>
 								</NavLink>
 							</li>
 							<li>
 								<NavLink to='/calendar'>
-									<IoCalendar className="fill-blue-500 dark:fill-purple-600" size={28} />
+									<IoCalendar className="fill-blue-500 dark:fill-purple-600 h-8" size={20}/>
 								</NavLink>
 							</li>
 							<li>

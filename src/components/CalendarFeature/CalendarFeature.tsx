@@ -22,7 +22,7 @@ export const CalendarFeature = () => {
 					onChange={onChange}
 					value={value}
 					className="
-          w-full max-w-full bg-white text-gray-800 rounded-lg shadow-md font-sans leading-tight"
+         			w-24 h-64 text-sm bg-white text-gray-800 rounded-lg shadow-md font-sans leading-tight"
 				/>
 			</motion.div>
 			<motion.div

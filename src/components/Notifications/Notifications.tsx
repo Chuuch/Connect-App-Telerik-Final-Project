@@ -30,7 +30,7 @@ export const Notifications: React.FC<NotificationsProps> = ({
 				transition={{ duration: 1.2 }}
 				whileInView={{ opacity: 1, y: 0 }}
 				viewport={{ once: true }}
-				className="w-96 shadow-inner"
+				className="lg:w-[350px] shadow-inner"
 			>
 				<ul className="flex flex-col pt-4 space-y-2">
 					{notification.map((notif) => (

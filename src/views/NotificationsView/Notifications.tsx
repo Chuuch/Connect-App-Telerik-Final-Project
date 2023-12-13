@@ -38,8 +38,8 @@ export const NotificationsView = () => {
 	}, [notification, setNotification]);
 
 	return (
-		<div className="bg-white dark:bg-gray-800 flex flex-row items-start justify-start lg:w-[1824px]">
-			<div className="lg:h-full lg:w-[350px] md:w-[276px] md:h-[682px] shadow-xl bg-gray-100 dark:bg-gray-900">
+		<div className="bg-white dark:bg-gray-800 flex flex-row items-start justify-start w-96 lg:w-[1824px]">
+			<div className="lg:h-full lg:w-[350px] md:w-[276px] md:h-[682px] bg-gray-100 dark:bg-gray-900">
 				<Notifications
 					notification={notification}
 					userID={''}
@@ -48,7 +48,7 @@ export const NotificationsView = () => {
 					}}
 				/>
 			</div>
-			<div className="flex flex-col items-center justify-center lg:ml-[600px] lg:mt-[200px] space-y-4">
+			<div className="flex flex-col items-center justify-center hidden lg:ml-[600px] lg:mt-[200px] space-y-4">
 				<img src="connect2.png" alt="logo" className="lg:w-32 lg:h-32" />
 				<h1 className="flex flex-row items-center justify-center text-6xl tracking-[5px] text-blue-500 dark:text-purple-500">
 					Notifications
