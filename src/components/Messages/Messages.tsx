@@ -39,7 +39,7 @@ export const Messages: React.FC<MessagesProps> = ({ msg }) => {
     msgRefContainer.current?.scrollIntoView({ behavior: 'smooth' });
   }, [msg]);
   return (
-    <div className="pt-5 h-[735px] md:h-[585px] lg:h-[750px] lg:w-[1465px]">
+    <div className="pt-5 h-[735px] md:h-[585px] lg:h-[920px]">
       {msg &&
         msg.map(
           (m: {

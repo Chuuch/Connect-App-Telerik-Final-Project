@@ -32,7 +32,7 @@ export const SingleConversation: React.FC<{ friend: User }> = ({ friend }) => {
 				whileInView={{ opacity: 1, y: 0 }}
 				viewport={{ once: true }}
 				className="flex flex-col pt-4">
-					<li className="flex flex-row space-x-1 items-center text-md hover:bg-gray-200 dark:hover:bg-gray-800 cursor-pointer h-full w-full pl-2">
+					<li className="flex flex-row space-x-1 items-center text-md hover:bg-gray-200 dark:hover:bg-gray-800 cursor-pointer h-full w-full lg:hover:w-[350px] lg:dark:hover:w-[350px] pl-2">
 					<Avatar userID={friend.uid} />
 						<p className="text-gray-500 dark:text-gray-300">{friend.username}</p>
 						<div className="flex flex-row pl-5 space-x-4">

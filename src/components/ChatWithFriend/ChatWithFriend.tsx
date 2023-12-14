@@ -64,7 +64,7 @@ export const Chat = () => {
 
   if (results.length === 0) {
     return <div className="flex flex-col w-full">
-      <div className="h-[735px] flex  items-start justify-center pt-32 border-l dark:bg-gray-800 dark:border-gray-600  shadow-inner overflow-auto">
+      <div className="h-[735px] lg:h-[751px] flex  items-start justify-center pt-32 border-l dark:bg-gray-800 dark:border-gray-600  shadow-inner overflow-auto">
         <p className="dark:text-purple-500 text-center text-2xl font-bold">
           Send a message to start a conversation
         </p>
@@ -77,7 +77,7 @@ export const Chat = () => {
 
   return (
     <div className="flex flex-col w-full bg-white dark:bg-gray-800">
-      <div className="h-[734px] lg:h-[750px] border-l dark:border-gray-600 shadow-inner overflow-auto">
+      <div className="h-[734px] lg:h-[920px]  border-l dark:border-gray-600 shadow-inner overflow-auto">
         <Messages msg={results} />
       </div>
       <div>

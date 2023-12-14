@@ -24,23 +24,23 @@ export const TeamsView = () => {
   }, [channelId]);
 
   return (
-    <div className="h-full bg-white dark:bg-black flex flex-grow items-start justify-start">
+    <div className="h-full bg-white dark:bg-gray-800 flex flex-grow items-start justify-start">
       <div className="flex-col shadow-x bg-gray-100 dark:bg-gray-900">
-        <div className="md:w-[276px] md:h-[682px] lg:h-[847px] lg:w-[400px] shadow-x bg-gray-100 dark:bg-gray-900">
+        <div className="md:w-[276px] md:h-[682px] lg:w-[400px] lg:h-[1016px] shadow-x bg-gray-100 dark:bg-gray-900">
           <Teams1 />
         </div>
         <div className=" shadow-xl bg-gray-100 dark:bg-gray-900">
         </div>
       </div>
       <div className="flex-grow flex-col">
-        <div className="lg:w-[350px] lg:h-[751px] flex-grow border-l dark:border-gray-600 shadow-inner overflow-auto">
+        <div className="lg:w-[700px] lg:h-[920px] flex-grow dark:border-gray-600 dark:bg-gray-800 shadow-inner overflow-auto">
           <Messages msg={msg} />
         </div>
         <div className=" dark:border-gray-600 flex-grow">
           {channelId && <MessageBox />}
         </div>
       </div>
-      <div className="h-[800px] lg:h-[847px] shadow-x bg-gray-100 dark:bg-gray-900">
+      <div className="h-[800px] lg:h-[1015px] shadow-x bg-gray-100 dark:bg-gray-900">
         <TeamUsersList teamId={teamId} />
       </div>
     </div>

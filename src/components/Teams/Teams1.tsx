@@ -132,10 +132,10 @@ const Teams1 = () => {
     }
 
     return (
-        <div className="w-96 md:w-[276px] md:h-[682px]">
-            <div className="flex flex-row justify-center items-center border-b dark:border-gray-500 p-2">
+        <div className="w-96 md:w-[276px] md:h-[682px] lg:w-[400px]">
+            <div className="flex flex-row justify-center items-center border-b dark:border-gray-500 p-2 ">
                 <div className="flex items-center justify-center">
-                    <h2 className="text-blue-500 dark:text-purple-500 text-2xl font-bold p-2">Teams</h2>
+                    <h2 className="flex flex-row items-center  justify-center text-blue-500 dark:text-purple-500 text-2xl font-bold p-2">Teams</h2>
                 </div>
             </div>
             <div className="shadow-inner">
@@ -207,12 +207,12 @@ const Teams1 = () => {
                                                                         <p className="text-gray-500 dark:text-gray-300">{channelName}</p>
                                                                     </div>
                                                                     <div className="flex flex-row">
-                                                                        <div className="tooltip" data-tip="Remove Channel">
+                                                                        <div className="tooltip items-center justify-center" data-tip="Remove Channel">
                                                                             <button
                                                                                 onClick={() => handleDeleteChannel(team.id, id, channelName)}
-                                                                                className="transparent hover:bg-blue-500 dark:bg-purple-600 hover:dark:bg-purple-500 text-white p-2 rounded-md text-sm"
+                                                                                className="transparent  text-blue-500 dark:text-purple-500 p-2 rounded-md text-sm "
                                                                             >
-                                                                                <MdDeleteForever size={20} />
+                                                                                <MdDeleteForever size={20}/>
                                                                             </button>
                                                                         </div>
                                                                     </div>

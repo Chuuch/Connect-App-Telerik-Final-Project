@@ -40,15 +40,15 @@ export const Privacy: React.FC<PrivacyProps> = () => {
   };
 
   return (
-    <div className="div">
-      <motion.div
-        initial={{ y: -100, opacity: 0 }}
-        transition={{ duration: 1.2 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="flex flex-col items-start justify-center bg-white dark:bg-gray-800 w-full h-full "
+    <div className="bg-white dark:bg-gray-800">
+      <div className="flex flex-col items-start justify-center"
       >
-        <form className="md:w-[500px] lg:w-[650px] flex flex-col items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-900 shadow-md p-10 cursor-pointer overflow-hidden">
+        <motion.form
+          initial={{ y: -100, opacity: 0 }}
+          transition={{ duration: 1.2 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+         className="md:w-[500px] lg:w-[650px] flex flex-col items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-900 shadow-md p-10 cursor-pointer overflow-hidden">
           <div className="flex flex-col space-y-4">
             <div className="flex flex-col">
               <label htmlFor="blockedUser" className="text-gray-500">
@@ -76,14 +76,14 @@ export const Privacy: React.FC<PrivacyProps> = () => {
               By blocking a user, you prevent them from interacting with you and seeing your content.
             </p>
           </div>
-        </form>
+        </motion.form>
 
         {/* Blocked Users Card */}
         <div className="flex flex-row items-center justify-center">
           <BlockedUsersList blockedUsers={blockedUsers} setBlockedUsers={setBlockedUsers} />
         </div>
        
-      </motion.div>
+      </div>
     </div>
   );
 };

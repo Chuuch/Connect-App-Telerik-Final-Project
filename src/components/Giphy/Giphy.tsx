@@ -53,7 +53,7 @@ const GiphySearch: React.FC<GiphySearchProps> = ({ API_SEARCH, API_KEY, onGifCli
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search for GIFs"
-          className="p-2 md:h-4 md:w-4 border dark:border-gray-500 bg-white text-white dark:text-gray-300 dark:bg-gray-800 dark:outline-gray-700 rounded-md focus:outline-none focus:border-blue-500 dark:focus:border-purple-500 flex-grow"
+          className="p-2 md:h-4 md:w-4 lg:w-64 lg:h-20 border dark:border-gray-500 bg-white text-black dark:gray-300 dark:bg-gray-800 dark:outline-gray-700 rounded-md focus:outline-none focus:border-blue-500 dark:focus:border-purple-500 flex-grow"
         />
         <button
           onClick={searchGifs}

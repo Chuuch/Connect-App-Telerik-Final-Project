@@ -72,14 +72,14 @@ export const Navbar = () => {
 				</div>
 			</div>
 			{/* Sidebar */}
-			<div className="drawer-side absolute top-0 left-24 h-full  md:h-[780] md:w-[280px] md:left-[75px] lg:w-[350px] w-96 z-20">
+			<div className="drawer-side absolute top-0 left-24 h-full  md:h-[780] md:w-[280px] md:left-[75px] lg:w-[370px] w-96 z-20">
 				<label
 					htmlFor="my-drawer-3"
 					aria-label="close sidebar"
 					className="drawer-overlay hidden"
 				></label>
 
-				<ul className="menu p-4 w-96 md:h-[780px] md:w-[276px] lg:w-[350px] lg:h-full bg-gray-100 dark:bg-gray-900 text-blue-500 dark:text-purple-600 dark:focus:text-purple-600">
+				<ul className="menu p-4 w-96 md:h-[780px] md:w-[276px] lg:w-[380px] lg:h-full bg-gray-100 dark:bg-gray-900 text-blue-500 dark:text-purple-600 dark:focus:text-purple-600">
 					{/* Sidebar content here */}
 					<h1 className="text-3xl ml-3 mb-4 text-blue-500 dark:text-purple-600">Personal Profile</h1>
 					<li className='dark:hover:bg-gray-800 rounded-md '>

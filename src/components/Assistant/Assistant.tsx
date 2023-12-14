@@ -53,7 +53,7 @@ const Assistant: AssistantProps = () => {
 				</div>
 			</div>
 			{/* Sidebar */}
-			<div className="drawer-side absolute top-0 md:left-[60px] lg:left-[65px] h-[1000px] md:h-[682px] w-[452px] md:w-[292px] lg:h-[847px] lg:w-[360px] lg:top-[-192px] z-40">
+			<div className="drawer-side absolute top-0 md:left-[60px] lg:left-[65px] h-[1000px] md:h-[682px] w-[452px] md:w-[292px] lg:h-[1015px] lg:w-[360px] lg:top-[-184px] z-40">
 				<label
 					htmlFor="assistant-drawer-3"
 					aria-label="close sidebar"
@@ -69,7 +69,7 @@ const Assistant: AssistantProps = () => {
 						<BsRobot className="flex mb-5 h-24 w-24 md:h-8 md:w-8" />
 					</div>
 					<div className="inline-block items-start top-1">
-						<div className='h-[550px] md:h-[480px] lg:h-[600px] lg:w-[320px] overflow-y-auto scrollbar-thin scrollbar-track-gray-400 dark:scrollbar-track-slate-600 scrollbar-thumb-blue-500 dark:scrollbar-thumb-purple-600'>
+						<div className='h-[550px] md:h-[480px] lg:h-[750px] lg:w-[320px] overflow-y-auto scrollbar-thin scrollbar-track-gray-400 dark:scrollbar-track-slate-600 scrollbar-thumb-blue-500 dark:scrollbar-thumb-purple-600'>
 						{hercResponse && <p className='md:p-2 text-base md:text-sm break-all whitespace-pre-line overflow-y-auto scrollbar-thin scrollbar-track-slate-600 dark:scrollbar-thumb-purple-600'>{hercResponse}</p>}
 						</div>
 						

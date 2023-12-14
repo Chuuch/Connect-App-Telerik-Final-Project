@@ -48,7 +48,7 @@ export const NotificationsView = () => {
 					}}
 				/>
 			</div>
-			<div className="flex flex-col items-center justify-center hidden lg:ml-[600px] lg:mt-[200px] space-y-4">
+			<div className="lg:flex lg:flex-col items-center justify-center hidden lg:ml-[600px] lg:mt-[200px] space-y-4">
 				<img src="connect2.png" alt="logo" className="lg:w-32 lg:h-32" />
 				<h1 className="flex flex-row items-center justify-center text-6xl tracking-[5px] text-blue-500 dark:text-purple-500">
 					Notifications
