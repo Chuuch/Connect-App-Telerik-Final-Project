@@ -40,10 +40,6 @@ export const Notifications: React.FC<NotificationsProps> = ({
 							className="flex flex-row space-x-1 items-center text-md hover:bg-gray-200 dark:hover:bg-gray-800 cursor-pointer h-full w-full p-2"
 						>
 							<Avatar userID={notif.userID}/>
-							<PiUserCircleFill
-								size={50}
-								className="fill-blue-500 dark:fill-purple-600 cursor-pointer"
-							/>
 							<p className="text-gray-500 dark:text-gray-300">
 								{notif.author} sent you a message
 							</p>
