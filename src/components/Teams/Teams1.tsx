@@ -4,13 +4,13 @@ import { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { HiUsers } from 'react-icons/hi2';
-import { IoPersonAdd } from 'react-icons/io5';
-import { MdDeleteForever, MdGroupAdd } from 'react-icons/md';
+import { IoPersonAdd, IoPersonRemove } from 'react-icons/io5';
+import { MdDeleteForever, MdDeleteSweep, MdGroupAdd } from 'react-icons/md';
 import { RiTeamFill } from 'react-icons/ri';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { db } from '../../config/firebase-config';
+import { auth, db } from '../../config/firebase-config';
 import UserContext from '../../context/UserContext';
-import { deleteTeam } from '../../services/teams.services';
+import { deleteTeam, leaveTeam } from '../../services/teams.services';
 import AddMembersForm from './AddMembersForm';
 import CreateTeamForm, { UserList } from './CreateTeamForm';
 import AddChannelForm from './AddChannelForm';
@@ -98,6 +98,16 @@ const Teams1 = () => {
             navigate('/teams')
         } catch (error) {
             toast.error(`Error deleting team: ${teamName}!`);
+        }
+    }
+
+    const handleLeaveTeam = async (teamId: string) => {
+        try {
+            if (!currentUserDB?.uid) return
+            await leaveTeam(teamId)
+            navigate('/teams')
+        } catch (error) {
+            toast.error(`Error deleting team: ${teamId}!`);
         }
     }
 
@@ -191,6 +201,14 @@ const Teams1 = () => {
                                                             <MdDeleteForever size={20} />
                                                         </button>
                                                     </div>
+                                                    {(team.userID !== auth?.currentUser?.uid) && <div className="tooltip" data-tip="Leave Team">
+                                                        <button
+                                                            onClick={() => handleLeaveTeam(team.id)}
+                                                            className="bg-blue-600 hover:bg-blue-500 dark:bg-purple-600 hover:dark:bg-purple-500 text-white p-2 rounded-md text-sm"
+                                                        >
+                                                            <IoPersonRemove size={20} />
+                                                        </button>
+                                                    </div>}
                                                 </div>
 
                                             </div>

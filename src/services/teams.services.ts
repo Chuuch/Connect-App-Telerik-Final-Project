@@ -101,3 +101,28 @@ export const addMemberToTeam = async (members: UserList[], teamId: string) => {
     }
   }
 }
+
+export const leaveTeam = async (teamId: string) => {
+  try {
+console.log("teamId" + teamId);
+
+const membersRef = ref(db, `teams/${teamId}/members`);
+const membersSnapshot = await get(membersRef);
+console.log(`membersSnapshot: ${membersSnapshot}`);
+
+const members = membersSnapshot.val();
+console.log(`members: ${members}`);
+
+const indexToRemove = members.findIndex((member) => member.id === auth?.currentUser?.uid);
+if (indexToRemove !== -1) {
+  members.splice(indexToRemove, 1);
+  await set(membersRef, members);
+  console.log('User removed successfully');
+    } else {
+      console.log('User not found in the team');
+    }
+  } catch (error) {
+    console.log(error.message);
+    
+  }
+}
