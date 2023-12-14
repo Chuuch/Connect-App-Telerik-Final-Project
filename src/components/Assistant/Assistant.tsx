@@ -35,6 +35,7 @@ const Assistant: AssistantProps = () => {
 			<div className="drawer-content flex flex-col">
 				{/* Navbar */}
 				<div className="w-12 h-full  dark:transparent  flex flex-col justify-start">
+				<div className="w-12 h-full  dark:transparent  flex flex-col justify-start">
 					<div className="flex flex-col">
 						<label
 							htmlFor="assistant-drawer-3"
@@ -42,6 +43,7 @@ const Assistant: AssistantProps = () => {
 							className="btn btn-square btn-ghost flex flex-col"
 						>
 							<BsRobot
+								size={20}
 								size={20}
 								className="text-blue-500 dark:text-purple-500"
 							/>
@@ -61,11 +63,15 @@ const Assistant: AssistantProps = () => {
 				></label>
 
 				<ul className="menu inline space-y-2 p-4 min-h-full w-[380px] lg:w-[360px] md:w-[295px] bg-gray-100 dark:bg-gray-900 text-blue-500 dark:text-purple-600 dark:focus:text-purple-600 ">
+				<ul className="menu inline space-y-2 p-4 min-h-full w-[380px] lg:w-[360px] md:w-[295px] bg-gray-100 dark:bg-gray-900 text-blue-500 dark:text-purple-600 dark:focus:text-purple-600 ">
 					{/* Sidebar content here */}
+					<div className="flex flex-row items-center">
+						<h1 className="lg:text-2xl md:text-xl mb-4 md:p-4 text-blue-500 dark:text-purple-600">
 					<div className="flex flex-row items-center">
 						<h1 className="lg:text-2xl md:text-xl mb-4 md:p-4 text-blue-500 dark:text-purple-600">
 							Buddy Assistant
 						</h1>
+						<BsRobot className="flex mb-5 h-24 w-24 md:h-8 md:w-8" />
 						<BsRobot className="flex mb-5 h-24 w-24 md:h-8 md:w-8" />
 					</div>
 					<div className="inline-block items-start top-1">
@@ -75,6 +81,8 @@ const Assistant: AssistantProps = () => {
 						
 					</div>
 
+					<div className="flex flex-row justify-start items-start space-x-3 md:pt-2 md:pl-2">
+						<div className="flex flex-row items-center justify-center space-x-2">
 					<div className="flex flex-row justify-start items-start space-x-3 md:pt-2 md:pl-2">
 						<div className="flex flex-row items-center justify-center space-x-2">
 							<input
@@ -89,11 +97,16 @@ const Assistant: AssistantProps = () => {
 								placeholder="Ask Buddy something..."
 								type="text"
 								className="rounded-lg flex items-start w-72 md:w-[180px] lg:w-[250px] lg:h-20 h-20 md:h-16 p-2 text-base md:text-sm text-gray-800 dark:bg-gray-800 outline-none dark:text-gray-300 border border-gray-200 dark:border-gray-600 focus:outline-blue-500 focus:border-none dark:focus:outline-purple-500"
+								className="rounded-lg flex items-start w-72 md:w-[180px] lg:w-[250px] lg:h-20 h-20 md:h-16 p-2 text-base md:text-sm text-gray-800 dark:bg-gray-800 outline-none dark:text-gray-300 border border-gray-200 dark:border-gray-600 focus:outline-blue-500 focus:border-none dark:focus:outline-purple-500"
 							/>
 						</div>
 						<div>
 							<div className="ml-3 mt-[105px] md:mt-[20px] lg:mt-[32px] z-10">
+							<div className="ml-3 mt-[105px] md:mt-[20px] lg:mt-[32px] z-10">
 								<button
+									onClick={() => { askHercai(); setUserInput(''); }}
+									
+									className="rounded-full items-center justify-center z-40"
 									onClick={() => { askHercai(); setUserInput(''); }}
 									
 									className="rounded-full items-center justify-center z-40"

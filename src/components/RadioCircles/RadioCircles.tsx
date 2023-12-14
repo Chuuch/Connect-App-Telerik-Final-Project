@@ -13,8 +13,7 @@ export const RadioCircles: React.FC<RadioCirclesProps> = () => {
             <div className='flex items-center justify-center opacity-100'>
             <LuRadioTower className='md:h-5 md:w-5' />
             </div>
-        <div />
-    </div>
+        </div>
   )
 }
 
