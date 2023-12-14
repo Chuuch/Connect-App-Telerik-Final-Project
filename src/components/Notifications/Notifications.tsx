@@ -2,6 +2,7 @@ import { PiUserCircleFill } from 'react-icons/pi';
 import { motion } from 'framer-motion';
 import { ServiceNotification } from '../../services/notifications.services';
 import { clearNotifications } from '../../services/notifications.services';
+import Avatar from '../Avatar/Avatar';
 
 interface NotificationsProps {
 	notification: ServiceNotification[];
@@ -38,6 +39,7 @@ export const Notifications: React.FC<NotificationsProps> = ({
 							key={notif.id}
 							className="flex flex-row space-x-1 items-center text-md hover:bg-gray-200 dark:hover:bg-gray-800 cursor-pointer h-full w-full p-2"
 						>
+							<Avatar userID={notif.userID}/>
 							<PiUserCircleFill
 								size={50}
 								className="fill-blue-500 dark:fill-purple-600 cursor-pointer"

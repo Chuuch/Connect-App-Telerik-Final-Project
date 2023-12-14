@@ -5,6 +5,7 @@ export interface ServiceNotification {
   id: string;
   type: 'message' | 'other';
   author: string;
+  userID?: string,
 }
 
 export const getNotifications = (userID: string): Promise<ServiceNotification[]> => {
