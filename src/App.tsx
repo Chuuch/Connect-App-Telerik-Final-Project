@@ -46,12 +46,14 @@ function App() {
 			const uid = user?.uid;
 			if (uid) {
 				getUserByID(uid).then((userData) => {
+					// const userData = snapshot.val()[Object.keys(snapshot.val())[0]];
+
 					setCurrentUserDB((prev) => {
 						return {
 							...prev,
 							uid: userData?.uid,
-							firstName: userData?.firstName || '',
-							lastName: userData?.lastName || '',
+							firstName: userData?.firstName || '', // TODO: because of old data
+							lastName: userData?.lastName || '', // TODO: because of old data
 							username: userData?.username,
 							email: userData?.email,
 							avatar: userData?.avatar || '',

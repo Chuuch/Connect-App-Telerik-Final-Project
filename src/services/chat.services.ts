@@ -31,6 +31,7 @@ export const createChatId = async (): Promise<string> => {
     }
   };
 
+
   export const createChatWithId = async (friendId: string): Promise<string> => {
 //   const userData = await getUserByID(friendId);
   const chatData = await getAllChats();

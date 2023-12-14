@@ -6,6 +6,7 @@ import { Status } from '../utils/status';
 import { db } from './../config/firebase-config';
 import { updateUserIsLogged, updateUserStatus } from './users.services';
 
+
 export const verifyUser = async (user: User) => {
     try {
         await sendEmailVerification(user);
@@ -64,9 +65,8 @@ export const loginUser = async (email: string, password: string) => {
 export const logoutUser = async () => {
     try {
         localStorage.removeItem('email')
-        if (!auth.currentUser?.uid) return
-        await updateUserIsLogged(auth.currentUser?.uid, false)
-        await updateUserStatus(auth.currentUser?.uid, Status.OFFLINE)
+        await updateUserIsLogged(auth.currentUser?.uid as string, false)
+        await updateUserStatus(auth.currentUser?.uid as string, Status.OFFLINE)
 
         await signOut(auth);
 
