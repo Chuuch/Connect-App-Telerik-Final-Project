@@ -35,9 +35,8 @@ export const Login: FC<Props> = () => {
 				await updateUserStatus(currentUser?.uid, Status.ONLINE)
 				await updateUserIsLogged(currentUser?.uid, true)
 
-				getUserByID(currentUser?.uid).then((userDB) => {
-					userDB && setCurrentUserDB?.(userDB)
-					console.log(currentUserDB)
+				await getUserByID(currentUser?.uid).then((userDB) => {
+					setCurrentUserDB?.(userDB)
 				})
 				navigate('/notifications')
 			} else if (data.user && !currentUser?.emailVerified) {

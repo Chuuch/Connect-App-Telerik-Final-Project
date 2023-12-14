@@ -11,20 +11,19 @@ export const getNotifications = (userID: string): Promise<ServiceNotification[]>
   const notificationsRef = ref(db, `notifications/${userID}`);
 
   return new Promise((resolve) => {
-      onValue(notificationsRef, (snapshot) => {
-          const notifications: ServiceNotification[] = [];
-          snapshot.forEach((childSnapshot) => {
-              notifications.push({ ...childSnapshot.val(), id: childSnapshot.key });
-          });
-          resolve(notifications);
+    onValue(notificationsRef, (snapshot) => {
+      const notifications: ServiceNotification[] = [];
+      snapshot.forEach((childSnapshot) => {
+        notifications.push({ ...childSnapshot.val(), id: childSnapshot.key });
       });
+      resolve(notifications);
+    });
   });
 };
 
-
 export const clearNotifications = async (userID: string): Promise<void> => {
   const notificationRef = ref(db, `notifications/${userID}`);
-  
+
   try {
     const notificationSnapshot = await get(notificationRef);
     const notification = notificationSnapshot.val();

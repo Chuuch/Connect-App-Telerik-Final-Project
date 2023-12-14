@@ -268,26 +268,26 @@ export const createChatMsg = async (content: string, chatId: string): Promise<st
   }
 };
 
-export const setMsgByChatId = async (chatId: string, msg: object): Promise<string> => {
-  const chat = await get(ref(db, `chats/${chatId}`));
-  if (chat) {
-    const updates = {
-      [`chats/${chatId}/`]: msg,
-    };
-    try {
-      await update(ref(db), updates);
-    } catch (error) {
-      console.log(error.message);
-    }
-  } return chatId;
-};
+// export const setMsgByChatId = async (chatId: string, msg: object): Promise<string> => {
+//   const chat = await get(ref(db, `chats/${chatId}`));
+//   if (chat) {
+//     const updates = {
+//       [`chats/${chatId}/`]: msg,
+//     };
+//     try {
+//       await update(ref(db), updates);
+//     } catch (error) {
+//       console.log(error?.message);
+//     }
+//   } return chatId;
+// };
 
-export const getMsgByChatId = async (chatId: string): Promise<string> => {
-  const chat = await get(ref(db, `chats/${chatId}`));
-  if (chat) {
-    const messages = chat.messages;
-    return messages;
-  } else {
-    return ''
-  }
-}
+// export const getMsgByChatId = async (chatId: string): Promise<string> => {
+//   const chat = await get(ref(db, `chats/${chatId}`));
+//   if (chat) {
+//     const messages = chat.messages;
+//     return messages;
+//   } else {
+//     return ''
+//   }
+// }

@@ -60,13 +60,13 @@ export const checkIfUserExist = async (username: string) => {
     return false
 }
 
-export const updateUserStatus = async (uid: Pick<User, 'uid'>, status: Pick<User, 'status'>) => {
+export const updateUserStatus = async (uid: string, status: `${Status}`) => {
     return update(ref(db), {
         [`users/${uid}/status`]: status,
     });
 };
 
-export const updateUserIsLogged = async (uid: Pick<User, 'uid'>, isLogged: Pick<User, 'isLogged'>) => {
+export const updateUserIsLogged = async (uid: string, isLogged: boolean) => {
     return update(ref(db), {
         [`users/${uid}/isLogged`]: isLogged,
     });
@@ -107,6 +107,7 @@ export const getUserByUsername = async (username: string) => {
 
 export const setUserFriend = async (username: string) => {
     try {
+        if (!auth?.currentUser?.uid) return
         const userId = await getUserByUsername(username);
         const currentFriendsRef = await get(ref(db, `users/${auth?.currentUser?.uid}/friends`));
         const currentUserInfo = await getUserByID(auth?.currentUser?.uid);
@@ -151,6 +152,7 @@ export const setUserFriend = async (username: string) => {
 
 export const setUserFriendChat = async (username: string) => {
     try {
+        if (!auth?.currentUser?.uid) return
         const userId = await getUserByUsername(username);
         const currentFriendsRef = await get(ref(db, `users/${auth?.currentUser?.uid}/friends`));
         const currentUserInfo = await getUserByID(auth?.currentUser?.uid);
@@ -209,6 +211,7 @@ export const getAllUserFriendsList = async (): Promise<UserList[]> => {
 };
 
 export const blockUser = async (username: string) => {
+    if (!auth?.currentUser?.uid) return
     const checkUser = await checkIfUserExist(username);
     const currentUserInfo = await getUserByID(auth?.currentUser?.uid);
     const currentUsername = currentUserInfo.username;

@@ -28,36 +28,36 @@ export const Header = () => {
 			try {
 				if (queryVal.trim() !== '') {
 					let msgQueryRef;
-                    if (chatId) {
-                    msgQueryRef = ref(db, `chats/${chatId}/messages`);
-                    } else if (channelId) {
-                    msgQueryRef = ref(db, `channelMessages/${channelId}`);
-                    }
+					if (chatId) {
+						msgQueryRef = ref(db, `chats/${chatId}/messages`);
+					} else if (channelId) {
+						msgQueryRef = ref(db, `channelMessages/${channelId}`);
+					}
 					if (msgQueryRef) {
 						const msgQuery = await get(msgQueryRef);
 						//console.log('Data:', msgQuery.val());
-					if (msgQuery.exists()) {
-						const msgData = msgQuery.val();
-						const dataArray: Message[] = Object.values(msgData);
-						const matches: Message[] = [];
-						for (const msg of dataArray) {
-							//console.log('data: ', msg.content);
-							if (
-								msg.content &&
-								msg.content.toLowerCase().includes(queryVal.toLowerCase())
-							) {
-								console.log(msg);
-								matches.push(msg);
+						if (msgQuery.exists()) {
+							const msgData = msgQuery.val();
+							const dataArray: Message[] = Object.values(msgData);
+							const matches: Message[] = [];
+							for (const msg of dataArray) {
+								//console.log('data: ', msg.content);
+								if (
+									msg.content &&
+									msg.content.toLowerCase().includes(queryVal.toLowerCase())
+								) {
+									console.log(msg);
+									matches.push(msg);
+								}
 							}
+							setResults(matches);
+						} else {
+							console.log('No results found');
+							setResults([]);
 						}
-						setResults(matches);
-					} else {
-						console.log('No results found');
-						setResults([]);
 					}
 				}
-			}
-		} catch (error) {
+			} catch (error) {
 				console.log('An error occurred: ' + error);
 			}
 		};
@@ -73,10 +73,10 @@ export const Header = () => {
 
 	const handleSubmit = (e: { preventDefault: () => void }) => {
 		e.preventDefault();
-		if(chatId){
-		navigate(`/search/${chatId}/${queryVal}`, { state: { results } });
+		if (chatId) {
+			navigate(`/search/${chatId}/${queryVal}`, { state: { results } });
 		} else {
-		navigate(`/search/${channelId}/${queryVal}`, { state: { results } });
+			navigate(`/search/${channelId}/${queryVal}`, { state: { results } });
 		}
 		setQueryVal('');
 	};
@@ -94,7 +94,9 @@ export const Header = () => {
 
 	const handleStatus = (e: { preventDefault: () => void }, status: `${Status}`) => {
 		e.preventDefault();
-		updateUserStatus(currentUserDB?.uid, status);
+		if (currentUserDB?.uid) {
+			updateUserStatus(currentUserDB.uid, status);
+		}
 		setShowStatusMenu(false);
 	}
 
