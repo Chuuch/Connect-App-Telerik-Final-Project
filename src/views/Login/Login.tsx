@@ -15,8 +15,9 @@ import { Status } from '../../utils/status';
 type FormData = {
 	email: string;
 	password: string;
-};
-type Props = object;
+}
+
+type Props = object
 
 export const Login: FC<Props> = () => {
 	const navigate = useNavigate();

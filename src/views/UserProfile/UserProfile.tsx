@@ -10,6 +10,7 @@ import { BaseSyntheticEvent, useContext, useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { FaCloudUploadAlt } from 'react-icons/fa';
 import {
 	HiKey,
 	HiOutlineMail,
@@ -23,7 +24,6 @@ import {
 	updateUserPhone,
 } from '../../services/users.services';
 import { passwordPattern, phonePattern } from '../../utils/regexPatterns';
-import { FaCloudUploadAlt } from 'react-icons/fa';
 
 interface UserProfileFormData {
 	phone: string;
@@ -49,7 +49,7 @@ export const UserProfile = () => {
 		formState: { errors: errors2 },
 	} = useForm<PasswordFormData>();
 	const [uploadImage, setUploadImage] = useState(null);
-	const [previewImage, setPreviewImage] = useState(null);
+	const [previewImage, setPreviewImage] = useState<string | null>(null);
 	const [avatar, setAvatar] = useState('');
 
 	useEffect(() => {
@@ -84,9 +84,9 @@ export const UserProfile = () => {
 		confirmNewPassword,
 	}: PasswordFormData) => {
 		if (!user) return;
-		if (newPassword === confirmNewPassword) {
+		if (newPassword === confirmNewPassword && user?.email) {
 			const credential = EmailAuthProvider.credential(
-				user?.email,
+				user.email,
 				currentPassword
 			);
 			try {
@@ -137,10 +137,8 @@ export const UserProfile = () => {
 				toast.success('Image uploaded successfully');
 				// setErrorMessage(null);
 			})
-			.catch((error) => {
-				toast.success('Failed to upload the image');
-				// TODO: To be removed
-				console.error('Upload error:', error);
+			.catch(() => {
+				toast.error('Failed to upload the image');
 			});
 	};
 
@@ -151,10 +149,11 @@ export const UserProfile = () => {
 		if (selectedFile) {
 			setUploadImage(selectedFile);
 			setPreviewImage(URL?.createObjectURL(selectedFile));
-			setCurrentUserDB?.((prev) => ({
-				...prev,
+			console.log(currentUserDB)
+			setCurrentUserDB?.({
+				...currentUserDB,
 				avatar: URL?.createObjectURL(selectedFile),
-			}));
+			});
 			// setErrorMessage(null);
 		} else {
 			setUploadImage(null);
@@ -193,7 +192,7 @@ export const UserProfile = () => {
 							<HiOutlineUser className="w-32 h-32 md:h-16 md:w-16 rounded-full text-blue-500 dark:text-purple-500" />
 						)}
 						<label htmlFor='avatar-upload'>
-							<FaCloudUploadAlt className='md:w-10 md:h-10 fill-blue-500 dark:fill-purple-500 ml-3 cursor-pointer'/>
+							<FaCloudUploadAlt className='md:w-10 md:h-10 fill-blue-500 dark:fill-purple-500 ml-3 cursor-pointer' />
 						</label>
 						<input
 							type="file"

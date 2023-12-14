@@ -1,17 +1,17 @@
+import { onValue, ref } from 'firebase/database';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { MessageBox } from "../../components/MessageBox/MessageBox";
 import { Messages } from "../../components/Messages/Messages";
-import { onValue, ref } from 'firebase/database';
-import { useEffect, useState } from 'react';
+import TeamUsersList from '../../components/TeamUsersList/TeamUsersList';
 import Teams1 from '../../components/Teams/Teams1';
 import { db } from '../../config/firebase-config';
-import TeamUsersList from '../../components/TeamUsersList/TeamUsersList';
 
 export const TeamsView = () => {
   const { teamId, channelId } = useParams();
   const [msg, setMsg] = useState([]);
 
-  +  useEffect(() => {
+  useEffect(() => {
     const msgRef = ref(db, `channelMessages/${channelId}`);
     const unsubscribe = onValue(msgRef, (snapshot) => {
       const data = snapshot.val();
@@ -37,7 +37,7 @@ export const TeamsView = () => {
           <Messages msg={msg} />
         </div>
         <div className=" dark:border-gray-600 flex-grow">
-          {channelId && <MessageBox />}
+          {channelId && <MessageBox  />}
         </div>
       </div>
       <div className="h-[800px] lg:h-[1015px] shadow-x bg-gray-100 dark:bg-gray-900">

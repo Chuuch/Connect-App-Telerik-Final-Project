@@ -5,21 +5,21 @@ import { Status } from '../utils/status';
 import { UserList } from '../components/Teams/CreateTeamForm';
 
 export interface User {
-    avatar: string
-    chats: object
-    createdOn: number
-    email: string
-    firstName: string
-    friends: object
-    isLogged: boolean
-    lastName: string
-    phone: string
-    status: `${Status}`
-    teams: object
-    uid: string
-    username: string
-    videoStreamId: string
-    blockedUsers: object[]
+    avatar?: string
+    chats?: object
+    createdOn?: number
+    email?: string
+    firstName?: string
+    friends?: object
+    isLogged?: boolean
+    lastName?: string
+    phone?: string
+    status?: `${Status}`
+    teams?: object
+    uid?: string
+    username?: string
+    videoStreamId?: string
+    blockedUsers?: object[]
 }
 
 export interface Friends {
@@ -60,25 +60,25 @@ export const checkIfUserExist = async (username: string) => {
     return false
 }
 
-export const updateUserStatus = async (uid: Pick<User, 'uid'>, status: Pick<User, 'status'>) => {
+export const updateUserStatus = async (uid: string, status: `${Status}`) => {
     return update(ref(db), {
         [`users/${uid}/status`]: status,
     });
 };
 
-export const updateUserIsLogged = async (uid: Pick<User, 'uid'>, isLogged: Pick<User, 'isLogged'>) => {
+export const updateUserIsLogged = async (uid: string, isLogged: boolean) => {
     return update(ref(db), {
         [`users/${uid}/isLogged`]: isLogged,
     });
 };
 
-export const updateUserAvatar = async (uid: Pick<User, 'uid'>, avatar: Pick<User, 'avatar'>) => {
+export const updateUserAvatar = async (uid: string, avatar: string) => {
     return update(ref(db), {
         [`users/${uid}/avatar`]: avatar,
     });
 }
 
-export const updateUserPhone = async (uid: Pick<User, 'uid'>, phone: Pick<User, 'phone'>) => {
+export const updateUserPhone = async (uid: string, phone: string) => {
     return update(ref(db), {
         [`users/${uid}/phone`]: phone,
     });

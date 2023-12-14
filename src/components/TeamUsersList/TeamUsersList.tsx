@@ -5,8 +5,9 @@ import { db } from '../../config/firebase-config';
 import TeamUser from './TeamUser';
 
 interface TeamUsersListProps {
-    teamId: string
+    teamId?: string
 }
+
 export interface UserData {
     uid: string
     avatar: string

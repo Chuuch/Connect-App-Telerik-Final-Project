@@ -10,7 +10,7 @@ import { auth, storage } from '../../config/firebase-config';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 interface MessageBoxProps {
-  chatId: string;
+  chatId?: string;
 }
 
 export const MessageBox: React.FC<MessageBoxProps> = ({ chatId }) => {
@@ -28,7 +28,7 @@ export const MessageBox: React.FC<MessageBoxProps> = ({ chatId }) => {
       setFile(e.target.files[0]);
     }
   };
-  
+
 
   const handleUploadFile = async () => {
     if (file) {
@@ -141,10 +141,10 @@ export const MessageBox: React.FC<MessageBoxProps> = ({ chatId }) => {
         />
         <button onClick={handleUploadFile} className='md:hidden'>FIle</button>
         <label htmlFor="file-input" className="cursor-pointer">
-        <IoMdPhotos
-          className="md:h-8 md:w-6 lg:w-7 cursor-pointer fill-blue-500 hover:fill-blue-500/90 dark:fill-purple-600/90 hover:dark:fill-purple-600"
-          onChange={() => handleUploadImg}
-        />
+          <IoMdPhotos
+            className="md:h-8 md:w-6 lg:w-7 cursor-pointer fill-blue-500 hover:fill-blue-500/90 dark:fill-purple-600/90 hover:dark:fill-purple-600"
+            onChange={() => handleUploadImg}
+          />
         </label>
         <input
           type="image"

@@ -6,7 +6,7 @@ interface TypewriterProps {
 }
 
 export const Typewriter: React.FC<TypewriterProps> = () => {
-    const [text] = useTypewriter({
+	const [text] = useTypewriter({
 		words: [
 			'Welcome!',
 			'Connecting buddies one by one',
@@ -15,7 +15,7 @@ export const Typewriter: React.FC<TypewriterProps> = () => {
 		loop: true,
 		delaySpeed: 2000,
 	});
-  return (
-
-  )
+	return (
+		<></>
+	)
 }

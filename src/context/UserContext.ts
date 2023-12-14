@@ -1,10 +1,9 @@
 import { Context, createContext } from 'react';
-import { UserDB } from '../App';
-import { DataSnapshot } from '@firebase/database';
+import { User } from '../services/users.services';
 
 interface UserContextType {
-    currentUserDB?: UserDB;
-    setCurrentUserDB?: (currentUserDB: UserDB & DataSnapshot) => void;
+    currentUserDB?: User;
+    setCurrentUserDB?: (currentUserDB: User) => void;
 }
 
 const UserContext: Context<UserContextType & object> = createContext({});

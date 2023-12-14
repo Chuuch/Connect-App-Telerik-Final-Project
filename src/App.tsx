@@ -1,4 +1,3 @@
-// import { useState } from 'react'
 import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Toaster } from 'react-hot-toast';
@@ -11,7 +10,7 @@ import { auth } from './config/firebase-config';
 import UserContext from './context/UserContext';
 import Authenticated from './hoc/Authentication';
 import './index.css';
-import { getUserByID } from './services/users.services';
+import { User, getUserByID } from './services/users.services';
 import { Status } from './utils/status';
 import { CalendarView } from './views/CalendarView/CalendarView';
 import { CallsView } from './views/CallsView/CallsView';
@@ -25,35 +24,21 @@ import { TeamsView } from './views/TeamsView/TeamsView';
 import DyteVideo from './components/DyteVideo/DyteVideo';
 import { Chat } from './components/ChatWithFriend/ChatWithFriend';
 
-export interface UserDB {
-	firstName: string;
-	lastName: string;
-	username: string;
-	email: string;
-	avatar: string;
-	status: `${Status}`;
-	phone: string;
-	uid: string;
-	isLogged: boolean;
-}
-
 function App() {
 	const [user, loading, error] = useAuthState(auth)
-	const [currentUserDB, setCurrentUserDB] = useState<UserDB & object>({});
+	const [currentUserDB, setCurrentUserDB] = useState<User | object>({});
 
 	useEffect(() => {
 		const unsubscribe = auth.onAuthStateChanged((user) => {
 			const uid = user?.uid;
 			if (uid) {
 				getUserByID(uid).then((userData) => {
-					// const userData = snapshot.val()[Object.keys(snapshot.val())[0]];
-
 					setCurrentUserDB((prev) => {
 						return {
 							...prev,
 							uid: userData?.uid,
-							firstName: userData?.firstName || '', // TODO: because of old data
-							lastName: userData?.lastName || '', // TODO: because of old data
+							firstName: userData?.firstName || '',
+							lastName: userData?.lastName || '',
 							username: userData?.username,
 							email: userData?.email,
 							avatar: userData?.avatar || '',

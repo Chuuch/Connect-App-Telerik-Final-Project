@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
-// import { MdOutlineAddPhotoAlternate } from 'react-icons/md';
 import { HiKey, HiOutlineIdentification, HiOutlineMail, HiOutlineUser, HiPhone } from "react-icons/hi";
 import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from '../../services/auth.services';
@@ -36,8 +35,7 @@ export const Register: FC = () => {
 		const data = await registerUser(firstName, lastName, username, email, password, phone)
 
 		if (data?.user) {
-			// toast.success('Registration successful! Please, verify your account via sent email!')
-			alert('Registration successful! Please, verify your account via sent email!')
+			toast.success('Registration successful! Please, verify your account via sent email!')
 			navigate('/login')
 			reset()
 		} else if (data?.error) {
@@ -63,7 +61,6 @@ export const Register: FC = () => {
 				</span>
 				<form onSubmit={handleSubmit(onSubmit)} action="" className="flex flex-col space-y-6 text-lg">
 					<div className="flex items-center">
-						{/* <div className="flex flex-row items-center justify-start"> */}
 						<HiOutlineIdentification className="mr-2 text-gray-500" />
 						<input
 							type="text"
@@ -162,19 +159,6 @@ export const Register: FC = () => {
 						/>
 					</div >
 					{errors.phone && <span className="text-red-500">{errors.phone?.message}</span>}
-					{/* <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
-						<span className="font-medium text-gray-600 dark:text-gray-100">JL</span>
-					</div> */}
-					{/* <input style={{ display: 'none' }} type="file" id='file' /> */}
-					{/* <label htmlFor="file" className="flex flex-row items-center space-x-2 cursor-pointer"> */}
-					{/* <MdOutlineAddPhotoAlternate size={35} className='fill-blue-500' /> */}
-					{/* <div className="relative">
-							<img className="w-10 h-10 rounded-full" src="/docs/images/people/profile-picture-5.jpg" alt="" />
-							<span className="top-0 left-7 absolute  w-3.5 h-3.5 bg-green-400 border-2 border-white dark:border-gray-800 rounded-full">GS</span>
-						</div> */}
-					{/* <img src={Add} alt="" className="h-10 w-10 rounded-full" /> */}
-					{/* <span className="text-blue-500">Add an avatar</span> */}
-					{/* </label> */}
 					<button type="submit" className="bg-blue-500 hover:bg-blue-500/90 text-white rounded-md h-12">
 						Sign up
 					</button>
